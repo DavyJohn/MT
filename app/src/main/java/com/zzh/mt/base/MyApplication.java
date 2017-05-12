@@ -11,14 +11,12 @@ import android.os.StrictMode;
 import android.support.annotation.RequiresApi;
 import android.support.multidex.MultiDex;
 
-import com.example.fw.R;
-import com.example.fw.activities.main.LoginActivity;
-import com.example.fw.utils.NetworkUtils;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
-import com.umeng.socialize.Config;
-import com.umeng.socialize.UMShareAPI;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zzh.mt.MainActivity;
+import com.zzh.mt.R;
+import com.zzh.mt.utils.NetworkUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -74,8 +72,7 @@ public class MyApplication extends Application {
 				.build();
 
 		OkHttpUtils.initClient(okHttpClient);
-		Config.DEBUG = true;
-		UMShareAPI.get(this);
+
 
 		//自定义崩溃
 //		CrashHandler crashHandler = CrashHandler.getInstance();
@@ -88,13 +85,13 @@ public class MyApplication extends Application {
 		Beta.autoCheckUpgrade = true;//自动检查开关
 		Beta.upgradeCheckPeriod = 60 * 1000;//升级检查周期
 		Beta.initDelay = 1 * 1000;//延迟初始化
-		Beta.largeIconId = R.drawable.logo;//
-		Beta.smallIconId = R.drawable.logo;
-		Beta.defaultBannerId = R.drawable.logo;
+		Beta.largeIconId = R.mipmap.ic_launcher;//
+		Beta.smallIconId = R.mipmap.ic_launcher;
+		Beta.defaultBannerId = R.mipmap.ic_launcher;
 		Beta.storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 		Beta.showInterruptedStrategy = true;
-		Beta.canShowUpgradeActs.add(LoginActivity.class);
-		Bugly.init(getApplicationContext(),"7a9e1dda22",true);
+		Beta.canShowUpgradeActs.add(MainActivity.class);
+		Bugly.init(getApplicationContext(),"91cb31c05e",true);
 
 	}
 
@@ -170,7 +167,7 @@ public class MyApplication extends Application {
 	public void finishAllExceptHome() {
 		try {
 			for (Activity activity : activities) {
-				if (activity != null && !(activity instanceof LoginActivity))
+				if (activity != null && !(activity instanceof MainActivity))
 					activity.finish();
 			}
 		} catch (Exception e) {

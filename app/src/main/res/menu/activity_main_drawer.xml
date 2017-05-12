@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:title="">
-        <menu>
-            <item
-                android:id="@+id/nav_mainpage"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/main_page" />
-        </menu>
-    </item>
-
-
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_mainpage"
+            android:icon="@drawable/ic_menu_share"
+            android:title="@string/main_page" />
+    </group>
+    <item android:icon="@mipmap/ic_launcher"
+        android:title=""
+        android:id="@+id/line"/>
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_classmate"
@@ -32,9 +31,10 @@
             android:icon="@drawable/ic_menu_manage"
             android:title="我的备注" />
     </group>
-
-    <item android:title="">
-        <menu>
+    <item android:icon="@mipmap/ic_launcher"
+        android:title=""
+        android:id="@+id/line2"/>
+    <group android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_info"
                 android:icon="@drawable/ic_menu_share"
@@ -43,7 +43,6 @@
                 android:id="@+id/nav_exit"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/exit" />
-        </menu>
-    </item>
+    </group>
 
 </menu>

@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.example.fw.R;
+import com.zzh.mt.R;
 
 
 public class ToolBarX {

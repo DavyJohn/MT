@@ -15,20 +15,9 @@ import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.example.fw.R;
-import com.example.fw.activities.main.HomeActivity;
-import com.example.fw.http.OkHttpHelper;
-import com.example.fw.http.SpotsCallBack;
-import com.example.fw.mode.response.BaseResponse;
-import com.example.fw.utils.Constant;
-import com.example.fw.utils.MdTools;
-import com.example.fw.utils.SharedPreferencesUtil;
-import com.github.javiersantos.appupdater.AppUpdater;
-import com.github.javiersantos.appupdater.AppUpdaterUtils;
-import com.github.javiersantos.appupdater.enums.AppUpdaterError;
-import com.github.javiersantos.appupdater.enums.Display;
-import com.github.javiersantos.appupdater.enums.Duration;
-import com.github.javiersantos.appupdater.enums.UpdateFrom;
+
+import com.zzh.mt.R;
+import com.zzh.mt.http.OkHttpHelper;
 
 import java.util.LinkedHashMap;
 
@@ -58,7 +47,7 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected int densityDpi;
 //    protected WaitProgressDialog mWaitProgressDialog;
     private AlertDialog dialog;
-    protected AppUpdater appupdater;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +60,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     private void initView() {
-//        mWaitProgressDialog = new WaitProgressDialog(this,"正在加载中...");
         mToolBar = (Toolbar) findViewById(R.id.toolbar);
-        mToolBar.setOverflowIcon(ContextCompat.getDrawable(mContext,R.drawable.assistant_icon));
+//        mToolBar.setOverflowIcon(ContextCompat.getDrawable(mContext,R.drawable.assistant_icon));
         mContentLayout = (RelativeLayout) findViewById(R.id.content);
         mNoContentLayout = (RelativeLayout) findViewById(R.id.no_content);
         // 获取手机分辨率
@@ -81,31 +69,6 @@ public abstract class BaseActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(dm);
         screenwidth = dm.widthPixels;
         densityDpi = dm.densityDpi;
-        appupdater = new AppUpdater(this)
-                .setDisplay(Display.DIALOG)
-                .setDuration(Duration.NORMAL)
-                .setUpdateFrom(UpdateFrom.XML)
-//                .setUpdateXML(Constant.UPDATEURL)
-                .setDialogTitleWhenUpdateAvailable("可更新")
-                .setDialogButtonUpdate("立即更新")
-                .setDialogButtonDismiss("稍后再说")
-                .setDialogButtonDoNotShowAgain("不再提示")
-                .setDialogTitleWhenUpdateNotAvailable("无可用更新")
-                .setDialogDescriptionWhenUpdateNotAvailable("您的app是最新版本！");
-
-        AppUpdaterUtils appUpdaterUtils = new AppUpdaterUtils(this)
-                .setUpdateFrom(UpdateFrom.XML)
-                .withListener(new AppUpdaterUtils.AppUpdaterListener() {
-                    @Override
-                    public void onSuccess(String s, Boolean isUpdateAvailable) {
-                        Log.d("AppUpdater", s + Boolean.toString(isUpdateAvailable));
-                    }
-                    @Override
-                    public void onFailed(AppUpdaterError appUpdaterError) {
-                        Log.d("AppUpdater", "Something went wrong");
-                    }
-                });
-        appUpdaterUtils.start();
     }
 
     public abstract int getLayoutId();
@@ -203,7 +166,6 @@ public abstract class BaseActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //退出接口
-                        logout();
 
                     }
                 }).create();
@@ -226,40 +188,4 @@ public abstract class BaseActivity extends AppCompatActivity {
         mContentLayout.setVisibility(View.VISIBLE);
     }
 
-    private void logout(){
-        LinkedHashMap<String,String> map = new LinkedHashMap<>();
-        map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
-        map.put("sign", MdTools.sign_digest(map));
-        mOkHttpHelper.post(mContext, Constant.COMMONURL + Constant.USERLOGOUT, map, TAG, new SpotsCallBack<BaseResponse>(mContext,false) {
-
-            public void onSuccess(Response response, BaseResponse o) {
-                Intent intent = new Intent(mContext, HomeActivity.class);
-                switch (o.getCode()){
-                    case "200":
-                        SharedPreferencesUtil.getInstance(mContext).putString("password","");
-                        intent.putExtra("finish",true);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|
-                                Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK );
-                        startActivity(intent);
-                        finish();
-                        break;
-                    case "500":
-//                        showToast("退出失败");
-                        break;
-                    case "110":
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                        startActivity(intent);
-
-                        break;
-                }
-            }
-
-            @Override
-            public void onError(Response response, int code, Exception e) {
-
-            }
-        });
-    }
-
-    //登陆界面的禁止登录
 }
