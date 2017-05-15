@@ -1,40 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_mainpage"
-            android:icon="@drawable/ic_menu_share"
-            android:title="@string/main_page" />
-    </group>
-    <item android:icon="@mipmap/ic_launcher"
-        android:title=""
-        android:id="@+id/line"/>
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/nav_classmate"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="我的同学" />
-        <item
-            android:id="@+id/nav_schedule"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="我的日程" />
-        <item
-            android:id="@+id/nav_course"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="我要选课" />
-        <item
-            android:id="@+id/nav_data"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="课程资料" />
-        <item
-            android:id="@+id/nav_remarks"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="我的备注" />
-    </group>
-    <item android:icon="@mipmap/ic_launcher"
-        android:title=""
-        android:id="@+id/line2"/>
-    <group android:checkableBehavior="single">
+        <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_mainpage"
+                    android:checked="true"
+                    android:icon="@drawable/ic_menu_share"
+                    android:title="@string/main_page" />
+        </group>
+
+
+        <group android:checkableBehavior="single"
+            android:id="@+id/useless">
+                <item
+                    android:id="@+id/nav_classmate"
+                    android:icon="@drawable/ic_menu_camera"
+                    android:title="我的同学" />
+                <item
+                    android:id="@+id/nav_schedule"
+                    android:icon="@drawable/ic_menu_gallery"
+                    android:title="我的日程" />
+                <item
+                    android:id="@+id/nav_course"
+                    android:icon="@drawable/ic_menu_slideshow"
+                    android:title="我要选课" />
+                <item
+                    android:id="@+id/nav_data"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="课程资料" />
+                <item
+                    android:id="@+id/nav_remarks"
+                    android:icon="@drawable/ic_menu_manage"
+                    android:title="我的备注" />
+
+        </group>
+
+
+        <group android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_info"
                 android:icon="@drawable/ic_menu_share"
@@ -43,6 +44,9 @@
                 android:id="@+id/nav_exit"
                 android:icon="@drawable/ic_menu_send"
                 android:title="@string/exit" />
-    </group>
+        </group>
+
+
+
 
 </menu>

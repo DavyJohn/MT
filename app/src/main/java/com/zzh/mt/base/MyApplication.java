@@ -14,7 +14,7 @@ import android.support.multidex.MultiDex;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zzh.mt.MainActivity;
+import com.zzh.mt.activity.MainActivity;
 import com.zzh.mt.R;
 import com.zzh.mt.utils.NetworkUtils;
 

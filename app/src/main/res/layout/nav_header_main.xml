@@ -11,31 +11,40 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-    <com.zzh.mt.widget.RoundImageView
+    <com.zzh.mt.widget.CircleImageView
         android:id="@+id/nav_header_image"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:scaleType="fitXY"
-        android:background="@drawable/image_ing" />
+        android:layout_gravity="bottom" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/nav_header_vertical_spacing"
-            android:text="@string/nickname"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-        <TextView
-            android:id="@+id/textView"
+        <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/myinfo" />
-    </LinearLayout>
+            android:layout_height="100dp"
+            android:orientation="vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_gravity="bottom">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/nav_header_vertical_spacing"
+                android:text="@string/nickname"
+                android:id="@+id/nav_header_nickname"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:id="@+id/nav_header_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/myinfo"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="21dp" />
+    </RelativeLayout>
 
 
 </LinearLayout>

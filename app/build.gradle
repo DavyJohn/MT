@@ -46,4 +46,6 @@ dependencies {
     compile 'com.lsjwzh:materialloadingprogressbar:0.5.8-RELEASE'
     compile 'com.pnikosis:materialish-progress:1.7'
 
+    compile 'io.reactivex:rxandroid:1.2.1'
+
 }

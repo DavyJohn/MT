@@ -10,4 +10,9 @@
     <string name="center_info">个人中心</string>
     <string name="exit">退出</string>
     <string name="main_page">首页</string>
+    <string name="check_out_classmate">查看同期学员</string>
+    <string name="my_schedule">我的日程</string>
+    <string name="my_courde">我要选课</string>
+    <string name="my_remarks">我的备注</string>
+    <string name="my_info">个人中心</string>
 </resources>
