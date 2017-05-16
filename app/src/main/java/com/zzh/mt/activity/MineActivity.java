@@ -73,6 +73,7 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
         }
         // 第一种方式，观察者模式通知刷新recreate
 		ObserverUtils.getInstance().notifyObservers(Integer.parseInt("1"));
+        //TODO SOMETHING TO ERROR
         // 第二种方式，跳回MainActivity
 //        go2Main();
     }
