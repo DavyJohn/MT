@@ -4,6 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -18,8 +21,13 @@ import android.widget.Toast;
 
 import com.zzh.mt.R;
 import com.zzh.mt.http.OkHttpHelper;
+import com.zzh.mt.utils.ObserverUtils;
+import com.zzh.mt.utils.SharedPreferencesUtil;
 
 import java.util.LinkedHashMap;
+import java.util.Locale;
+import java.util.Observable;
+import java.util.Observer;
 
 import okhttp3.Response;
 
@@ -27,7 +35,7 @@ import okhttp3.Response;
 /**
  * Created by zhailiangrong on 16/6/8.
  */
-public abstract class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity implements Observer {
 
     private static final String TAG = BaseActivity.class.getSimpleName();
     private Toolbar mToolBar;
@@ -57,6 +65,29 @@ public abstract class BaseActivity extends AppCompatActivity {
         initView();
         View view = getLayoutInflater().inflate(getLayoutId(), mContentLayout, false); //IOC 控制反转：在父类中调用子类的反转
         mContentLayout.addView(view);
+
+        changeAppLanguage();
+        ObserverUtils.getInstance().addObserver(this);
+    }
+
+    public void changeAppLanguage() {
+        SharedPreferences preferences = getSharedPreferences("lang", Context.MODE_PRIVATE);
+        String sta = preferences.getString("lang", "zh");//这是SharedPreferences工具类，用于保存设置，代码很简单，自己实现吧
+        // 本地语言设置
+        Locale myLocale = new Locale(sta);
+        Resources res = getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        if (arg instanceof Integer) {
+            changeAppLanguage();
+            recreate();
+        }
     }
 
     private void initView() {
@@ -186,6 +217,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void dimssNoContent() {
         mNoContentLayout.setVisibility(View.GONE);
         mContentLayout.setVisibility(View.VISIBLE);
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ObserverUtils.getInstance().deleteObserver(this);
     }
 
 }
