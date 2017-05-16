@@ -8,8 +8,12 @@ import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,29 +22,46 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.zzh.mt.R;
 import com.zzh.mt.base.BaseActivity;
+import com.zzh.mt.base.CommonAdapter;
+import com.zzh.mt.base.MultiItemTypeAdapter;
 import com.zzh.mt.base.MyApplication;
+import com.zzh.mt.base.ViewHolder;
+import com.zzh.mt.http.SpotsCallBack;
 import com.zzh.mt.mode.BannerEntity;
+import com.zzh.mt.utils.Contants;
 import com.zzh.mt.widget.CircleImageView;
 import com.zzh.mt.widget.banner.BannerView;
+import com.zzh.mt.wrapper.HeaderAndFooterWrapper;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Response;
 
 public class MainActivity extends BaseActivity
         implements NavigationView.OnNavigationItemSelectedListener ,View.OnClickListener{
+
+    private static final String TAG = MainActivity.class.getSimpleName();
     private ImageView mNavImage;
     private TextView mNickName,mInfo;
-    private LinkedList<BannerEntity> banners = new LinkedList<>();
-
-    @BindView(R.id.banner)
+    private HeaderAndFooterWrapper mHeaderAndFooterWrapper;
+    private LinkedList<BannerEntity.Head> banners = new LinkedList<>();
+    private CommonAdapter<Integer> adapter;
+    private Integer[] data = {R.string.my_courde,R.string.class_schedule,R.string.Course_materials};
+    private LinkedList<Integer> list = new LinkedList<>();
     BannerView mBanner;
+//    @BindView(R.id.banner)
+//    BannerView mBanner;
+    @BindView(R.id.main_recyclerview)
+    RecyclerView mRecycler;
+    @BindView(R.id.main_swipe)
+    SwipeRefreshLayout mSwipe;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
         MyApplication.getInstance().add(this);
         ButterKnife.bind(this);
         hasToolBar(false);
@@ -69,9 +90,96 @@ public class MainActivity extends BaseActivity
         mInfo = (TextView) headerLayout.findViewById(R.id.nav_header_info);
         mNavImage.setOnClickListener(this);
         mInfo.setOnClickListener(this);
-//        mBanner.delayTime(5).build(banners);
+        initRecycler();
+        banner();
     }
 
+    private void initRecycler(){
+        for (int i=0;i<data.length;i++ ){
+            list.add(data[i]);
+        }
+
+        mSwipe.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        mSwipe.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mSwipe.isRefreshing() == false){
+                    mSwipe.setRefreshing(true);
+                    banner();
+                }
+            }
+        });
+        mRecycler.setHasFixedSize(true);
+        mRecycler.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new CommonAdapter<Integer>(this,R.layout.main_recycler_item_layout,list) {
+
+            @Override
+            protected void convert(ViewHolder holder, Integer integer, int position) {
+                holder.setTextid(R.id.main_recycler_item_text,integer);
+            }
+        };
+        mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(adapter);
+        mBanner= new BannerView(mContext);
+        mHeaderAndFooterWrapper.addHeaderView(mBanner);
+        mRecycler.setAdapter(adapter);
+        mRecycler.setAdapter(mHeaderAndFooterWrapper);
+        mHeaderAndFooterWrapper.notifyDataSetChanged();
+        adapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                switch (position){
+                    case 1:
+                        //我要选课
+                        startActivity(new Intent(MainActivity.this,CourseActivity.class));
+                        break;
+                    case 2:
+                        //课程安排
+                        break;
+                    case 3:
+                        //课程材料
+                        break;
+                }
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
+        mSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                if (mSwipe.isRefreshing() == true){
+                    mSwipe.setRefreshing(false);
+                }
+                banner();
+            }
+        });
+
+
+    }
+
+    private void banner(){
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        mOkHttpHelper.post(mContext, Contants.BASEBANNERURL+Contants.BANNERURL, map, TAG, new
+                SpotsCallBack<BannerEntity>(mContext) {
+                    @Override
+                    public void onSuccess(Response response, BannerEntity data) {
+                        if (mSwipe.isRefreshing()){
+                            mSwipe.setRefreshing(false);
+                        }
+                        banners.clear();
+                        banners.addAll(data.getResult().getAd().getHead());
+                        mBanner.delayTime(5).build(banners);
+                    }
+
+                    @Override
+                    public void onError(Response response, int code, Exception e) {
+
+                    }
+                });
+    }
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
@@ -93,19 +201,26 @@ public class MainActivity extends BaseActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
         if (id == R.id.nav_mainpage) {
-
+        //首页
         } else if (id == R.id.nav_classmate) {
+            //我的同学
             startActivity(new Intent(this,ClassmateActivity.class));
         } else if (id == R.id.nav_schedule) {
+            //我的日程
             startActivity(new Intent(this,ScheduleActivity.class));
         } else if (id == R.id.nav_course) {
+            //我要选课
             startActivity(new Intent(this,CourseActivity.class));
         } else if (id == R.id.nav_data) {
+            //课程资料
             startActivity(new Intent(this,DataActivity.class));
         } else if (id == R.id.nav_remarks) {
+            //我的备注
             startActivity(new Intent(this,RemarksActivity.class));
         } else if (id == R.id.nav_info) {
-            startActivity(new Intent(this,MineActivity.class));
+            Intent intent = new Intent(this, MineActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
         } else if (id == R.id.nav_exit) {
           //退出
         }

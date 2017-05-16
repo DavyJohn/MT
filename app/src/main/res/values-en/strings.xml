@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="nickname">Nick Name</string>
+    <string name="myinfo">Edit your profile</string>
+    <string name="center_info">Personal center</string>
+    <string name="exit">Drop out</string>
+    <string name="main_page">Home</string>
+    <string name="check_out_classmate">View contemporaries</string>
+    <string name="my_schedule">Schedule</string>
+    <string name="my_courde">Elective</string>
+    <string name="my_remarks">Remarks</string>
+    <string name="my_info">Personal center</string>
+    <string name="class_schedule">Class schedule</string>
+    <string name="Course_materials">Course materials</string>
+    <string name="my_classmate">Classmate</string>
+</resources>

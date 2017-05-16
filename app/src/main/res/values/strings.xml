@@ -1,10 +1,9 @@
 <resources>
     <string name="app_name">MT</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="action_settings">Settings</string>
+
     <string name="nickname">昵称</string>
     <string name="myinfo">编辑个人资料</string>
     <string name="center_info">个人中心</string>
@@ -15,4 +14,7 @@
     <string name="my_courde">我要选课</string>
     <string name="my_remarks">我的备注</string>
     <string name="my_info">个人中心</string>
+    <string name="class_schedule">课程安排</string>
+    <string name="Course_materials">课程材料</string>
+    <string name="my_classmate">我的同学</string>
 </resources>

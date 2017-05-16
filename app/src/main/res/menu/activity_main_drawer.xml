@@ -14,23 +14,23 @@
                 <item
                     android:id="@+id/nav_classmate"
                     android:icon="@drawable/ic_menu_camera"
-                    android:title="我的同学" />
+                    android:title="@string/my_classmate" />
                 <item
                     android:id="@+id/nav_schedule"
                     android:icon="@drawable/ic_menu_gallery"
-                    android:title="我的日程" />
+                    android:title="@string/my_schedule" />
                 <item
                     android:id="@+id/nav_course"
                     android:icon="@drawable/ic_menu_slideshow"
-                    android:title="我要选课" />
+                    android:title="@string/my_courde" />
                 <item
                     android:id="@+id/nav_data"
                     android:icon="@drawable/ic_menu_manage"
-                    android:title="课程资料" />
+                    android:title="@string/Course_materials" />
                 <item
                     android:id="@+id/nav_remarks"
                     android:icon="@drawable/ic_menu_manage"
-                    android:title="我的备注" />
+                    android:title="@string/my_remarks" />
 
         </group>
 

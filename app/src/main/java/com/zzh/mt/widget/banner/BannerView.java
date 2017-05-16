@@ -57,7 +57,7 @@ public class BannerView extends RelativeLayout implements BannerAdapter.ViewPage
 
     private Context context;
     // TODO: 2017/5/15 String 数据
-    private List<BannerEntity> bannerList;
+    private List<BannerEntity.Head> bannerList;
 
     //选中显示Indicator
     private int selectRes = R.drawable.shape_dots_select;
@@ -118,7 +118,7 @@ public class BannerView extends RelativeLayout implements BannerAdapter.ViewPage
     /**
      * 图片轮播需要传入参数 url
      */
-    public void build(List<BannerEntity> list)
+    public void build(List<BannerEntity.Head> list)
     {
         destory();
         bannerList = new ArrayList<>();
@@ -162,7 +162,7 @@ public class BannerView extends RelativeLayout implements BannerAdapter.ViewPage
         for ( int i = 0; i < bannerList.size(); i++)
         {hImageView = new ImageView(context);
             //TODO 获取图
-            url = bannerList.get(i).img;
+            url = bannerList.get(i).getImg();
             Picasso.with(context)
                     .load(url)
                     .config(Bitmap.Config.RGB_565)
