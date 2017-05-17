@@ -13,4 +13,10 @@
     <string name="class_schedule">Class schedule</string>
     <string name="Course_materials">Course materials</string>
     <string name="my_classmate">Classmate</string>
+    <string name="login">Login</string>
+    <string name="input_username">Please input Username</string>
+    <string name="input_passworld">Please enter your password</string>
+    <string name="registered">Registered</string>
+    <string name="forget_password">Forget password？</string>
+    <string name="mt_xieyi">Click on the registration that has agreed to 《MT Agreement》</string>
 </resources>

@@ -29,6 +29,8 @@ import java.util.Locale;
 import java.util.Observable;
 import java.util.Observer;
 
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import okhttp3.Response;
 
 
@@ -55,6 +57,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
     protected int densityDpi;
 //    protected WaitProgressDialog mWaitProgressDialog;
     private AlertDialog dialog;
+    private Unbinder unbinder;
 
 
     @Override
@@ -65,7 +68,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
         initView();
         View view = getLayoutInflater().inflate(getLayoutId(), mContentLayout, false); //IOC 控制反转：在父类中调用子类的反转
         mContentLayout.addView(view);
-
+        ButterKnife.bind(this);
+        unbinder = ButterKnife.bind(this);
         changeAppLanguage();
         ObserverUtils.getInstance().addObserver(this);
     }
@@ -109,6 +113,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
             mToolBarX = new ToolBarX(mToolBar, this);
         }
         return mToolBarX;
+    }
+
+    public void setToolbarColor(int resid){
+        mToolBar.setBackgroundColor(resid);
     }
 
     public void hasToolBar(boolean flag) {
@@ -222,6 +230,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
     protected void onDestroy() {
         super.onDestroy();
         ObserverUtils.getInstance().deleteObserver(this);
+        unbinder.unbind();
     }
 
 }

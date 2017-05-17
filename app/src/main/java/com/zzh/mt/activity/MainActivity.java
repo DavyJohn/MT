@@ -28,6 +28,7 @@ import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
 import com.zzh.mt.http.SpotsCallBack;
 import com.zzh.mt.mode.BannerEntity;
+import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
 import com.zzh.mt.widget.CircleImageView;
 import com.zzh.mt.widget.banner.BannerView;
@@ -194,6 +195,12 @@ public class MainActivity extends BaseActivity
         } else {
             super.onBackPressed();
         }
+
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            CommonUtil.exitBy2Click(this);
+        } else {
+            getSupportFragmentManager().popBackStack();
+        }
     }
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -223,6 +230,8 @@ public class MainActivity extends BaseActivity
             startActivity(intent);
         } else if (id == R.id.nav_exit) {
           //退出
+            startActivity(new Intent(mContext,LoginActivity.class));
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

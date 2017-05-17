@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         app:popupTheme="@style/OverflowMenuStyle"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/black"
         android:theme="@style/AppTheme"
+        android:background="@color/colorAccent"
         android:navigationIcon="@android:style/Widget.Toolbar.Button.Navigation">
 
         <RelativeLayout

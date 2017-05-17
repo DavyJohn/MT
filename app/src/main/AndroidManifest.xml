@@ -35,7 +35,10 @@
         <activity android:name=".activity.ClassmateActivity"
             android:configChanges="locale"
             />
-
+        <activity android:name=".activity.LoginActivity"
+            android:configChanges="locale"/>
+        <activity android:name=".activity.RegisteredActivity"
+            android:configChanges="locale"/>
         <activity android:name=".activity.ScheduleActivity"
             android:configChanges="locale"
             />
