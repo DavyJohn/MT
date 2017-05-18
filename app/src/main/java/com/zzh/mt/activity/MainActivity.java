@@ -2,6 +2,7 @@ package com.zzh.mt.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -46,10 +47,13 @@ public class MainActivity extends BaseActivity
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private ImageView mNavImage;
+    DrawerLayout drawer;
+    ActionBarDrawerToggle toggle;
     private TextView mNickName,mInfo;
     private HeaderAndFooterWrapper mHeaderAndFooterWrapper;
     private LinkedList<BannerEntity.Head> banners = new LinkedList<>();
     private CommonAdapter<Integer> adapter;
+    private Integer[] imageData = {R.drawable.ic_menu_elective,R.drawable.ic_menu_data,R.drawable.main_item_data};
     private Integer[] data = {R.string.my_courde,R.string.class_schedule,R.string.Course_materials};
     private LinkedList<Integer> list = new LinkedList<>();
     BannerView mBanner;
@@ -73,27 +77,28 @@ public class MainActivity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
                 this,
                 drawer,
                 toolbar,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        navigationView.setItemIconTintList(null);//防止icon 为灰色
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
         mNavImage = (CircleImageView) headerLayout.findViewById(R.id.nav_header_image);
-        Picasso.with(mContext).load(R.drawable.image_ing).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mNavImage);
+        Picasso.with(mContext).load(R.drawable.imag_demo).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mNavImage);
         mInfo = (TextView) headerLayout.findViewById(R.id.nav_header_info);
         mNavImage.setOnClickListener(this);
         mInfo.setOnClickListener(this);
         initRecycler();
         banner();
     }
+
 
     private void initRecycler(){
         for (int i=0;i<data.length;i++ ){
@@ -118,6 +123,17 @@ public class MainActivity extends BaseActivity
             @Override
             protected void convert(ViewHolder holder, Integer integer, int position) {
                 holder.setTextid(R.id.main_recycler_item_text,integer);
+                switch (position){
+                    case 1:
+                        holder.setImageResource(R.id.main_recycle_item_image,imageData[0]);
+                        break;
+                    case 2:
+                        holder.setImageResource(R.id.main_recycle_item_image,imageData[1]);
+                        break;
+                    case 3:
+                        holder.setImageResource(R.id.main_recycle_item_image,imageData[2]);
+                        break;
+                }
             }
         };
         mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(adapter);
@@ -186,6 +202,14 @@ public class MainActivity extends BaseActivity
         return R.layout.activity_main;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (toggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
 
     @Override
     public void onBackPressed() {

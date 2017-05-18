@@ -55,10 +55,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
     protected Context mContext;
     protected int screenwidth;
     protected int densityDpi;
-//    protected WaitProgressDialog mWaitProgressDialog;
     private AlertDialog dialog;
     private Unbinder unbinder;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -31,11 +31,11 @@ public ToolBarX(Toolbar mToolBar, final AppCompatActivity mActivity) {
 
     mTitleView = new TextView(mActivity);
     //标题加粗---------------------------
-    TextPaint tp = mTitleView.getPaint();
-    tp.setFakeBoldText(true);
+//    TextPaint tp = mTitleView.getPaint();
+//    tp.setFakeBoldText(true);
     //----------------------------------
     mTitleView.setTextSize(22);
-    mTitleView.setTextColor(mActivity.getResources().getColor(R.color.toolbarTextColor));
+    mTitleView.setTextColor(mActivity.getResources().getColor(R.color.black));
     ActionBar.LayoutParams params = new ActionBar.LayoutParams(-2, -2);
     params.gravity = Gravity.CENTER;
     mActionBar.setCustomView(mTitleView, params);

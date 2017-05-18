@@ -5,12 +5,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/base_bg"
     tools:context="com.zzh.mt.activity.MainActivity"
     tools:showIn="@layout/app_bar_main">
-        <!--<com.zzh.mt.widget.banner.BannerView-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="200dp"-->
-            <!--android:id="@+id/banner"/>-->
+
         <android.support.v4.widget.SwipeRefreshLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
