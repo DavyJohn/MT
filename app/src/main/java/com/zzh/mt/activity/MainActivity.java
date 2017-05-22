@@ -107,6 +107,7 @@ public class MainActivity extends BaseActivity
 
         mSwipe.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
+
         mSwipe.post(new Runnable() {
             @Override
             public void run() {
@@ -152,6 +153,7 @@ public class MainActivity extends BaseActivity
                         break;
                     case 2:
                         //课程安排
+                        startActivity(new Intent(MainActivity.this,ScheduleActivity.class));
                         break;
                     case 3:
                         //课程材料
@@ -237,7 +239,7 @@ public class MainActivity extends BaseActivity
             //我的同学
             startActivity(new Intent(this,ClassmateActivity.class));
         } else if (id == R.id.nav_schedule) {
-            //我的日程
+            //课程安排
             startActivity(new Intent(this,ScheduleActivity.class));
         } else if (id == R.id.nav_course) {
             //我要选课

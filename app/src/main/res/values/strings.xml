@@ -10,7 +10,6 @@
     <string name="exit">退出</string>
     <string name="main_page">首页</string>
     <string name="check_out_classmate">查看同期学员</string>
-    <string name="my_schedule">我的日程</string>
     <string name="my_courde">我要选课</string>
     <string name="my_remarks">我的备注</string>
     <string name="my_info">个人中心</string>
@@ -25,4 +24,7 @@
     <string name="registered_btn">注    册</string>
     <string name="forget_password">忘记密码？</string>
     <string name="mt_xieyi">点击注册即表示已同意《MT协议》</string>
+
+    //没有翻译
+    <string name="open_class">选课开放时间:</string>
 </resources>
