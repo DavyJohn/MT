@@ -9,8 +9,6 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:fitsSystemWindows">false</item>
-        <item name="actionMenuTextAppearance">@style/AppTheme.actionMenuTextSize</item>
-        <item name="actionMenuTextColor">@color/toolbarTextColor</item>
     </style>
     <style name="AppTheme.actionMenuTextSize" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Menu">
         <item name="android:textSize">18sp</item>
@@ -44,4 +42,7 @@
         <item name="android:backgroundDimEnabled">false</item>
     </style>
 
+    <style name="CustomCheckboxTheme" parent="@android:style/Widget.CompoundButton.CheckBox">
+        <item name="android:button">@drawable/checkbox_addpending</item>
+    </style>
 </resources>

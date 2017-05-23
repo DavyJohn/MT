@@ -2,6 +2,7 @@ package com.zzh.mt.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -28,6 +29,7 @@ import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
 import com.zzh.mt.http.SpotsCallBack;
 import com.zzh.mt.mode.BannerEntity;
+import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
 import com.zzh.mt.widget.CircleImageView;
 import com.zzh.mt.widget.banner.BannerView;
@@ -45,10 +47,13 @@ public class MainActivity extends BaseActivity
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private ImageView mNavImage;
+    DrawerLayout drawer;
+    ActionBarDrawerToggle toggle;
     private TextView mNickName,mInfo;
     private HeaderAndFooterWrapper mHeaderAndFooterWrapper;
     private LinkedList<BannerEntity.Head> banners = new LinkedList<>();
     private CommonAdapter<Integer> adapter;
+    private Integer[] imageData = {R.drawable.ic_menu_elective,R.drawable.ic_menu_data,R.drawable.main_item_data};
     private Integer[] data = {R.string.my_courde,R.string.class_schedule,R.string.Course_materials};
     private LinkedList<Integer> list = new LinkedList<>();
     BannerView mBanner;
@@ -72,27 +77,28 @@ public class MainActivity extends BaseActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+        drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        toggle = new ActionBarDrawerToggle(
                 this,
                 drawer,
                 toolbar,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
+        navigationView.setItemIconTintList(null);//防止icon 为灰色
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
         mNavImage = (CircleImageView) headerLayout.findViewById(R.id.nav_header_image);
-        Picasso.with(mContext).load(R.drawable.image_ing).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mNavImage);
+        Picasso.with(mContext).load(R.drawable.imag_demo).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mNavImage);
         mInfo = (TextView) headerLayout.findViewById(R.id.nav_header_info);
         mNavImage.setOnClickListener(this);
         mInfo.setOnClickListener(this);
         initRecycler();
         banner();
     }
+
 
     private void initRecycler(){
         for (int i=0;i<data.length;i++ ){
@@ -101,6 +107,7 @@ public class MainActivity extends BaseActivity
 
         mSwipe.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
+
         mSwipe.post(new Runnable() {
             @Override
             public void run() {
@@ -117,6 +124,17 @@ public class MainActivity extends BaseActivity
             @Override
             protected void convert(ViewHolder holder, Integer integer, int position) {
                 holder.setTextid(R.id.main_recycler_item_text,integer);
+                switch (position){
+                    case 1:
+                        holder.setImageResource(R.id.main_recycle_item_image,imageData[0]);
+                        break;
+                    case 2:
+                        holder.setImageResource(R.id.main_recycle_item_image,imageData[1]);
+                        break;
+                    case 3:
+                        holder.setImageResource(R.id.main_recycle_item_image,imageData[2]);
+                        break;
+                }
             }
         };
         mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(adapter);
@@ -135,6 +153,7 @@ public class MainActivity extends BaseActivity
                         break;
                     case 2:
                         //课程安排
+                        startActivity(new Intent(MainActivity.this,ScheduleActivity.class));
                         break;
                     case 3:
                         //课程材料
@@ -185,6 +204,14 @@ public class MainActivity extends BaseActivity
         return R.layout.activity_main;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (toggle.onOptionsItemSelected(item)){
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
 
     @Override
     public void onBackPressed() {
@@ -193,6 +220,12 @@ public class MainActivity extends BaseActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+        }
+
+        if (getSupportFragmentManager().getBackStackEntryCount() == 0) {
+            CommonUtil.exitBy2Click(this);
+        } else {
+            getSupportFragmentManager().popBackStack();
         }
     }
     @SuppressWarnings("StatementWithEmptyBody")
@@ -206,7 +239,7 @@ public class MainActivity extends BaseActivity
             //我的同学
             startActivity(new Intent(this,ClassmateActivity.class));
         } else if (id == R.id.nav_schedule) {
-            //我的日程
+            //课程安排
             startActivity(new Intent(this,ScheduleActivity.class));
         } else if (id == R.id.nav_course) {
             //我要选课
@@ -216,13 +249,15 @@ public class MainActivity extends BaseActivity
             startActivity(new Intent(this,DataActivity.class));
         } else if (id == R.id.nav_remarks) {
             //我的备注
-            startActivity(new Intent(this,RemarksActivity.class));
+            startActivity(new Intent(this,MyRemarketsActivity.class));
         } else if (id == R.id.nav_info) {
             Intent intent = new Intent(this, MineActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_exit) {
           //退出
+            startActivity(new Intent(mContext,LoginActivity.class));
+            finish();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

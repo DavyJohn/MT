@@ -85,9 +85,9 @@ public class MyApplication extends Application {
 		Beta.autoCheckUpgrade = true;//自动检查开关
 		Beta.upgradeCheckPeriod = 60 * 1000;//升级检查周期
 		Beta.initDelay = 1 * 1000;//延迟初始化
-		Beta.largeIconId = R.mipmap.ic_launcher;//
-		Beta.smallIconId = R.mipmap.ic_launcher;
-		Beta.defaultBannerId = R.mipmap.ic_launcher;
+		Beta.largeIconId = R.drawable.logo;//
+		Beta.smallIconId = R.drawable.logo;
+		Beta.defaultBannerId = R.drawable.logo;
 		Beta.storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 		Beta.showInterruptedStrategy = true;
 		Beta.canShowUpgradeActs.add(MainActivity.class);

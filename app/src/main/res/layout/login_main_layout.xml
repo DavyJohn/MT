@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <ImageView
+            android:layout_width="245px"
+            android:layout_height="212px"
+            android:src="@drawable/logo"
+            android:layout_gravity="center"
+            android:layout_marginTop="60dp"/>
+
+        <EditText
+            android:id="@+id/login_et_username"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="45px"
+            android:layout_marginRight="45px"
+            android:background="@drawable/login_et_shape"
+            android:hint="@string/input_username"
+            android:paddingLeft="30dp"
+            android:textColor="#999"
+            android:layout_marginTop="80px"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25px">
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:id="@+id/login_et_password"
+                android:layout_marginRight="45px"
+                android:layout_marginLeft="45px"
+                android:paddingLeft="30dp"
+                android:hint="@string/input_passworld"
+                android:textColor="#999"
+                android:background="@drawable/login_et_shape"/>
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:id="@+id/login_eye"
+                android:src="@drawable/closeeye"
+                android:layout_marginRight="18dp"
+                android:layout_marginEnd="18dp"
+                android:layout_centerVertical="true"
+                android:layout_alignRight="@+id/login_et_password"
+                android:layout_alignEnd="@+id/login_et_password" />
+        </RelativeLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_btn_shape"
+            android:text="@string/login_btn"
+            android:textSize="25dp"
+            android:layout_marginRight="45px"
+            android:layout_marginLeft="45px"
+            android:layout_marginTop="30dp"
+            android:textColor="#fff"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginRight="45px"
+            android:layout_marginLeft="45px"
+            android:layout_marginTop="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/registered"
+                android:textSize="16sp"
+                android:textColor="@color/login_text_color"
+                android:id="@+id/login_registered" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:id="@+id/login_forget_password"
+                android:text="@string/forget_password"
+                android:textSize="16sp"
+                android:textColor="@color/login_text_color"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/login_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/transparent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:layout_gravity="center"
+            android:textSize="22sp"
+            android:textColor="@color/black"/>
+    </android.support.v7.widget.Toolbar>
+</FrameLayout>
