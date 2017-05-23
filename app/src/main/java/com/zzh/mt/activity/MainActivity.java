@@ -249,7 +249,7 @@ public class MainActivity extends BaseActivity
             startActivity(new Intent(this,DataActivity.class));
         } else if (id == R.id.nav_remarks) {
             //我的备注
-            startActivity(new Intent(this,RemarksActivity.class));
+            startActivity(new Intent(this,MyRemarketsActivity.class));
         } else if (id == R.id.nav_info) {
             Intent intent = new Intent(this, MineActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

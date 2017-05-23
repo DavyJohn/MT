@@ -27,4 +27,7 @@
 
     //没有翻译
     <string name="open_class">选课开放时间:</string>
+    <string name="edit_menu">编辑</string>
+    <string name="remarks_menu_complete">完成</string>
+    <string name="my_obligatory">我的必修课</string>
 </resources>

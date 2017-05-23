@@ -3,22 +3,24 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/base_bg">
-    
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:background="@color/white"
+        android:layout_marginTop="?attr/actionBarSize"
         android:orientation="horizontal">
+        //必修
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:id="@+id/obligatory_layout"
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:src="@drawable/compulsory_icon"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -32,12 +34,16 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:text="我的必修课"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:textColor="#333"/>
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:text="已修:3/10"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:textColor="#333"/>
             </LinearLayout>
 
@@ -48,16 +54,18 @@
             android:background="#7D7D7D"
             android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"/>
+        //选修
         <LinearLayout
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:id="@+id/my_elective_layout"
             android:layout_height="match_parent"
             android:orientation="horizontal">
             <ImageView
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="20dp"
+                android:layout_marginLeft="10dp"
                 android:src="@drawable/xuanxiu_icon"/>
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -70,6 +78,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:text="我的选修课"
                     android:textColor="#333"/>
                 <TextView
@@ -77,6 +87,8 @@
                     android:layout_height="wrap_content"
                     android:textSize="18sp"
                     android:text="已修:3/10"
+                    android:maxLines="1"
+                    android:singleLine="true"
                     android:textColor="#333"/>
             </LinearLayout>
         </LinearLayout>
@@ -94,6 +106,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"/>
     </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"

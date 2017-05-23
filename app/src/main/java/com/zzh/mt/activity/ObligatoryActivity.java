@@ -2,6 +2,7 @@ package com.zzh.mt.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -15,52 +16,55 @@ import com.zzh.mt.base.ViewHolder;
 import java.util.LinkedList;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
- * Created by 腾翔信息 on 2017/5/15.
+ * Created by 腾翔信息 on 2017/5/23.
  */
 
-public class ScheduleActivity extends BaseActivity {
-    private static final String TAG = ScheduleActivity.class.getSimpleName();
-    CommonAdapter<Integer> adapter;
-    private LinkedList<Integer> list = new LinkedList<>();
-    @BindView(R.id.schedule_recycler)
-    RecyclerView mReycler;
-    //必修
-    @OnClick(R.id.obligatory_layout) void obligatory(){
-        startActivity(new Intent(mContext,ObligatoryActivity.class));
-    }
-    //选修
-    @OnClick(R.id.my_elective_layout) void elective(){
-        startActivity(new Intent(mContext,ObligatoryActivity.class));
-    }
+public class ObligatoryActivity extends BaseActivity {
+
+    private CommonAdapter<String> adapter;
+    private LinkedList<String> list = new LinkedList<>();
+    @BindView(R.id.obligatory_swipe)
+    SwipeRefreshLayout mSwipe;
+    @BindView(R.id.obligatory_recycler)
+    RecyclerView mRecycler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getToolBar().setTitle(getString(R.string.class_schedule));
+        getToolBar().setTitle(getString(R.string.my_obligatory));
         MyApplication.getInstance().add(this);
         initview();
     }
 
     private void initview(){
-        for (int i=0;i<2;i++){
-            list.add(i);
+        for (int i=0;i<5;i++){
+            list.add(i+"");
         }
-        mReycler.setHasFixedSize(true);
-        mReycler.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new CommonAdapter<Integer>(mContext,R.layout.schedule_recyclerview_item_layout,list) {
+        mSwipe.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+        mSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
-            protected void convert(ViewHolder holder, final Integer integer, int position) {
-                if (position == 1){
-                    holder.setVisible(R.id.schedule_recycler_item_image_schedule,false);
+            public void onRefresh() {
+                if (mSwipe.isRefreshing() == true){
+                    mSwipe.setRefreshing(false);
                 }
+
+            }
+        });
+
+        mRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mRecycler.setHasFixedSize(true);
+        adapter = new CommonAdapter<String>(mContext,R.layout.schedule_recyclerview_item_layout,list) {
+            @Override
+            protected void convert(ViewHolder holder, String s, final int position) {
                 //详情
                 holder.setOnClickListener(R.id.schedule_recycler_item_details, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext,CourseDetailsActivity.class);
-                        intent.putExtra("Course",integer+"");
+                        intent.putExtra("Course",list.get(position));
                         startActivity(intent);
                     }
                 });
@@ -69,16 +73,16 @@ public class ScheduleActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext,ScheduleDateActivity.class);
-                        intent.putExtra("Course",integer+"");
+                        intent.putExtra("Course",list.get(position));
                         startActivity(intent);
                     }
                 });
             }
         };
-        mReycler.setAdapter(adapter);
+        mRecycler.setAdapter(adapter);
     }
     @Override
     public int getLayoutId() {
-        return R.layout.schedule_main_layout;
+        return R.layout.oblifatory_main_layout;
     }
 }

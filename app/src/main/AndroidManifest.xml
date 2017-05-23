@@ -54,9 +54,6 @@
             android:configChanges="locale"
             />
 
-        <activity android:name=".activity.RemarksActivity"
-            android:configChanges="locale"
-            />
         <activity android:name=".activity.ElectiveListActivity"
             android:configChanges="locale"/>
 
@@ -64,6 +61,14 @@
             android:configChanges="locale"/>
 
         <activity android:name=".activity.CourseDetailsActivity"
+            android:configChanges="locale"/>
+        <activity android:name=".activity.ScheduleDateActivity"
+            android:configChanges="locale"/>
+        <activity android:name=".activity.MyRemarketsActivity"
+            android:configChanges="locale"/>
+        <activity android:name=".activity.MyRemarksTwoActivity"
+            android:configChanges="locale"/>
+        <activity android:name=".activity.ObligatoryActivity"
             android:configChanges="locale"/>
     </application>
 
