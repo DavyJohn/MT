@@ -45,7 +45,7 @@ public class LoginActivity extends BaseActivity {
     }
 
     @OnClick(R.id.login_forget_password) void forget(){
-//        startActivity();
+        startActivity(new Intent(mContext,ForgetPassActivity.class));
     }
     @OnClick(R.id.login_eye) void appearpwd(){
         isAppearPwd();

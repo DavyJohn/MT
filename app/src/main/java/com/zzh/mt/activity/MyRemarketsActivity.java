@@ -46,14 +46,6 @@ public class MyRemarketsActivity extends BaseActivity {
         mSwipe.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
 
-        mSwipe.post(new Runnable() {
-            @Override
-            public void run() {
-                if (mSwipe.isRefreshing() == false){
-                    mSwipe.setRefreshing(true);
-                }
-            }
-        });
         mSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {

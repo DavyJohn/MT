@@ -57,13 +57,21 @@ public class ScheduleDateActivity extends BaseActivity {
                 if (position ==0 || position == 1){
                     holder.setVisible(R.id.schedule_date_remarks_show_image,true);
                 }
+                holder.setOnClickListener(R.id.schedule_date_remarks_image, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        startActivity(new Intent(mContext,MyRemarketsActivity.class));
+
+                    }
+                });
             }
         };
         mRecycler.setAdapter(adapter);
         adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                startActivity(new Intent(mContext,MyRemarketsActivity.class));
+                    showToast("小组活动");
+
             }
 
             @Override

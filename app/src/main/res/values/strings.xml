@@ -14,7 +14,8 @@
     <string name="my_remarks">我的备注</string>
     <string name="my_info">个人中心</string>
     <string name="class_schedule">课程安排</string>
-    <string name="Course_materials">课程材料</string>
+    <string name="Course_materials">课程资料</string>
+    <string name="materials">课程材料</string>
     <string name="my_classmate">我的同学</string>
     <string name="login">登录</string>
     <string name="login_btn">登    录</string>
@@ -30,4 +31,10 @@
     <string name="edit_menu">编辑</string>
     <string name="remarks_menu_complete">完成</string>
     <string name="my_obligatory">我的必修课</string>
+    <string name="all_check">全选</string>
+    <string name="downing">确认下载</string>
+    <string name="down">下载</string>
+    <string name="my_schedule">我的日程</string>
+    <string name="email_address">请输入您的邮箱地址</string>
+    <string name="forget_pass">忘记密码</string>
 </resources>

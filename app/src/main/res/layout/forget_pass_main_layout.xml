@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <EditText
+            android:id="@+id/forget_et_username"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="45px"
+            android:layout_marginRight="45px"
+            android:background="@drawable/login_et_shape"
+            android:hint="@string/email_address"
+            android:paddingLeft="30dp"
+            android:textColor="#999"
+            android:layout_marginTop="60dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/login_btn_shape"
+            android:text="密码找回"
+            android:textSize="20dp"
+            android:layout_marginRight="45px"
+            android:layout_marginLeft="45px"
+            android:layout_marginTop="30dp"
+            android:textColor="#fff"/>
+    </LinearLayout>
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/forget_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/transparent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/forget_pass"
+            android:layout_gravity="center"
+            android:textSize="22sp"
+            android:textColor="@color/black"/>
+    </android.support.v7.widget.Toolbar>
+</FrameLayout>

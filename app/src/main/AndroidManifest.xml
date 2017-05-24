@@ -33,6 +33,7 @@
         </activity>
         <activity android:name=".activity.ClassmateActivity"
             android:configChanges="locale"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"
             />
         <activity android:name=".activity.LoginActivity"
             android:configChanges="locale"/>
@@ -69,6 +70,19 @@
         <activity android:name=".activity.MyRemarksTwoActivity"
             android:configChanges="locale"/>
         <activity android:name=".activity.ObligatoryActivity"
+            android:configChanges="locale"/>
+        <activity android:name=".activity.MaterialsActivity"
+            android:configChanges="locale"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".activity.DownActivity"
+            android:configChanges="locale"/>
+        <activity android:name=".activity.ClassmateInfoActivity"
+            android:configChanges="locale"/>
+        <activity android:name=".activity.ModifyPassActivity"
+            android:configChanges="locale"/>
+        <activity android:name=".activity.LanguageSettingActivity"
+            android:configChanges="locale"/>
+        <activity android:name=".activity.ForgetPassActivity"
             android:configChanges="locale"/>
     </application>
 
