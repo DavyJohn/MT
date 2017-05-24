@@ -157,6 +157,7 @@ public class MainActivity extends BaseActivity
                         break;
                     case 3:
                         //课程材料
+                        startActivity(new Intent(MainActivity.this,DataActivity.class));
                         break;
                 }
             }
@@ -239,7 +240,7 @@ public class MainActivity extends BaseActivity
             //我的同学
             startActivity(new Intent(this,ClassmateActivity.class));
         } else if (id == R.id.nav_schedule) {
-            //课程安排
+            //我的日程
             startActivity(new Intent(this,ScheduleActivity.class));
         } else if (id == R.id.nav_course) {
             //我要选课

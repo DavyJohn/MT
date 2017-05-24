@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/base_bg">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:id="@+id/searchview_root"
+        android:layout_marginTop="?attr/actionBarSize"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+        <SearchView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:focusableInTouchMode="true"
+            android:id="@+id/search_materials"
+            android:focusable="true"
+            android:queryHint="请输入您要搜索的课件"
+            android:background="@drawable/searchview_shape"
+            android:searchIcon="@drawable/search_icon"/>
+
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/materials_recycler"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#f4b335"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/all_check"
+            android:layout_height="match_parent"
+            android:textColor="#fefefe"
+            android:textSize="26sp"
+            android:text="@string/all_check"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:id="@+id/downing"
+            android:layout_height="match_parent"
+            android:textColor="#fefefe"
+            android:textSize="26sp"
+            android:text="@string/downing"/>
+    </LinearLayout>
+</LinearLayout>

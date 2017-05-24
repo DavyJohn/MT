@@ -27,7 +27,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:id="@+id/schedule_recycler_item_title"
+                android:id="@+id/data_recycler_item_title"
                 android:layout_gravity="left"
                 android:text="javascript基础"
                 android:textSize="20sp"
@@ -40,18 +40,19 @@
                 android:layout_gravity="right"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
-                    android:id="@+id/schedule_recycler_item_image_schedule"
-                    android:src="@drawable/schedule"/>
-
-                <ImageView
                     android:layout_width="80dp"
                     android:layout_height="40dp"
-                    android:layout_marginLeft="10dp"
-                    android:id="@+id/schedule_recycler_item_details"
+                    android:id="@+id/data_recycler_item_details"
                     android:src="@drawable/my_elective_recycler_item_details_btn"/>
+
+                <ImageView
+                    android:layout_width="100dp"
+                    android:layout_height="40dp"
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/data_recycler_item_image_materials"
+                    android:src="@drawable/data_materials_icon"/>
+
             </LinearLayout>
         </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>

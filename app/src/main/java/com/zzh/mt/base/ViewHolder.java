@@ -14,7 +14,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.CheckBox;
 import android.widget.Checkable;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -259,7 +261,7 @@ public class ViewHolder extends RecyclerView.ViewHolder
 
     public ViewHolder setChecked(int viewId, boolean checked)
     {
-        Checkable view = (Checkable) getView(viewId);
+        CheckBox view = (CheckBox) getView(viewId);
         view.setChecked(checked);
         return this;
     }
@@ -272,6 +274,12 @@ public class ViewHolder extends RecyclerView.ViewHolder
     {
         View view = getView(viewId);
         view.setOnClickListener(listener);
+        return this;
+    }
+
+    public ViewHolder setOnCheckedChangeListener(int viewId, CompoundButton.OnCheckedChangeListener listener){
+        CompoundButton view = getView(viewId);
+        view.setOnCheckedChangeListener(listener);
         return this;
     }
 
