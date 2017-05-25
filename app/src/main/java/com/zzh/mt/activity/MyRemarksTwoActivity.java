@@ -3,7 +3,9 @@ package com.zzh.mt.activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.zzh.mt.R;
 import com.zzh.mt.base.BaseActivity;
@@ -19,7 +21,9 @@ public class MyRemarksTwoActivity extends BaseActivity {
 
     private MenuItem  item = null;
     @BindView(R.id.my_remarks_two_et)
-    EditText mText;
+    EditText mEtText;
+    @BindView(R.id.remarks_two_text)
+    TextView mText;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,7 +45,22 @@ public class MyRemarksTwoActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        item.setTitle(R.string.remarks_menu_complete);
+        if (item.getTitle().equals("完成")){
+            mEtText.setVisibility(View.VISIBLE);
+            mText.setVisibility(View.GONE);
+            item.setTitle(R.string.edit_menu);
+
+        }else if (item.getTitle().equals("编辑")){
+            mEtText.setVisibility(View.GONE);
+            mText.setVisibility(View.VISIBLE);
+            mText.setText(mEtText.getText().toString());
+            item.setTitle("完成");
+        }
+
+
+
+
+
         return super.onOptionsItemSelected(item);
     }
 

@@ -77,6 +77,7 @@ public class DownActivity extends BaseActivity {
                         super.handleMessage(msg);
                             switch (msg.what){
                                 case 1:
+                                    view.setVisibility(View.VISIBLE);
                                     for (int i=1;i<=100;i++){
                                         view.setProgress(i);
                                     }

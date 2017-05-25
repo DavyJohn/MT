@@ -66,11 +66,11 @@
                 android:layout_marginLeft="20dp"
                 android:text="我的选课"
                 android:textColor="#333"
-                android:textSize="22sp" />
+                android:textSize="20sp" />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="35dp"
+                android:layout_height="25dp"
                 android:layout_marginRight="20dp"
                 android:layout_gravity="center"
                 android:src="@drawable/my_elective_right_icpn" />

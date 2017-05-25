@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="59dp"
         android:layout_marginTop="?attr/actionBarSize"
         android:orientation="horizontal"
         android:background="@color/white">
@@ -16,12 +16,13 @@
             android:orientation="vertical"
             android:gravity="center"
             android:id="@+id/schedule_left"
-            android:layout_marginLeft="20dp">
+            android:layout_marginLeft="10dp">
+
             <ImageView
+                android:id="@+id/imageView"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@drawable/left"
-                />
+                android:src="@drawable/left" />
 
         </LinearLayout>
         //日期
@@ -46,7 +47,7 @@
             android:layout_height="match_parent" android:orientation="vertical"
             android:gravity="center"
             android:id="@+id/schedule_right"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="10dp">
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
@@ -58,5 +59,6 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         android:id="@+id/schedule_date_recycler"/>
 </LinearLayout>

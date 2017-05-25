@@ -14,11 +14,13 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -139,6 +141,7 @@ public class MainActivity extends BaseActivity
             }
         };
         mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(adapter);
+        //设置 banner
         mBanner= new BannerView(mContext);
         mHeaderAndFooterWrapper.addHeaderView(mBanner);
         mRecycler.setAdapter(adapter);

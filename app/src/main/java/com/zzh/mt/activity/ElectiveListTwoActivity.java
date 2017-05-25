@@ -11,6 +11,7 @@ import com.zzh.mt.base.BaseActivity;
 import com.zzh.mt.base.CommonAdapter;
 import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
+import com.zzh.mt.widget.DividerItemDecoration;
 
 import java.util.LinkedList;
 
@@ -49,7 +50,8 @@ public class ElectiveListTwoActivity extends BaseActivity {
         }
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRecycler.setHasFixedSize(true);
-
+        mRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
+        //// TODO: 2017/5/25 checkbox 修改
         adapter = new CommonAdapter<Integer>(mContext,R.layout.elective_list_two_recycler_item_layout,list) {
             @Override
             protected void convert(ViewHolder holder, Integer integer, int position) {

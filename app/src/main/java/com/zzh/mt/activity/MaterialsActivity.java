@@ -14,6 +14,7 @@ import com.zzh.mt.base.BaseActivity;
 import com.zzh.mt.base.CommonAdapter;
 import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
+import com.zzh.mt.widget.DividerItemDecoration;
 
 import java.util.LinkedList;
 
@@ -77,6 +78,7 @@ public class MaterialsActivity extends BaseActivity implements SearchView.OnQuer
         mSearch.setIconifiedByDefault(false);
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRecycler.setHasFixedSize(true);
+        mRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
         adapter = new CommonAdapter<String>(mContext,R.layout.materials_item_main_layout,list) {
             @Override
             protected void convert(final ViewHolder holder, String s, int position) {

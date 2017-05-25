@@ -13,6 +13,7 @@ import com.zzh.mt.base.CommonAdapter;
 import com.zzh.mt.base.MultiItemTypeAdapter;
 import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
+import com.zzh.mt.widget.DividerItemDecoration;
 
 import java.util.LinkedList;
 
@@ -51,6 +52,7 @@ public class ScheduleDateActivity extends BaseActivity {
         }
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRecycler.setHasFixedSize(true);
+        mRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
         adapter = new CommonAdapter<String>(mContext,R.layout.schedule_date_recycler_item_layout,list) {
             @Override
             protected void convert(ViewHolder holder, String s, int position) {
@@ -70,7 +72,7 @@ public class ScheduleDateActivity extends BaseActivity {
         adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                    showToast("小组活动");
+                    startActivity(new Intent(mContext,GroupActivity.class));
 
             }
 

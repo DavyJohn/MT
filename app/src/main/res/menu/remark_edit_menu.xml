@@ -4,5 +4,5 @@
     <item
         app:showAsAction="always"
         android:id="@+id/remarks_menu_edit"
-        android:title="@string/edit_menu"/>
+        android:title="@string/remarks_menu_complete"/>
 </menu>

@@ -29,7 +29,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:textColor="#333"
                     android:id="@+id/elective_list_title"
                     android:text="javascript基础"
@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:text="2天"
                     android:layout_gravity="center"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:layout_marginLeft="10dp"
                     android:textColor="#6c6c6c"/>
             </LinearLayout>
@@ -58,19 +58,19 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="40dp"
+                    android:layout_height="42dp"
                     android:src="@drawable/change_sel"/>
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="40dp"
+                    android:layout_height="42dp"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/cancel_sel"/>
 
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="40dp"
+                    android:layout_height="42dp"
                     android:id="@+id/elective_list_two_dedails"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/my_elective_recycler_item_details_btn"/>
@@ -82,5 +82,6 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         android:id="@+id/elective_list_two_recycler"/>
 </LinearLayout>
