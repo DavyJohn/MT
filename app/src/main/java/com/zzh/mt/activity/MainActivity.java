@@ -17,6 +17,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -270,10 +271,10 @@ public class MainActivity extends BaseActivity
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.nav_header_image:
-                showToast("修改头像");
+//                showToast("修改头像");
                 break;
             case R.id.nav_header_info:
-                showToast("编辑资料");
+                startActivity(new Intent(mContext, EditInfoActivity.class));
                 break;
 
         }

@@ -11,22 +11,24 @@
             android:id="@+id/forget_et_username"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="45px"
-            android:layout_marginRight="45px"
+            android:layout_marginLeft="32dp"
+            android:layout_marginRight="32dp"
             android:background="@drawable/login_et_shape"
             android:hint="@string/email_address"
+            android:drawablePadding="30dp"
             android:paddingLeft="30dp"
-            android:textColor="#999"
+            android:textColor="#333"
+            android:textColorHint="#999"
             android:layout_marginTop="60dp"/>
 
         <Button
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="45dp"
             android:background="@drawable/login_btn_shape"
             android:text="密码找回"
             android:textSize="20dp"
-            android:layout_marginRight="45px"
-            android:layout_marginLeft="45px"
+            android:layout_marginRight="32dp"
+            android:layout_marginLeft="32dp"
             android:layout_marginTop="30dp"
             android:textColor="#fff"/>
     </LinearLayout>

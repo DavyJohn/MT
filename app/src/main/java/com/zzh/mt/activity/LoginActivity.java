@@ -50,6 +50,9 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.login_eye) void appearpwd(){
         isAppearPwd();
     }
+    @OnClick(R.id.login) void login(){
+        startActivity(new Intent(mContext,MainActivity.class));
+    }
 
     private void isAppearPwd() {
         if (isapppwd == true) {

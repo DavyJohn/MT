@@ -84,6 +84,11 @@
             android:configChanges="locale"/>
         <activity android:name=".activity.ForgetPassActivity"
             android:configChanges="locale"/>
+        <activity android:name=".activity.EditInfoActivity"
+            android:windowSoftInputMode="stateHidden|stateAlwaysHidden"
+            android:configChanges="locale"/>
+        <activity android:name=".activity.GroupActivity"
+            android:configChanges="locale"/>
     </application>
 
 

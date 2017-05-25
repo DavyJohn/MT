@@ -60,7 +60,7 @@ public class ScheduleDateActivity extends BaseActivity {
                 holder.setOnClickListener(R.id.schedule_date_remarks_image, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(mContext,MyRemarketsActivity.class));
+                        startActivity(new Intent(mContext,MyRemarksTwoActivity.class));
 
                     }
                 });

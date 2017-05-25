@@ -32,8 +32,7 @@ import butterknife.OnClick;
  */
 
 public class MineActivity extends BaseActivity implements View.OnClickListener{
-//    @BindView(R.id.language)
-//    Button mButton;
+
     @BindView(R.id.mine_recycler)
     RecyclerView mRecycler;
     @BindView(R.id.nav_header_image)
@@ -43,6 +42,9 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
     }
     @OnClick(R.id.mine_passw) void updataPass(){
         startActivity(new Intent(mContext,ModifyPassActivity.class));
+    }
+    @OnClick(R.id.nav_header_info) void edit(){
+        startActivity(new Intent(mContext,EditInfoActivity.class));
     }
     private LinkedList<String> list = new LinkedList<>();
     private String [] data = {"中文名字","英文名字","品牌","部门","性别","生日","公司邮箱"};
@@ -56,7 +58,6 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         getToolBar().setTitle(getString(R.string.my_info));
         MyApplication.getInstance().add(this);
-//        mButton.setOnClickListener(this);
         preferences = getSharedPreferences("lang", Context.MODE_PRIVATE);
         editor = preferences.edit();
         initview();
@@ -89,45 +90,7 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-//        switch (v.getId()){
-//            case R.id.language:
-//                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//                builder.setSingleChoiceItems(R.array.lang, android.R.id.text1, new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        dialogInterface.dismiss();
-//                        saveLangConfig(i);
-//                    }
-//                });
-//                AlertDialog dialog = builder.create();
-//                dialog.show();
-//                break;
-//        }
+
     }
 
-    private void saveLangConfig(int i) {
-        switch (i) {
-            case 0:
-                editor.putString("lang", "zh");
-                editor.commit();
-                break;
-            case 1:
-                editor.putString("lang", "en");
-                editor.commit();
-                break;
-        }
-        // 第一种方式，观察者模式通知刷新recreate
-		ObserverUtils.getInstance().notifyObservers(Integer.parseInt("1"));
-        //TODO SOMETHING TO ERROR
-        // 第二种方式，跳回MainActivity
-//        go2Main();
-    }
-    private void go2Main() {
-        // 微信切换语言后是回调主页
-        // 微博切换语音后是重启App
-        // 设计切换语音为系统自动，和自己支持的语音可选
-        Intent intent = new Intent(this, MainActivity.class);
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(intent);
-    }
 }

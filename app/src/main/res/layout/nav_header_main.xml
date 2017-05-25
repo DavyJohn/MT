@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="@dimen/nav_header_vertical_spacing"
                 android:text="jessica"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 android:textColor="#333"
                 android:id="@+id/nav_header_nickname"
                 android:textAppearance="@style/TextAppearance.AppCompat.Body1"
@@ -39,10 +39,10 @@
 
             <TextView
                 android:id="@+id/nav_header_info"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/myinfo"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textColor="@color/login_btn_color"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
