@@ -9,7 +9,15 @@
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:fitsSystemWindows">false</item>
+        <!-- 这里设置左上角可点击展开的小图标 -->
+        <item name="drawerArrowStyle">@style/AppTheme.DrawerArrowToggle</item>
     </style>
+
+    <style name="AppTheme.DrawerArrowToggle" parent="Base.Widget.AppCompat.DrawerArrowToggle">
+        <item name="color">#f4b335</item>
+        <item name="android:drawable">@mipmap/ic_launcher</item>
+    </style>
+
     <style name="AppTheme.actionMenuTextSize" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Menu">
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">normal</item>

@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
@@ -51,7 +52,14 @@ public class LoginActivity extends BaseActivity {
         isAppearPwd();
     }
     @OnClick(R.id.login) void login(){
-        startActivity(new Intent(mContext,MainActivity.class));
+        if (TextUtils.isEmpty(mEtUserName.getText().toString())){
+            showMessageDialog("用户名不能为空！",mContext);
+        }else if (TextUtils.isEmpty(mEtPassword.getText().toString())){
+            showMessageDialog("密码不能为空！",mContext);
+        }else {
+            startActivity(new Intent(mContext,MainActivity.class));
+        }
+
     }
 
     private void isAppearPwd() {
