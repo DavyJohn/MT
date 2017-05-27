@@ -47,8 +47,8 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
         startActivity(new Intent(mContext,EditInfoActivity.class));
     }
     private LinkedList<String> list = new LinkedList<>();
-    private String [] data = {"中文名字","英文名字","品牌","部门","性别","生日","公司邮箱"};
-    private String [] da = {"张杰","jason","牌牌","生产部","难","05月11日","1111111@163.com"};
+    private String [] data = {"中文名字","英文名字","品牌","部门","性别","生日","入职年份","公司邮箱"};
+    private String [] da = {"张杰","jason","牌牌","生产部","难","05月11日","2017","1111111@163.com"};
     CommonAdapter<String> adapter;
 
     private SharedPreferences preferences;

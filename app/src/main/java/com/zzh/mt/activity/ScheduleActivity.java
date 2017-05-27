@@ -2,9 +2,11 @@ package com.zzh.mt.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.zzh.mt.R;
 import com.zzh.mt.base.BaseActivity;
@@ -27,24 +29,41 @@ public class ScheduleActivity extends BaseActivity {
     private LinkedList<Integer> list = new LinkedList<>();
     @BindView(R.id.schedule_recycler)
     RecyclerView mReycler;
+    @BindView(R.id.compulsory)
+    ImageView mCompulsory;
+    @BindView(R.id.xuanxiu)
+    ImageView mXuanxiu;
     //必修
     @OnClick(R.id.obligatory_layout) void obligatory(){
-        startActivity(new Intent(mContext,ObligatoryActivity.class));
+        //更改图标刷新界面
+        mCompulsory.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.compulsory_sel));
+        initview(3);
+        //初始化宁一个选项卡
+        mXuanxiu.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.xuanxiu_icon));
+        //// TODO: 2017/5/27  quxiao  ObligatoryActivity
+//        startActivity(new Intent(mContext,ObligatoryActivity.class));
     }
     //选修
     @OnClick(R.id.my_elective_layout) void elective(){
-        startActivity(new Intent(mContext,ObligatoryActivity.class));
+//        startActivity(new Intent(mContext,ObligatoryActivity.class));
+        mCompulsory.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.compulsory_icon));
+        mXuanxiu.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.xuanxiu_sel));
+        initview(4);
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getToolBar().setTitle(getString(R.string.class_schedule));
         MyApplication.getInstance().add(this);
-        initview();
+        //默认选中第一个
+        mCompulsory.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.compulsory_sel));
+        initview(3);
     }
 
-    private void initview(){
-        for (int i=0;i<2;i++){
+    private void initview(int index){
+
+        list.clear();
+        for (int i=0;i<index;i++){
             list.add(i);
         }
         mReycler.setHasFixedSize(true);

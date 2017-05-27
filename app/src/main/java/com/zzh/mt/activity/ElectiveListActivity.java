@@ -77,6 +77,7 @@ public class ElectiveListActivity extends BaseActivity{
                     }
                 });
                 if (position == 1){
+                    holder.setClick(R.id.training_num,false);
                     holder.setImageDrawable(R.id.training_num, ContextCompat.getDrawable(mContext,R.drawable.click_training_unsel));
                 }
             }

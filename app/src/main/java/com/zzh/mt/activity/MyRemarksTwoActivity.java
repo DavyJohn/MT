@@ -24,6 +24,8 @@ public class MyRemarksTwoActivity extends BaseActivity {
     EditText mEtText;
     @BindView(R.id.remarks_two_text)
     TextView mText;
+    @BindView(R.id.remarks_type)
+    TextView mType;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,7 +35,20 @@ public class MyRemarksTwoActivity extends BaseActivity {
     }
 
     private void initview(){
-
+        switch (getIntent().getIntExtra("postion",-1)){
+            case 0:
+                mType.setText("普通");
+                break;
+            case 1:
+                mType.setText("普通");
+                break;
+            case 2:
+                mType.setText("小组活动");
+                break;
+            case 3:
+                mType.setText("小组活动");
+                break;
+        }
     }
 
     @Override

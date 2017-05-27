@@ -107,15 +107,6 @@ public class LoginActivity extends BaseActivity {
         });
         //一开始就为秘闻显示
         isAppearPwd();
-        //登录 输入框
-        Drawable drawableleft = ContextCompat.getDrawable(mContext,R.drawable.login_username_icon);
-        Drawable drawableright = ContextCompat.getDrawable(mContext,R.drawable.login_password_icon);
-        drawableleft.setBounds(0,0,34,36);//长宽
-        drawableright.setBounds(0,0,34,36);//长宽
-        mEtPassword.setPadding(30,0,30,0);
-        mEtUserName.setPadding(30,0,30,0);
-        mEtUserName.setCompoundDrawables(drawableleft,null,null,null);
-        mEtPassword.setCompoundDrawables(drawableright,null,null,null);
 
     }
 

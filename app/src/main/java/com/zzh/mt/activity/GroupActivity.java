@@ -22,7 +22,9 @@ import butterknife.OnClick;
 
 public class GroupActivity extends BaseActivity {
     @OnClick(R.id.group_note) void note (){
-        startActivity(new Intent(mContext,MyRemarksTwoActivity.class));
+        Intent intent = new Intent(mContext,MyRemarksTwoActivity.class);
+        intent.putExtra("postion",2);
+        startActivity(intent);
     }
     CommonAdapter<String> adapter ;
     private LinkedList<String> list = new LinkedList<>();

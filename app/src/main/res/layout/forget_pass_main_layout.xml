@@ -7,19 +7,33 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <EditText
-            android:id="@+id/forget_et_username"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
-            android:background="@drawable/login_et_shape"
-            android:hint="@string/email_address"
-            android:drawablePadding="30dp"
-            android:paddingLeft="30dp"
-            android:textColor="#333"
-            android:textColorHint="#999"
-            android:layout_marginTop="60dp"/>
+            android:layout_marginTop="60dp">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/login_username_icon"
+                android:layout_centerVertical="true"
+                android:layout_alignLeft="@+id/forget_et_username"
+                android:layout_alignStart="@+id/forget_et_username"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp" />
+
+            <EditText
+                android:id="@+id/forget_et_username"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="32dp"
+                android:layout_marginRight="32dp"
+                android:background="@drawable/login_et_shape"
+                android:hint="@string/email_address"
+                android:paddingLeft="60dp"
+                android:textColor="#333"
+                android:textColorHint="#999"/>
+
+        </RelativeLayout>
 
         <Button
             android:layout_width="match_parent"

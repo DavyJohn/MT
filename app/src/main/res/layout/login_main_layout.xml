@@ -30,25 +30,47 @@
             android:layout_marginTop="41dp"
             android:src="@drawable/logo" />
 
-        <EditText
-            android:id="@+id/login_et_username"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_marginLeft="32dp"
-            android:layout_marginRight="32dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/login_et_shape"
-            android:drawablePadding="15dp"
-            android:hint="@string/input_username"
-            android:paddingLeft="30dp"
-            android:textColorHint="#999"
-            android:textColor="#333" />
+            android:layout_marginTop="20dp">
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/login_username_icon"
+                android:layout_centerVertical="true"
+                android:layout_alignLeft="@+id/login_et_username"
+                android:layout_alignStart="@+id/login_et_username"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp" />
+            <EditText
+                android:id="@+id/login_et_username"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="32dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginRight="32dp"
+                android:background="@drawable/login_et_shape"
+                android:hint="@string/input_username"
+                android:paddingLeft="60dp"
+                android:textColorHint="#999"
+                android:textColor="#333" />
+
+        </RelativeLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25px">
-
+            <ImageView
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/login_password_icon"
+                android:layout_centerVertical="true"
+                android:layout_alignLeft="@+id/login_et_password"
+                android:layout_alignStart="@+id/login_et_password"
+                android:layout_marginLeft="15dp"
+                android:layout_marginStart="15dp" />
             <EditText
                 android:id="@+id/login_et_password"
                 android:layout_width="match_parent"
@@ -58,7 +80,7 @@
                 android:background="@drawable/login_et_shape"
                 android:drawablePadding="15dp"
                 android:hint="@string/input_passworld"
-                android:paddingLeft="30dp"
+                android:paddingLeft="60dp"
                 android:textColorHint="#999"
                 android:textColor="#333" />
 
@@ -99,6 +121,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/registered"
+                android:visibility="gone"
                 android:textColor="@color/login_text_color"
                 android:textSize="16sp" />
 

@@ -72,6 +72,7 @@
                 android:textColor="#333"
                 android:textSize="20sp"
                 android:text="课堂"
+                android:id="@+id/remarks_type"
                 android:layout_gravity="center"/>
         </LinearLayout>
 

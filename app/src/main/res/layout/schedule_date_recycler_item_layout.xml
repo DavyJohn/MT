@@ -12,6 +12,7 @@
         <View
             android:id="@+id/group_view"
             android:layout_width="10dp"
+            android:visibility="gone"
             android:layout_height="match_parent"
             android:background="#f4b335" />
 

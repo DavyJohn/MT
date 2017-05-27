@@ -42,12 +42,13 @@ public class ScheduleDateActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyApplication.getInstance().add(this);
-        getToolBar().setTitle(getIntent().getStringExtra("Course"));
+//        getToolBar().setTitle(getIntent().getStringExtra("Course"));
+        getToolBar().setTitle("javascript基础");
         initview();
     }
 
     private void initview(){
-        for (int i=0;i<8;i++){
+        for (int i=0;i<5;i++){
             list.add(i+"");
         }
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -55,24 +56,38 @@ public class ScheduleDateActivity extends BaseActivity {
         mRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
         adapter = new CommonAdapter<String>(mContext,R.layout.schedule_date_recycler_item_layout,list) {
             @Override
-            protected void convert(ViewHolder holder, String s, int position) {
+            protected void convert(ViewHolder holder, String s, final int position) {
                 if (position ==0 || position == 1){
                     holder.setVisible(R.id.schedule_date_remarks_show_image,true);
+                    if (position == 1){
+                        holder.setVisible(R.id.schedule_date_remarks_show_image,false);
+                    }
                 }
+                if (position == 2 || position == 3){
+                    holder.setVisible(R.id.group_view,true);
+                    holder.setVisible(R.id.schedule_date_remarks_image,false);
+                }
+
                 holder.setOnClickListener(R.id.schedule_date_remarks_image, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        startActivity(new Intent(mContext,MyRemarksTwoActivity.class));
+                        Intent intent = new Intent(mContext,MyRemarksTwoActivity.class);
+                        intent.putExtra("postion",position);
+                        startActivity(intent);
 
                     }
                 });
             }
         };
         mRecycler.setAdapter(adapter);
-        adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+        adapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                if (position == 0 || position ==1 ||position == 4 ){
+
+                }else {
                     startActivity(new Intent(mContext,GroupActivity.class));
+                }
 
             }
 

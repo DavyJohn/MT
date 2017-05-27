@@ -138,6 +138,12 @@ public class ViewHolder extends RecyclerView.ViewHolder
         return this;
     }
 
+    public ViewHolder setClick(int viewId,boolean isClick){
+        view = getView(viewId);
+        view.setClickable(isClick);
+        return  this;
+    }
+
     public ViewHolder setBackgroundColor(int viewId, int color)
     {
         View view = getView(viewId);

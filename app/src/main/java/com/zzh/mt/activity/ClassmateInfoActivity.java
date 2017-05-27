@@ -24,8 +24,8 @@ public class ClassmateInfoActivity extends BaseActivity {
     @BindView(R.id.class_info_recycler)
     RecyclerView mRecycler;
     private LinkedList<String> list = new LinkedList<>();
-    private String [] data = {"中文名字","英文名字","品牌","部门","性别","星座","公司邮箱"};
-    private String [] da = {"张杰","jason","牌牌","生产部","难","巨蟹","1111111@163.com"};
+    private String [] data = {"中文名字","英文名字","品牌","部门","性别","生日","入职年份","公司邮箱"};
+    private String [] da = {"张杰","jason","牌牌","生产部","男","05月11日","2017","1111111@163.com"};
     CommonAdapter<String> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {

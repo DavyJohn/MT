@@ -32,10 +32,6 @@ public class ForgetPassActivity extends BaseActivity {
     }
 
     private void initview(){
-        Drawable drawableleft = ContextCompat.getDrawable(mContext,R.drawable.login_username_icon);
-        drawableleft.setBounds(0,0,34,36);//长宽
-        mEditAddress.setPadding(30,0,30,0);
-        mEditAddress.setCompoundDrawables(drawableleft,null,null,null);
         mTool.setTitle("");
         setSupportActionBar(mTool);
         mTool.setNavigationIcon(R.drawable.ic_backback);

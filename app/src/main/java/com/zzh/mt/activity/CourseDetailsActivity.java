@@ -30,7 +30,8 @@ public class CourseDetailsActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyApplication.getInstance().add(this);
-        getToolBar().setTitle(getIntent().getStringExtra("Course"));
+//        getToolBar().setTitle(getIntent().getStringExtra("Course"));
+        getToolBar().setTitle("javascript基础");
 
     }
 
