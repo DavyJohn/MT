@@ -1,6 +1,7 @@
-package com.zzh.mt.http;
+package com.zzh.mt.http.callback;
 
 import android.content.Context;
+import android.widget.ProgressBar;
 
 
 import com.zzh.mt.widget.WaitProgressDialog;
@@ -17,17 +18,22 @@ public abstract class SpotsCallBack<T> extends BaseCallBack<T>{
     private WaitProgressDialog mWaitProgressDialog;
     private boolean isShow = false;
 
+
     public SpotsCallBack(Context context) {
         this(context,false);
     }
 
     public SpotsCallBack(Context context, boolean flag) {
-        mWaitProgressDialog = new WaitProgressDialog(context, "正在加载中...");
+        if (flag == true){
+            mWaitProgressDialog = new WaitProgressDialog(context, "正在加载中...");
+        }
         isShow = flag;
     }
 
     public SpotsCallBack(Context context, boolean flag, String title) {
-        mWaitProgressDialog = new WaitProgressDialog(context, title);
+        if (flag == true){
+            mWaitProgressDialog = new WaitProgressDialog(context, title);
+        }
         isShow = flag;
     }
 
@@ -57,5 +63,6 @@ public abstract class SpotsCallBack<T> extends BaseCallBack<T>{
     public void onResponse(Response response) {
         dimissDialog();
     }
+
 
 }

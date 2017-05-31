@@ -188,6 +188,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
                 }).create();
         dialog.show();
     }
+
+
     //退出
     protected void quite(String str, Context context) {
         dialog = new AlertDialog.Builder(context)

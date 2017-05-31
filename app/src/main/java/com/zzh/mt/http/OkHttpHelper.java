@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonParseException;
+import com.zzh.mt.http.callback.BaseCallBack;
 import com.zzh.mt.utils.NetworkUtils;
 import com.zzh.mt.utils.StringUtils;
 
@@ -92,6 +93,7 @@ public class OkHttpHelper {
                     if (StringUtils.isNotEmpty(resultStr)) {
                         if (callBack.mType == String.class) {
                             callbackSuccess(callBack, response, resultStr);
+
                         } else {
                             try {
                                 Object object = gson.fromJson(resultStr, callBack.mType);
@@ -107,6 +109,7 @@ public class OkHttpHelper {
                     callbackError(callBack, response, null);
                 }
             }
+
         });
     }
 

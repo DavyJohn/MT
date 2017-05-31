@@ -31,13 +31,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Angelababy"
+
                 android:textSize="20sp"
+                android:id="@+id/class_en_name"
                 android:textColor="#333"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="杨颖"
+
+                android:id="@+id/class_china_name"
                 android:layout_marginTop="10dp"
                 android:textSize="20sp"
                 android:textColor="#333"/>

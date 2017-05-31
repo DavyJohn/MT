@@ -12,12 +12,18 @@ import com.zzh.mt.base.CommonAdapter;
 import com.zzh.mt.base.MultiItemTypeAdapter;
 import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
+import com.zzh.mt.http.callback.SpotsCallBack;
+import com.zzh.mt.mode.ClassMateData;
+import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.SharedPreferencesUtil;
 import com.zzh.mt.widget.MysearchView;
 import com.zzh.mt.widget.sidebar.WaveSideBar;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 import butterknife.BindView;
+import okhttp3.Response;
 
 /**
  * Created by 腾翔信息 on 2017/5/15.
@@ -25,15 +31,18 @@ import butterknife.BindView;
 
 public class ClassmateActivity extends BaseActivity {
 
+    private static final String TAG = ClassmateActivity.class.getSimpleName();
     @BindView(R.id.classmate_recycler)
     RecyclerView mRecycler;
     @BindView(R.id.classmate_side)
     WaveSideBar mBar;
     @BindView(R.id.classmate_search)
     MysearchView mSearch;
-    CommonAdapter<String> adapter;
-    LinkedList<String> list = new LinkedList<>();
-    String [] data = {"A","B","C","D","E","F","G"};
+    CommonAdapter<ClassMateData.PersonListData> adapter;
+    LinkedList<ClassMateData.PersonListData> list = new LinkedList<>();
+    LinkedList<String> index = new LinkedList<>();
+
+    String [] data = null;
     String [] name = {"张三","里斯","王马死","王麻子","历史","请示黄","你妈妈"};
 
     @Override
@@ -41,22 +50,22 @@ public class ClassmateActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getToolBar().setTitle(getString(R.string.check_out_classmate));
         MyApplication.getInstance().add(this);
-        initview();
+        classmate();
+
     }
 
     private void initview(){
-        list.clear();
-        for (int i=0;i<data.length;i++){
-            list.add(data[i]);
-        }
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRecycler.setHasFixedSize(true);
-        adapter = new CommonAdapter<String>(mContext,R.layout.classmate_item_main_layout,list) {
+        adapter = new CommonAdapter<ClassMateData.PersonListData>(mContext,R.layout.classmate_item_main_layout,list) {
             @Override
-            protected void convert(ViewHolder holder, String s, int position) {
+            protected void convert(ViewHolder holder, ClassMateData.PersonListData s, int position) {
+                holder.setText(R.id.class_en_name,s.getEnglishName());
+                holder.setText(R.id.class_china_name,s.getChineseName());
                 if (position ==0 || list.get(position-1).equals(list.get(position))){
                     holder.setVisible(R.id.tv_index,true);
-                    holder.setText(R.id.tv_index,list.get(position));
+                    holder.setText(R.id.tv_index,index.get(position));
+
                 }else
                     {
                         holder.setVisible(R.id.tv_index,false);
@@ -67,7 +76,7 @@ public class ClassmateActivity extends BaseActivity {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                 Intent intent = new Intent(mContext,ClassmateInfoActivity.class);
-                intent.putExtra("name",name[position]);
+                intent.putExtra("name",list.get(position).getChineseName());
                 startActivity(intent);
             }
 
@@ -77,6 +86,7 @@ public class ClassmateActivity extends BaseActivity {
             }
         });
         mRecycler.setAdapter(adapter);
+        data = index.toArray(new String[index.size()]);
         mBar.setIndexItems(data);
         mBar.setOnSelectIndexItemListener(new WaveSideBar.OnSelectIndexItemListener() {
             @Override
@@ -86,6 +96,41 @@ public class ClassmateActivity extends BaseActivity {
                         ((LinearLayoutManager) mRecycler.getLayoutManager()).scrollToPositionWithOffset(i, 0);
                     }
                 }
+            }
+        });
+    }
+    private void classmate(){
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CLASSMATE, map, TAG, new SpotsCallBack<ClassMateData>(mContext) {
+            @Override
+            public void onSuccess(Response response, ClassMateData data) {
+                    if (data.getCode().equals("200")){
+                        if (data.getPersonList().size() != 0){
+                            index.clear();
+                            list.clear();
+                            for (int i=0;i<data.getPersonList().size();i++){
+                                if (i<data.getPersonList().size()-1){
+                                    if (data.getPersonList().get(i).getInitial().equals(data.getPersonList().get(i+1).getInitial())){
+
+                                    }else {
+                                        index.add(data.getPersonList().get(i).getInitial());
+                                    }
+                                }else {
+                                    index.add(data.getPersonList().get(i).getInitial());
+                                }
+                            }
+                            list.addAll(data.getPersonList());
+                            initview();
+                        }
+
+                    }
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
             }
         });
     }

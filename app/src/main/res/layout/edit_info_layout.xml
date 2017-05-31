@@ -58,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#333"
                 android:textSize="20sp"
+                android:id="@+id/edit_nickname"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:background="@null"
                 android:text="Jessica"/>
@@ -88,6 +89,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#333"
                 android:background="@null"
+                android:id="@+id/edit_brand"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:textSize="20sp"
                 android:text="牌牌"/>
@@ -118,6 +120,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#333"
                 android:textSize="20sp"
+                android:id="@+id/edit_deparname"
                 android:textCursorDrawable="@drawable/color_cursor"
                 android:background="@null"
                 android:text="人事部"/>
@@ -137,6 +140,7 @@
             android:textColor="@color/white"
             android:text="保   存"
             android:textSize="20sp"
+            android:id="@+id/edit_save"
             android:gravity="center"/>
     </LinearLayout>
 

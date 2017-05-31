@@ -10,7 +10,7 @@
         <ImageView
             android:layout_width="245px"
             android:layout_height="212px"
-            android:src="@drawable/logo"
+            android:src="@drawable/login_icon"
             android:layout_gravity="center"
             android:layout_marginTop="60dp"/>
 

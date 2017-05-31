@@ -30,6 +30,8 @@
                 android:background="@drawable/login_et_shape"
                 android:hint="@string/email_address"
                 android:paddingLeft="60dp"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="#333"
                 android:textColorHint="#999"/>
 
@@ -41,6 +43,7 @@
             android:background="@drawable/login_btn_shape"
             android:text="密码找回"
             android:textSize="20dp"
+            android:id="@+id/forget_button"
             android:layout_marginRight="32dp"
             android:layout_marginLeft="32dp"
             android:layout_marginTop="30dp"

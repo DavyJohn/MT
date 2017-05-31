@@ -28,7 +28,7 @@
             android:layout_height="141dp"
             android:layout_gravity="center"
             android:layout_marginTop="41dp"
-            android:src="@drawable/logo" />
+            android:src="@drawable/login_icon" />
 
         <RelativeLayout
             android:layout_width="match_parent"

@@ -3,7 +3,6 @@ package com.zzh.mt.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.icu.text.UnicodeSetSpanner;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -16,29 +15,30 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
 import com.squareup.picasso.Picasso;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.Callback;
 import com.zzh.mt.R;
 import com.zzh.mt.base.BaseActivity;
 import com.zzh.mt.base.CommonAdapter;
-import com.zzh.mt.base.MultiItemTypeAdapter;
 import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
-import com.zzh.mt.http.SpotsCallBack;
+import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.BannerEntity;
+import com.zzh.mt.mode.BaseData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.SharedPreferencesUtil;
 import com.zzh.mt.widget.CircleImageView;
 import com.zzh.mt.widget.banner.BannerView;
 import com.zzh.mt.wrapper.HeaderAndFooterWrapper;
@@ -48,6 +48,7 @@ import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
 import okhttp3.Response;
 
 public class MainActivity extends BaseActivity
@@ -55,6 +56,7 @@ public class MainActivity extends BaseActivity
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private ImageView mNavImage;
+    private android.app.AlertDialog dialog;
     DrawerLayout drawer;
     ActionBarDrawerToggle toggle;
     private TextView mNickName,mInfo;
@@ -75,8 +77,13 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (SharedPreferencesUtil.getInstance(mContext).getString("userid") == null ||TextUtils.isEmpty(SharedPreferencesUtil.getInstance(mContext).getString("userid"))){
+            startActivity(new Intent(mContext,LoginActivity.class));
+            finish();
+        }
         MyApplication.getInstance().add(this);
         ButterKnife.bind(this);
+
         //更新
         PgyUpdateManager.register(this, "com.zzh.mt.fileprovider", new UpdateManagerListener() {
             @Override
@@ -119,15 +126,6 @@ public class MainActivity extends BaseActivity
         setSupportActionBar(toolbar);
         getSupportActionBar().setHomeButtonEnabled(true);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        toolbar.setNavigationIcon(R.mipmap.ic_home_nav);
-//        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                showToast("弹出抽屉");
-//                drawer.openDrawer(GravityCompat.START);
-//            }
-//        });
-
         toggle = new ActionBarDrawerToggle(
                 this,
                 drawer,
@@ -159,15 +157,6 @@ public class MainActivity extends BaseActivity
         mSwipe.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
 
-        mSwipe.post(new Runnable() {
-            @Override
-            public void run() {
-                if (mSwipe.isRefreshing() == false){
-                    mSwipe.setRefreshing(true);
-                    banner();
-                }
-            }
-        });
         mRecycler.setHasFixedSize(true);
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CommonAdapter<Integer>(this,R.layout.main_recycler_item_layout,list) {
@@ -232,26 +221,27 @@ public class MainActivity extends BaseActivity
 
     }
 
+
     private void banner(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         mOkHttpHelper.post(mContext, Contants.BASEBANNERURL+Contants.BANNERURL, map, TAG, new
                 SpotsCallBack<BannerEntity>(mContext) {
                     @Override
                     public void onSuccess(Response response, BannerEntity data) {
-                        if (mSwipe.isRefreshing()){
-                            mSwipe.setRefreshing(false);
-                        }
+                        mSwipe.setRefreshing(false);
                         banners.clear();
                         banners.addAll(data.getResult().getAd().getHead());
                         mBanner.delayTime(5).build(banners);
                     }
-
                     @Override
                     public void onError(Response response, int code, Exception e) {
 
                     }
                 });
+
     }
+
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
@@ -309,8 +299,8 @@ public class MainActivity extends BaseActivity
             startActivity(intent);
         } else if (id == R.id.nav_exit) {
           //退出
-            startActivity(new Intent(mContext,LoginActivity.class));
-            finish();
+            logout();
+
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -321,13 +311,30 @@ public class MainActivity extends BaseActivity
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.nav_header_image:
-//                showToast("修改头像");
-                break;
             case R.id.nav_header_info:
                 startActivity(new Intent(mContext, EditInfoActivity.class));
                 break;
 
         }
+    }
+    private void logout(){
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.LOGOUT, map, TAG, new SpotsCallBack<BaseData>(mContext) {
+            @Override
+            public void onSuccess(Response response, BaseData data) {
+                if (data.getCode().equals("200")){
+                    startActivity(new Intent(mContext,LoginActivity.class));
+                    finish();
+                    showToast(data.getMessage());
+                }
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
 }

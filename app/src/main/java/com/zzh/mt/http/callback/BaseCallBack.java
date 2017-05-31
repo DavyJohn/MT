@@ -1,4 +1,4 @@
-package com.zzh.mt.http;
+package com.zzh.mt.http.callback;
 
 import com.google.gson.internal.$Gson$Types;
 
@@ -38,4 +38,5 @@ public abstract class BaseCallBack<T> {
     public abstract void onError(Response response, int code, Exception e);
 
     public abstract void onResponse(Response response);
+
 }

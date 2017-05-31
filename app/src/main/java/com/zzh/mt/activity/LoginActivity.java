@@ -20,10 +20,17 @@ import com.squareup.picasso.Picasso;
 import com.zzh.mt.R;
 import com.zzh.mt.base.BaseActivity;
 import com.zzh.mt.base.MyApplication;
+import com.zzh.mt.http.callback.SpotsCallBack;
+import com.zzh.mt.mode.LoginData;
 import com.zzh.mt.utils.CommonUtil;
+import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.SharedPreferencesUtil;
+
+import java.util.LinkedHashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Response;
 
 /**
  * Created by 腾翔信息 on 2017/5/17.
@@ -51,14 +58,17 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.login_eye) void appearpwd(){
         isAppearPwd();
     }
-    @OnClick(R.id.login) void login(){
+    @OnClick(R.id.login) void log(){
         if (TextUtils.isEmpty(mEtUserName.getText().toString())){
             showMessageDialog("用户名不能为空！",mContext);
-        }else if (TextUtils.isEmpty(mEtPassword.getText().toString())){
+        }else if (!CommonUtil.isEmail(mEtUserName.getText().toString())){
+            showMessageDialog("输入的用户名格式不正确！",mContext);
+        } else if (TextUtils.isEmpty(mEtPassword.getText().toString())){
             showMessageDialog("密码不能为空！",mContext);
         }else {
-            startActivity(new Intent(mContext,MainActivity.class));
+            login();
         }
+
 
     }
 
@@ -107,9 +117,34 @@ public class LoginActivity extends BaseActivity {
         });
         //一开始就为秘闻显示
         isAppearPwd();
-
+        if (SharedPreferencesUtil.getInstance(mContext).getString("companyEmail") !=null && !TextUtils.isEmpty(SharedPreferencesUtil.getInstance(mContext).getString("companyEmail"))){
+            mEtUserName.setText(SharedPreferencesUtil.getInstance(mContext).getString("companyEmail"));
+        }
     }
 
+
+    private void login(){
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("companyEmail",mEtUserName.getText().toString());
+        map.put("password",mEtPassword.getText().toString());
+        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.LOGIN, map, TAG, new SpotsCallBack<LoginData>(mContext) {
+            @Override
+            public void onSuccess(Response response, LoginData data) {
+                    if (data.getCode().equals("200")){
+                        SharedPreferencesUtil.getInstance(mContext).putString("companyEmail",mEtUserName.getText().toString());
+                        SharedPreferencesUtil.getInstance(mContext).putString("userid",data.getUserId());
+                        startActivity(new Intent(mContext,MainActivity.class));
+                    }else {
+                        showMessageDialog(data.getMessage(),mContext);
+                    }
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
     @Override
     public int getLayoutId() {
         return R.layout.login_main_layout;

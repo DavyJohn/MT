@@ -17,6 +17,9 @@
         android:name=".base.MyApplication"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        //裁剪
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity"
+            android:screenOrientation="portrait"/>
         //bugly
         <activity
             android:name="com.tencent.bugly.beta.ui.BetaActivity"

@@ -49,4 +49,7 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.2.1'
 
     compile 'com.pgyersdk:sdk:2.5.6'
+
+    //裁剪
+    compile 'com.soundcloud.android:android-crop:1.0.1@aar'
 }
