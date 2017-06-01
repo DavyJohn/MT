@@ -21,6 +21,7 @@ import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
 import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.UserData;
+import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
 import com.zzh.mt.utils.ObserverUtils;
 import com.zzh.mt.utils.SharedPreferencesUtil;
@@ -80,10 +81,11 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
 
     private void initview(){
         mImage.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.imag_demo));
+        list.clear();
         for (int i=0;i<data.length;i++){
             list.add(data[i]);
         }
-        mName.setText(userData.getUserInfo().getChineseName());
+        mName.setText(userData.getUserInfo().getNickName());
         Picasso.with(mContext).load(userData.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mImage);
         mRecycler.setHasFixedSize(true);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -112,10 +114,10 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
                         holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getSex().equals("1")?"男":"女");
                         break;
                     case 5:
-                        holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getDepartment().getDepartmentName());
+                        holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getBirthday());
                         break;
                     case 6:
-                        holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getCreateTime());
+                        holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getEntryYear());
                         break;
                     case 7:
                         holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getCompanyEmail());
@@ -134,6 +136,10 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
     private void getInfo(){
         //个人资料
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("digest","");
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.GETUSER, map, TAG, new SpotsCallBack<UserData>(mContext) {
             @Override
@@ -150,6 +156,13 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
             }
         });
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getInfo();
+    }
+
     @Override
     public void onClick(View v) {
 

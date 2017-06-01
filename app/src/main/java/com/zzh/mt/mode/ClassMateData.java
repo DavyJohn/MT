@@ -57,9 +57,17 @@ public class ClassMateData {
         private String updateTime;
         private String haveClassHoursElective;
         private String haveClassHoursRequired;
-        private String department;
+        private Department department;
         private String validataCode;
         private String registerDate;
+
+        public Department getDepartment() {
+            return department;
+        }
+
+        public void setDepartment(Department department) {
+            this.department = department;
+        }
 
         public String getId() {
             return id;
@@ -221,14 +229,6 @@ public class ClassMateData {
             this.haveClassHoursRequired = haveClassHoursRequired;
         }
 
-        public String getDepartment() {
-            return department;
-        }
-
-        public void setDepartment(String department) {
-            this.department = department;
-        }
-
         public String getValidataCode() {
             return validataCode;
         }
@@ -243,6 +243,81 @@ public class ClassMateData {
 
         public void setRegisterDate(String registerDate) {
             this.registerDate = registerDate;
+        }
+
+        public class Department{
+            private String id;
+            private String departmentName;
+            private String code;
+            private String isDisabled;
+            private String creator;
+            private String updater;
+            private String create_time;
+            private String update_time;
+
+            public String getId() {
+                return id;
+            }
+
+            public void setId(String id) {
+                this.id = id;
+            }
+
+            public String getDepartmentName() {
+                return departmentName;
+            }
+
+            public void setDepartmentName(String departmentName) {
+                this.departmentName = departmentName;
+            }
+
+            public String getCode() {
+                return code;
+            }
+
+            public void setCode(String code) {
+                this.code = code;
+            }
+
+            public String getIsDisabled() {
+                return isDisabled;
+            }
+
+            public void setIsDisabled(String isDisabled) {
+                this.isDisabled = isDisabled;
+            }
+
+            public String getCreator() {
+                return creator;
+            }
+
+            public void setCreator(String creator) {
+                this.creator = creator;
+            }
+
+            public String getUpdater() {
+                return updater;
+            }
+
+            public void setUpdater(String updater) {
+                this.updater = updater;
+            }
+
+            public String getCreate_time() {
+                return create_time;
+            }
+
+            public void setCreate_time(String create_time) {
+                this.create_time = create_time;
+            }
+
+            public String getUpdate_time() {
+                return update_time;
+            }
+
+            public void setUpdate_time(String update_time) {
+                this.update_time = update_time;
+            }
         }
     }
 }

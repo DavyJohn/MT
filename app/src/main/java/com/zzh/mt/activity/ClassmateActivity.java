@@ -14,6 +14,7 @@ import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
 import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.ClassMateData;
+import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 import com.zzh.mt.widget.MysearchView;
@@ -60,8 +61,9 @@ public class ClassmateActivity extends BaseActivity {
         adapter = new CommonAdapter<ClassMateData.PersonListData>(mContext,R.layout.classmate_item_main_layout,list) {
             @Override
             protected void convert(ViewHolder holder, ClassMateData.PersonListData s, int position) {
-                holder.setText(R.id.class_en_name,s.getEnglishName());
+                holder.setText(R.id.class_en_name,s.getNickName());
                 holder.setText(R.id.class_china_name,s.getChineseName());
+                holder.setImageUrl(R.id.classmate_image,s.getHeadUrl());
                 if (position ==0 || list.get(position-1).equals(list.get(position))){
                     holder.setVisible(R.id.tv_index,true);
                     holder.setText(R.id.tv_index,index.get(position));
@@ -77,6 +79,7 @@ public class ClassmateActivity extends BaseActivity {
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                 Intent intent = new Intent(mContext,ClassmateInfoActivity.class);
                 intent.putExtra("name",list.get(position).getChineseName());
+                intent.putExtra("id",list.get(position).getId());
                 startActivity(intent);
             }
 
@@ -101,6 +104,10 @@ public class ClassmateActivity extends BaseActivity {
     }
     private void classmate(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("digest","");
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CLASSMATE, map, TAG, new SpotsCallBack<ClassMateData>(mContext) {
             @Override

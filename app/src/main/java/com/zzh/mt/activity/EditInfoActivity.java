@@ -4,6 +4,9 @@ import android.Manifest;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Build;
@@ -13,6 +16,7 @@ import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,22 +24,39 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.soundcloud.android.crop.Crop;
 import com.squareup.picasso.Picasso;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.Callback;
 import com.zhy.http.okhttp.callback.StringCallback;
 import com.zzh.mt.R;
 import com.zzh.mt.base.BaseActivity;
 import com.zzh.mt.base.MyApplication;
+import com.zzh.mt.http.callback.SpotsCallBack;
+import com.zzh.mt.mode.BaseData;
+import com.zzh.mt.mode.UpLoadData;
+import com.zzh.mt.utils.CommonUtil;
+import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.SharedPreferencesUtil;
 import com.zzh.mt.utils.TimeUtil;
 import com.zzh.mt.widget.CircleImageView;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.channels.FileChannel;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
+import okhttp3.Response;
 
 /**
  * Created by 腾翔信息 on 2017/5/25.
@@ -46,6 +67,7 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
     private static final String TAG = EditInfoActivity.class.getSimpleName();
     private String path = null;
     Dialog mCameraDialog;
+    File file = null;
     private Uri destinationUri;
     private String imageFilePath;
     private int isFirst  = 0 ;
@@ -55,8 +77,13 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
     EditText mNick;
     @BindView(R.id.edit_brand)
     EditText mBrand;
-    @BindView(R.id.edit_deparname)
-    EditText mDeparname;
+    @BindView(R.id.edit_info_header)
+    CircleImageView mImage;
+    @BindView(R.id.text_deparname)
+    TextView mDeparname;
+    @OnClick(R.id.deparname_layout) void click(){
+        startActivity(new Intent(mContext,DeparNameActivity.class));
+    }
     @OnClick(R.id.edit_info_image) void image(){
         //开启相机相册
         mCameraDialog = new Dialog(mContext, R.style.my_dialog);
@@ -81,9 +108,19 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
     }
     @OnClick(R.id.edit_save) void save(){
         //先上传再保存
+        if (TextUtils.isEmpty(mNick.getText().toString())){
+            showToast("昵称不能为空！");
+        }else if (TextUtils.isEmpty(mBrand.getText().toString())){
+            showToast("品牌不能为空！");
+        }else {
+           if (file == null){
+               s(getIntent().getStringExtra("headurl"));
+           }else {
+               upPhoto(file);
+           }
+
+        }
     }
-    @BindView(R.id.edit_info_header)
-    CircleImageView mImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,15 +131,41 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
     }
 
     private void initview(){
+//        if ( getIntent().getStringExtra("deparname") != null && !TextUtils.isEmpty(getIntent().getStringExtra("deparname"))){
+//            mDeparname.setText(getIntent().getStringExtra("deparname"));
+//        }
         path = getIntent().getStringExtra("headurl");
         mNick.setText(getIntent().getStringExtra("nickname"));
         mBrand.setText(getIntent().getStringExtra("brandname"));
-        mDeparname.setText(getIntent().getStringExtra("deparname"));
-        Picasso.with(mContext).load(R.drawable.imag_demo).placeholder(R.drawable.imag_demo).error(R.drawable.imag_demo).into(mImage);
+        Picasso.with(mContext).load(path).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mImage);
     }
     //保存
-    private void s(){
+    private void s(String path){
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("brandName",mBrand.getText().toString());
+        map.put("departmentId",Contants.Deparmentid);
+        map.put("headImageUrl",path);
+        map.put("nickname",mNick.getText().toString());
+        map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CHANGEINFO, map, TAG, new SpotsCallBack<BaseData>(mContext) {
+            @Override
+            public void onSuccess(Response response, BaseData data) {
+                if (data.getCode().equals("200")){
+                    Contants.Deparmentname = null;
+                    Contants.Deparmentid = null;
+                    finish();
+                    showToast(data.getMessage());
+                }else {
+                    showMessageDialog(data.getMessage(),mContext);
+                }
 
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
     }
     private void dispatchTakePictureIntent() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
@@ -178,7 +241,108 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
         imageFilePath = image.getAbsolutePath();
         return image;
     }
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        mCameraDialog.dismiss();
 
+        if (requestCode == TAKE_PHOTO && resultCode == RESULT_OK) {
+            Uri uri = Uri.fromFile(new File(imageFilePath));
+            Crop.of(uri,destinationUri).asSquare().start(this);
+        }else if (requestCode == Crop.REQUEST_CROP){
+            if (data != null){
+                path = CommonUtil.getRealFilePath(mContext,Crop.getOutput(data));
+                file = new File(path);
+
+                Uri uri = Uri.fromFile(new File(path));
+                mImage.setImageURI(uri);
+
+            }
+        }else if (requestCode == Crop.RESULT_ERROR){
+            showToast(Crop.getError(data).getMessage());
+        }else if (requestCode == REQUEST_CODE_IMAGE&& resultCode == RESULT_OK){
+            if (data != null){
+                Uri uri = data.getData();
+                Cursor cursor = mContext.getContentResolver().query(uri,null,null,null,null);
+                if (cursor != null && cursor.moveToFirst()){
+                    String path = cursor.getString(cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA));
+                    Uri chooseuri = Uri.fromFile(new File(path));
+                    //TODO 压缩就报空
+                    Uri inputuri = Uri.fromFile(scal(chooseuri,path));
+                    Crop.of(inputuri,destinationUri).asSquare().start(this);
+                }
+            }
+
+        }
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    //压缩图片
+    public  File scal(Uri fileUri,String imagepath){
+        String path = fileUri.getPath();
+        if (!TextUtils.isEmpty(path)){
+
+        }
+        File outputFile = new File(path);
+        long fileSize = outputFile.length();
+        final long fileMaxSize = 100 * 1024;
+        if (fileSize >= fileMaxSize) {
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(path, options);
+            int height = options.outHeight;
+            int width = options.outWidth;
+            double scale = Math.sqrt((float) fileSize / fileMaxSize);
+            options.outHeight = (int) (height / scale);
+            options.outWidth = (int) (width / scale);
+            options.inSampleSize = (int) (scale + 0.5);
+            options.inJustDecodeBounds = false;
+
+            Bitmap bitmap = BitmapFactory.decodeFile(path, options);
+            outputFile = new File(imagepath);//问题出在这 imagepath 不能写死
+            FileOutputStream fos = null;
+            try {
+                fos = new FileOutputStream(outputFile);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 50, fos);
+                fos.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+            //TODO 某些时候会报出异常但是可能不会影响app
+            if (!bitmap.isRecycled()) {
+                bitmap.recycle();
+            }else{
+                File tempFile = outputFile;
+                outputFile = new File(imagepath);//问题出在这 imagepath 不能写死
+                copyFileUsingFileChannels(tempFile, outputFile);
+            }
+
+        }
+        return outputFile;
+
+    }
+    public static void copyFileUsingFileChannels(File source, File dest){
+        FileChannel inputChannel = null;
+        FileChannel outputChannel = null;
+        try {
+            try {
+                inputChannel = new FileInputStream(source).getChannel();
+                outputChannel = new FileOutputStream(dest).getChannel();
+                outputChannel.transferFrom(inputChannel, 0, inputChannel.size());
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        } finally {
+            try {
+                inputChannel.close();
+                outputChannel.close();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
+    }
     private View.OnClickListener btnlistener = new View.OnClickListener() {
 
         @Override
@@ -211,9 +375,47 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
     protected void onStart() {
         super.onStart();
         destinationUri = Uri.fromFile(new File(getCacheDir(), TimeUtil.getData()+"cropimage"));
+        if (Contants.Deparmentname != null && !TextUtils.isEmpty(Contants.Deparmentname)){
+            mDeparname.setText(Contants.Deparmentname);
+        }
 
     }
 
+    private void upPhoto(File file){
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("digest","");
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        OkHttpUtils.post().addFile("file","android_head_image.png",file)
+                .url(Contants.BASEURL+Contants.UPLOAD).params(map).build().execute(new HeadCallBack() {
+            @Override
+            public void onError(Call call, Exception e, int id) {
+
+            }
+
+            @Override
+            public void onResponse(UpLoadData response, int id) {
+                if (response.getCode().equals("200")){
+                    Picasso.with(mContext).load(response.getHeadImageUrl()).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mImage);
+                    s(response.getHeadImageUrl());
+                }
+            }
+        });
+
+    }
+    private abstract  class HeadCallBack extends Callback<UpLoadData> {
+        @Override
+        public UpLoadData parseNetworkResponse(Response response, int id) throws Exception {
+            String string = response.body().string();
+            UpLoadData data = new Gson().fromJson(string,UpLoadData.class);
+            return data;
+        }
+
+
+
+    }
     @Override
     public int getLayoutId() {
         return R.layout.edit_info_layout;

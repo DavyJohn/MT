@@ -28,6 +28,7 @@ import com.pgyersdk.update.UpdateManagerListener;
 import com.squareup.picasso.Picasso;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.Callback;
+import com.zhy.http.okhttp.callback.StringCallback;
 import com.zzh.mt.R;
 import com.zzh.mt.base.BaseActivity;
 import com.zzh.mt.base.CommonAdapter;
@@ -36,6 +37,7 @@ import com.zzh.mt.base.ViewHolder;
 import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.BannerEntity;
 import com.zzh.mt.mode.BaseData;
+import com.zzh.mt.mode.UserData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
 import com.zzh.mt.utils.SharedPreferencesUtil;
@@ -58,10 +60,11 @@ public class MainActivity extends BaseActivity
     private ImageView mNavImage;
     private android.app.AlertDialog dialog;
     DrawerLayout drawer;
+    private UserData userData;
     ActionBarDrawerToggle toggle;
     private TextView mNickName,mInfo;
     private HeaderAndFooterWrapper mHeaderAndFooterWrapper;
-    private LinkedList<BannerEntity.Head> banners = new LinkedList<>();
+    private LinkedList<BannerEntity.ImageData> banners = new LinkedList<>();
     private CommonAdapter<Integer> adapter;
     private Integer[] imageData = {R.drawable.ic_menu_elective,R.drawable.ic_menu_data,R.drawable.main_item_data};
     private Integer[] data = {R.string.my_courde,R.string.class_schedule,R.string.Course_materials};
@@ -83,7 +86,7 @@ public class MainActivity extends BaseActivity
         }
         MyApplication.getInstance().add(this);
         ButterKnife.bind(this);
-
+        getInfo();
         //更新
         PgyUpdateManager.register(this, "com.zzh.mt.fileprovider", new UpdateManagerListener() {
             @Override
@@ -116,7 +119,6 @@ public class MainActivity extends BaseActivity
         //end
 
         hasToolBar(false);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
             getWindow().setStatusBarColor(Color.TRANSPARENT);
             getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
@@ -140,8 +142,8 @@ public class MainActivity extends BaseActivity
         navigationView.setItemIconTintList(null);//防止icon 为灰色
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
         mNavImage = (CircleImageView) headerLayout.findViewById(R.id.nav_header_image);
-        Picasso.with(mContext).load(R.drawable.imag_demo).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mNavImage);
         mInfo = (TextView) headerLayout.findViewById(R.id.nav_header_info);
+        mNickName = (TextView) headerLayout.findViewById(R.id.nav_header_nickname);
         mNavImage.setOnClickListener(this);
         mInfo.setOnClickListener(this);
         initRecycler();
@@ -224,13 +226,18 @@ public class MainActivity extends BaseActivity
 
     private void banner(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
-        mOkHttpHelper.post(mContext, Contants.BASEBANNERURL+Contants.BANNERURL, map, TAG, new
+        map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("digest","");
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
+        mOkHttpHelper.post(mContext, Contants.BASEURL+Contants.BANNERURL, map, TAG, new
                 SpotsCallBack<BannerEntity>(mContext) {
                     @Override
                     public void onSuccess(Response response, BannerEntity data) {
                         mSwipe.setRefreshing(false);
                         banners.clear();
-                        banners.addAll(data.getResult().getAd().getHead());
+                        banners.addAll(data.getImageList());
                         mBanner.delayTime(5).build(banners);
                     }
                     @Override
@@ -240,7 +247,34 @@ public class MainActivity extends BaseActivity
                 });
 
     }
+    //获取个人信息昵称头像
+    private void getInfo(){
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("digest","");
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.GETUSER, map, TAG, new SpotsCallBack<UserData>(mContext) {
+            @Override
+            public void onSuccess(Response response, UserData data) {
+                if (data.getCode().equals("200")){
+                    userData = data;
+                    Contants.Deparmentname = userData.getUserInfo().getDepartment().getDepartmentName();
+                    Contants.Deparmentid = userData.getUserInfo().getDepartmentId();
+                    Picasso.with(mContext).load(data.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mNavImage);
+                    mNickName.setText(data.getUserInfo().getNickName());
+                }else {
+                    showMessageDialog(data.getMessage(),mContext);
+                }
+            }
 
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
 
     @Override
     public int getLayoutId() {
@@ -253,7 +287,6 @@ public class MainActivity extends BaseActivity
             return true;
         }
         return super.onOptionsItemSelected(item);
-
     }
 
     @Override
@@ -312,11 +345,23 @@ public class MainActivity extends BaseActivity
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.nav_header_info:
-                startActivity(new Intent(mContext, EditInfoActivity.class));
+                Intent intent = new Intent(mContext,EditInfoActivity.class);
+                intent.putExtra("headurl",userData.getUserInfo().getHeadUrl());
+                intent.putExtra("nickname",userData.getUserInfo().getNickName());
+                intent.putExtra("brandname",userData.getUserInfo().getBrandName());
+//                intent.putExtra("deparname",userData.getUserInfo().getDepartment().getDepartmentName());
+                startActivity(intent);
                 break;
 
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getInfo();
+    }
+
     private void logout(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));

@@ -125,6 +125,10 @@ public class LoginActivity extends BaseActivity {
 
     private void login(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("digest","");
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
         map.put("companyEmail",mEtUserName.getText().toString());
         map.put("password",mEtPassword.getText().toString());
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.LOGIN, map, TAG, new SpotsCallBack<LoginData>(mContext) {

@@ -7,8 +7,8 @@ package com.zzh.mt.utils;
 public class Contants {
     //首页轮播url api
     public static final String BASEURL = "http://192.168.6.22:8080";
-    public static final String  BASEBANNERURL = "http://bangumi.bilibili.com/api/";
-    public static final String BANNERURL = "app_index_page_v4?build=3940&device=phone&mobi_app=iphone&platform=ios";
+    //查询轮播图列表
+    public static final String BANNERURL = "/mtms-gateway/appImage/getImage";
 
     //登录
     public static final String LOGIN = "/mtms-gateway/appUser/userLogin";
@@ -24,5 +24,14 @@ public class Contants {
     public static final String GETUSER = "/mtms-gateway/appUser/getUserById";
     //查询我的同期学员列表
     public static final String CLASSMATE = "/mtms-gateway/appUser/getClassmate";
+    //上传图片
+    public static final String UPLOAD = "/mtms-gateway/appUser/upload";
+    //查询部门列表
+    public static final String DEPARTMENTLIST = "/mtms-gateway/appUser/departmentList";
+
+
+    //编辑界面
+    public static String Deparmentid = null;
+    public static String Deparmentname = null;
     public static int LANGUAGENEM = 0;
 }

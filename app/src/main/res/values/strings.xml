@@ -37,4 +37,5 @@
     <string name="my_schedule">我的日程</string>
     <string name="email_address">请输入您的邮箱地址</string>
     <string name="forget_pass">忘记密码</string>
+    <string name="depar_name">部门列表</string>
 </resources>

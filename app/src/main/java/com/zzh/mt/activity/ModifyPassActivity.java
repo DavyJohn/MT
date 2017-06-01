@@ -13,6 +13,7 @@ import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.BaseData;
 import com.zzh.mt.mode.UserData;
+import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 
@@ -62,6 +63,10 @@ public class ModifyPassActivity extends BaseActivity {
         //个人资料
 
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("digest","");
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
         map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.GETUSER, map, TAG, new SpotsCallBack<UserData>(mContext) {
             @Override
@@ -80,6 +85,10 @@ public class ModifyPassActivity extends BaseActivity {
     }
     private void modpass(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("digest","");
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
         map.put("newPassword",mNewPass.getText().toString());
         map.put("oldPassword",mOldPassword.getText().toString());
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));

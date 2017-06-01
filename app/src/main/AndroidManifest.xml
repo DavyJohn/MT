@@ -94,7 +94,8 @@
             android:configChanges="locale"/>
         <activity android:name=".activity.GroupActivity"
             android:configChanges="locale"/>
-
+        <activity android:name=".activity.DeparNameActivity"
+            android:configChanges="locale"/>
 
 
 
