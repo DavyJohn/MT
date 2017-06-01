@@ -40,6 +40,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="4月2日——4月15日"
+                android:id="@+id/class_time"
                 android:textColor="#333"
                 android:textSize="20sp" />
         </LinearLayout>

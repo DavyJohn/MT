@@ -331,9 +331,7 @@ public class MainActivity extends BaseActivity
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_exit) {
-          //退出
             logout();
-
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -349,7 +347,6 @@ public class MainActivity extends BaseActivity
                 intent.putExtra("headurl",userData.getUserInfo().getHeadUrl());
                 intent.putExtra("nickname",userData.getUserInfo().getNickName());
                 intent.putExtra("brandname",userData.getUserInfo().getBrandName());
-//                intent.putExtra("deparname",userData.getUserInfo().getDepartment().getDepartmentName());
                 startActivity(intent);
                 break;
 

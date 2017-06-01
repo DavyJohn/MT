@@ -28,8 +28,9 @@ public class Contants {
     public static final String UPLOAD = "/mtms-gateway/appUser/upload";
     //查询部门列表
     public static final String DEPARTMENTLIST = "/mtms-gateway/appUser/departmentList";
-
-
+    //查询我的课时目标
+    public static final String CLASSGOALS = "/mtms-gateway/appCurriculum/queryClassGoals";
+    //
     //编辑界面
     public static String Deparmentid = null;
     public static String Deparmentname = null;
