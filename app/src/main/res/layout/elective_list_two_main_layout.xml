@@ -14,6 +14,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/imag_demo"
+            android:id="@+id/elective_two_image"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"/>
         <LinearLayout
@@ -40,14 +41,16 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/my_elective_recycler_item_date"/>
+
                 <TextView
+                    android:id="@+id/elective_two_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2天"
                     android:layout_gravity="center"
-                    android:textSize="20sp"
                     android:layout_marginLeft="10dp"
-                    android:textColor="#6c6c6c"/>
+                    android:text="2天"
+                    android:textColor="#6c6c6c"
+                    android:textSize="20sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -58,11 +61,13 @@
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:id="@+id/elective_change"
                     android:layout_height="42dp"
                     android:src="@drawable/change_sel"/>
                 <ImageView
                     android:layout_width="0dp"
                     android:layout_weight="1"
+                    android:id="@+id/elective_cancel"
                     android:layout_height="42dp"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/cancel_sel"/>

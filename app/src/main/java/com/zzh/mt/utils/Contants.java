@@ -6,7 +6,7 @@ package com.zzh.mt.utils;
 
 public class Contants {
     //首页轮播url api
-    public static final String BASEURL = "http://192.168.6.22:8080";
+    public static final String BASEURL = "http://192.168.6.17:8802";
     //查询轮播图列表
     public static final String BANNERURL = "/mtms-gateway/appImage/getImage";
 
@@ -30,7 +30,16 @@ public class Contants {
     public static final String DEPARTMENTLIST = "/mtms-gateway/appUser/departmentList";
     //查询我的课时目标
     public static final String CLASSGOALS = "/mtms-gateway/appCurriculum/queryClassGoals";
-    //
+    //查询已选课程列表
+    public static final String CurriculumChoice = "/mtms-gateway/appCurriculum/getCurriculumChoice";
+    //查询可选选修课程列表
+    public static final String CurriculumNoChoice = "/mtms-gateway/appCurriculum/getCurriculumNoChoice";
+    //查询课程详情
+    public static final String CurriculumDetails= "/mtms-gateway/appCurriculum/getCurriculumDetails";
+    //查询课程培训场次
+    public static final String CoursesTrainingSessions= "/mtms-gateway/appCurriculum/queryCoursesTrainingSessions";
+    //修改课程培训场次
+    public static final String CurriculumNo = "/mtms-gateway/appCurriculum/editCurriculumNo";
     //编辑界面
     public static String Deparmentid = null;
     public static String Deparmentname = null;

@@ -15,6 +15,7 @@ import android.widget.Toast;
 
 import com.zzh.mt.base.MyApplication;
 
+import java.math.BigDecimal;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Matcher;
@@ -106,5 +107,12 @@ public class CommonUtil {
     }
     public static String android_id(Context context){
         return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+
+    //double 相加
+    public static Double add(Double v1,Double v2){
+        BigDecimal b1 = new BigDecimal(v1.toString());
+        BigDecimal b2 = new BigDecimal(v2.toString());
+        return b1.add(b2).doubleValue();
     }
 }

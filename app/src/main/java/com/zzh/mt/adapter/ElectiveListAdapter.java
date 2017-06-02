@@ -6,8 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.zzh.mt.R;
+import com.zzh.mt.mode.CoursesTrainingSessionsData;
+
+import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,13 +25,18 @@ import butterknife.ButterKnife;
 public class ElectiveListAdapter extends RecyclerView.Adapter<ElectiveListAdapter.ViewHolder> {
     private Context context;
     private LayoutInflater inflater;
+    private LinkedList<CoursesTrainingSessionsData.CourseNoListData> list = new LinkedList<>();
     public ElectiveListAdapter(Context context){
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
 
-    private int index;
-
+    private int index = -1;
+    public void addData(LinkedList<CoursesTrainingSessionsData.CourseNoListData> datas){
+        list.clear();
+        list.addAll(datas);
+        notifyDataSetChanged();
+    }
     public void addPostion(int postion){
         index = postion;
         notifyDataSetChanged();
@@ -41,12 +52,23 @@ public class ElectiveListAdapter extends RecyclerView.Adapter<ElectiveListAdapte
 
     @Override
     public void onBindViewHolder(final ElectiveListAdapter.ViewHolder holder, final int position) {
-        holder.mBox.setClickable(false);
-        if (position == index){
-            holder.mBox.setChecked(true);
-        }else {
-            holder.mBox.setChecked(false);
+
+        holder.mTime.setText(list.get(position).getAttendTime().substring(0,10));
+        holder.mNum.setText(list.get(position).getRemainingSeats());
+        if (list.get(position).getIsSelected().equals("0")){
+            Picasso.with(context).load(R.drawable.un_checkbox).into(holder.mBox);
+        }else if (list.get(position).getIsSelected().equals("1")){
+            Picasso.with(context).load(R.drawable.sel_checkbox).into(holder.mBox);
         }
+        if ( index != -1){
+            if (position == index ) {
+                Picasso.with(context).load(R.drawable.sel_checkbox).into(holder.mBox);
+            }else {
+                Picasso.with(context).load(R.drawable.un_checkbox).into(holder.mBox);
+            }
+        }
+
+
         if (onClickItemListener!= null){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -59,19 +81,24 @@ public class ElectiveListAdapter extends RecyclerView.Adapter<ElectiveListAdapte
 
     @Override
     public int getItemCount() {
-        return 5;
+        return list.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.elective_checkbox)
-        CheckBox mBox;
+        ImageView mBox;
+        @BindView(R.id.elective_list_two_item_date)
+        TextView mTime;
+        @BindView(R.id.elective_list_two_item_num)
+        TextView mNum;
+
         public ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }
     }
     public interface OnClickItemListener{
-        void onClickItem(View itemview,CheckBox view, int postion);
+        void onClickItem(View itemview,ImageView view, int postion);
     }
 
     public ElectiveListAdapter.OnClickItemListener onClickItemListener;

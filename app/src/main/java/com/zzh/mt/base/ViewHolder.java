@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
+import com.zzh.mt.R;
 
 /**
  * Created by 腾翔信息 on 2017/5/11.
@@ -127,7 +128,7 @@ public class ViewHolder extends RecyclerView.ViewHolder
     public ViewHolder setImageUrl(int viewId,String url)
     {
         view = getView(viewId);
-        Picasso.with(mContext).load(url).config(Bitmap.Config.RGB_565).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).transform(transformation).into(view);
+        Picasso.with(mContext).load(url).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).config(Bitmap.Config.RGB_565).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).transform(transformation).into(view);
         return this;
     }
 
