@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Apr 4,AM 09:00"
+                android:id="@+id/group_start"
                 android:textSize="20sp"
                 android:textColor="#333"/>
         </LinearLayout>
@@ -46,7 +46,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Apr 4,AM 11:00"
+                android:id="@+id/group_end"
                 android:textSize="20sp"
                 android:textColor="#333"/>
         </LinearLayout>

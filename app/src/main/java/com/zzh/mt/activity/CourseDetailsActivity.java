@@ -61,30 +61,35 @@ public class CourseDetailsActivity extends BaseActivity {
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CurriculumDetails, map, TAG, new SpotsCallBack<CourseInfoData>(mContext) {
             @Override
             public void onSuccess(Response response, CourseInfoData data) {
-                Picasso.with(mContext).load(data.getCourseInfo().getPictureUrl()).into(mImage);
-                mTextTitle.setText(data.getCourseInfo().getChineseName());
-                mIntroduce.setText(data.getCourseInfo().getIntroduce());
-                if (data.getCourseInfo().getCurriculumNo() != null){
-                    findViewById(R.id.courrse_details_layout).setVisibility(View.VISIBLE);
-                    if (data.getCourseInfo().getCurriculumNo().getClassHours() == null){
-                        mCdc.setText("");
+                if (data.getCode().equals("200")){
+                    Picasso.with(mContext).load(data.getCourseInfo().getPictureUrl()).into(mImage);
+                    mTextTitle.setText(data.getCourseInfo().getChineseName());
+                    mIntroduce.setText(data.getCourseInfo().getIntroduce());
+                    if (data.getCourseInfo().getCurriculumNo() != null){
+                        findViewById(R.id.courrse_details_layout).setVisibility(View.VISIBLE);
+                        if (data.getCourseInfo().getCurriculumNo().getClassHours() == null){
+                            mCdc.setText("");
+                        }else {
+                            mCdc.setText(data.getCourseInfo().getCurriculumNo().getClassHours()+"天");
+                        }
+                        if (data.getCourseInfo().getCurriculumNo().getAttendPlace() == null){
+                            mCdw.setText("");
+                        }else {
+                            mCdw.setText(data.getCourseInfo().getCurriculumNo().getAttendPlace());
+                        }
+                        if (data.getCourseInfo().getCurriculumNo().getAttendTime() == null){
+                            mCdd.setText("");
+                        }else {
+                            mCdd.setText(data.getCourseInfo().getCurriculumNo().getAttendTime().substring(0,10));
+                        }
                     }else {
-                        mCdc.setText(data.getCourseInfo().getCurriculumNo().getClassHours()+"天");
-                    }
-                    if (data.getCourseInfo().getCurriculumNo().getAttendPlace() == null){
-                        mCdw.setText("");
-                    }else {
-                        mCdw.setText(data.getCourseInfo().getCurriculumNo().getAttendPlace());
-                    }
-                    if (data.getCourseInfo().getCurriculumNo().getAttendTime() == null){
-                        mCdd.setText("");
-                    }else {
-                        mCdd.setText(data.getCourseInfo().getCurriculumNo().getAttendTime().substring(0,10));
+                        //消失课程信息
+                        findViewById(R.id.courrse_details_layout).setVisibility(View.GONE);
                     }
                 }else {
-                    //消失课程信息
-                    findViewById(R.id.courrse_details_layout).setVisibility(View.GONE);
+                    showMessageDialog(data.getMessage(),mContext);
                 }
+
             }
 
             @Override

@@ -40,6 +40,16 @@ public class Contants {
     public static final String CoursesTrainingSessions= "/mtms-gateway/appCurriculum/queryCoursesTrainingSessions";
     //修改课程培训场次
     public static final String CurriculumNo = "/mtms-gateway/appCurriculum/editCurriculumNo";
+    //查询已选场次列表
+    public static final String CurriculumNoByUserId = "/mtms-gateway/appCurriculum/getCurriculumNoByUserId";
+    //查询课程活动安排
+    public static final String CourseActivityArrangement = "/mtms-gateway/appActivity/queryCourseActivityArrangement";
+    //查询活动备注
+    public static final String AppRemarksByGroupId = "/mtms-gateway/appRemarks/getAppRemarksByGroupId";
+    //修改活动备注
+    public static final String ReditRemarks ="/mtms-gateway/appRemarks/editRemarks";
+    //查询所属小组活动信息
+    public static final String GroupActivityInformation = "/mtms-gateway/appActivity/queryGroupActivityInformation";
     //编辑界面
     public static String Deparmentid = null;
     public static String Deparmentname = null;

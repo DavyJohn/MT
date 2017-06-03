@@ -29,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#333"
                 android:textSize="20sp"
-                android:text="AM 09:00"
+                android:id="@+id/my_remarks_time"
                 android:layout_gravity="center"/>
         </LinearLayout>
 
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#333"
                 android:textSize="20sp"
-                android:text="javascript基础"
+                android:id="@+id/my_remarks_title"
                 android:layout_gravity="center"/>
         </LinearLayout>
 

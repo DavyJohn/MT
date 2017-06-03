@@ -43,6 +43,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="19sp"
                     android:text="已修:3/10"
+                    android:id="@+id/schedule_required"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textColor="#6c6c6c"/>
@@ -89,6 +90,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="19sp"
                     android:text="已修:4/10"
+                    android:id="@+id/schedule_elective"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textColor="#6c6c6c"/>
