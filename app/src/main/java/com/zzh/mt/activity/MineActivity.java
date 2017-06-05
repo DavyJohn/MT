@@ -74,6 +74,12 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
         super.onCreate(savedInstanceState);
         getToolBar().setTitle(getString(R.string.my_info));
         MyApplication.getInstance().add(this);
+        mRecycler.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setSmoothScrollbarEnabled(true);
+        mRecycler.setLayoutManager(layoutManager);
+        mRecycler.setNestedScrollingEnabled(false);
+        mRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
         preferences = getSharedPreferences("lang", Context.MODE_PRIVATE);
         editor = preferences.edit();
         getInfo();
@@ -86,13 +92,12 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
             list.add(data[i]);
         }
         mName.setText(userData.getUserInfo().getNickName());
-        Picasso.with(mContext).load(userData.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mImage);
-        mRecycler.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        layoutManager.setSmoothScrollbarEnabled(true);
-        mRecycler.setLayoutManager(layoutManager);
-        mRecycler.setNestedScrollingEnabled(false);
-        mRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
+        if (userData.getUserInfo().getSex().equals("1")){
+            Picasso.with(mContext).load(userData.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_b).error(R.drawable.image_b).into(mImage);
+        }else {
+            Picasso.with(mContext).load(userData.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_g).error(R.drawable.image_g).into(mImage);
+        }
+
         adapter = new CommonAdapter<String>(mContext,R.layout.classmate_info_item_main_layout,list) {
             @Override
             protected void convert(ViewHolder holder, String s, int position) {
@@ -117,7 +122,7 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
                         holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getBirthday());
                         break;
                     case 6:
-                        holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getEntryYear());
+                        holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getEntryYear().substring(0,4));
                         break;
                     case 7:
                         holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getCompanyEmail());

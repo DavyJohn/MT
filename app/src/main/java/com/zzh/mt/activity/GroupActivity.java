@@ -37,7 +37,7 @@ public class GroupActivity extends BaseActivity {
         intent.putExtra("courseNoId",getIntent().getStringExtra("courseNoId"));
         intent.putExtra("activityTypeName",getIntent().getStringExtra("activityTypeName"));
         intent.putExtra("time",getIntent().getStringExtra("time"));
-        intent.putExtra("name",getIntent().getStringExtra("Course"));
+        intent.putExtra("name",getIntent().getStringExtra("name"));
         startActivity(intent);
     }
     CommonAdapter<GroupActivityInformation.personListData> adapter ;
@@ -48,6 +48,8 @@ public class GroupActivity extends BaseActivity {
     TextView mEnd;
     @BindView(R.id.group_recycler)
     RecyclerView mRecycler;
+    @BindView(R.id.group_remark)
+    TextView mTextmRenark;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +65,7 @@ public class GroupActivity extends BaseActivity {
         adapter = new CommonAdapter<GroupActivityInformation.personListData>(mContext,R.layout.group_item_layout,list) {
             @Override
             protected void convert(ViewHolder holder, GroupActivityInformation.personListData s, int position) {
-                holder.setText(R.id.group_iten_name,s.getNickName());
+                holder.setText(R.id.group_iten_name,"-"+s.getNickName());
             }
         };
         mRecycler.setAdapter(adapter);
@@ -82,8 +84,9 @@ public class GroupActivity extends BaseActivity {
                 if (data.getCode().equals("200")){
                     list.clear();
                     list.addAll(data.getPersonList());
-                    mStart.setText(data.getRemarks().getStartTime());
-                    mEnd.setText(data.getRemarks().getEndTime());
+                    mStart.setText(getIntent().getStringExtra("time"));
+                    mEnd.setText(getIntent().getStringExtra("endtime"));
+                    mTextmRenark.setText(data.getRemarks().getInformation());
                     initview();
                 }else {
                     showMessageDialog(data.getMessage(),mContext);

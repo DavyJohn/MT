@@ -3,6 +3,7 @@ package com.zzh.mt.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.PasswordTransformationMethod;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -61,6 +62,9 @@ public class ModifyPassActivity extends BaseActivity {
 
     private void initview(){
         //个人资料
+        mOldPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        mNewPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        mSecNewPass.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
@@ -72,7 +76,7 @@ public class ModifyPassActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, UserData data) {
                 if (data.getCode().equals("200")){
-                    mNickName.setText(data.getUserInfo().getCompanyEmail());
+                    mNickName.setText(data.getUserInfo().getNickName());
                 }
             }
 

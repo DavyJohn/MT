@@ -19,10 +19,13 @@ import com.zzh.mt.mode.CourseActivityArrangement;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
 import com.zzh.mt.utils.SharedPreferencesUtil;
+import com.zzh.mt.utils.StringUtils;
 import com.zzh.mt.widget.DividerItemDecoration;
 
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -40,11 +43,14 @@ public class ScheduleDateActivity extends BaseActivity {
     TextView mDate;
     @BindView(R.id.schedule_date_recycler)
     RecyclerView mRecycler;
+    LinkedList<String> listData = new LinkedList<>();
     @OnClick(R.id.schedule_left) void sub (){
         showToast("－1");
+        getInfo();
     }
     @OnClick(R.id.schedule_right) void add(){
         showToast("＋1");
+        getInfo();
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,25 +58,29 @@ public class ScheduleDateActivity extends BaseActivity {
         MyApplication.getInstance().add(this);
         getToolBar().setTitle(getIntent().getStringExtra("Course"));
         getInfo();
+        initview();
     }
 
     private void initview(){
-
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRecycler.setHasFixedSize(true);
         mRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
         adapter = new CommonAdapter<CourseActivityArrangement.activityListData>(mContext,R.layout.schedule_date_recycler_item_layout,list) {
             @Override
             protected void convert(ViewHolder holder, final CourseActivityArrangement.activityListData s, final int position) {
-                holder.setText(R.id.schedule_date_item_time,s.getStartTime());
+                holder.setText(R.id.schedule_date_item_time,s.getStartTime().substring(0,10));
                 holder.setText(R.id.schedule_date_item_title,s.getGroupName());
                 //设置小组颜色 和 备注图标
                 if (s.getGroupId() == null || TextUtils.isEmpty(s.getGroupId())){
                     //普通
                     holder.setVisible(R.id.group_view,false);
                     holder.setVisible(R.id.schedule_date_remarks_image,true);
+                    if (s.getHasRemark().equals("1")){
+                        holder.setVisible(R.id.schedule_date_remarks_show_image,true);
+                    }
                 }else {
                     //小组活动
+                    holder.setVisible(R.id.schedule_date_remarks_show_image,false);
                     holder.setVisible(R.id.schedule_date_remarks_image,false);
                     holder.setVisible(R.id.group_view,true);
                 }
@@ -132,8 +142,28 @@ public class ScheduleDateActivity extends BaseActivity {
             public void onSuccess(Response response, CourseActivityArrangement data) {
                 if (data.getCode().equals("200")){
                     list.clear();
+                    listData.clear();
                     list.addAll(data.getActivityList());
-                    initview();
+                    if (list.size() != 0){
+                        for (int i=0;i<list.size();i++){
+                            listData.add(data.getActivityList().get(i).getStartTime().substring(0,10));
+                        }
+                        Set<String> set = new LinkedHashSet<String>();
+                        set.addAll(listData);
+                        listData.clear();
+                        listData.addAll(set);
+                        for (int m=0;m<listData.size();m++){
+                            if (listData.get(m).equals(CommonUtil.getData())){
+                                mDate.setText(listData.get(m));
+                                break;
+                            }else {
+                                mDate.setText(listData.get(0));
+                            }
+                        }
+
+                    }
+                    adapter.notifyDataSetChanged();
+//                    initview();
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
                 }

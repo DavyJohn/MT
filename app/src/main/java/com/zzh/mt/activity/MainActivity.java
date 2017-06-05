@@ -119,10 +119,10 @@ public class MainActivity extends BaseActivity
         //end
 
         hasToolBar(false);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
+//            getWindow().setStatusBarColor(Color.TRANSPARENT);
+//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//        }
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
@@ -219,10 +219,7 @@ public class MainActivity extends BaseActivity
                 banner();
             }
         });
-
-
     }
-
 
     private void banner(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
@@ -262,7 +259,11 @@ public class MainActivity extends BaseActivity
                     userData = data;
                     Contants.Deparmentname = userData.getUserInfo().getDepartment().getDepartmentName();
                     Contants.Deparmentid = userData.getUserInfo().getDepartmentId();
-                    Picasso.with(mContext).load(data.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mNavImage);
+                    if (userData.getUserInfo().getSex().equals("1")){
+                        Picasso.with(mContext).load(data.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_b).error(R.drawable.image_b).into(mNavImage);
+                    }else {
+                        Picasso.with(mContext).load(data.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_g).error(R.drawable.image_g).into(mNavImage);
+                    }
                     mNickName.setText(data.getUserInfo().getNickName());
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
@@ -331,7 +332,7 @@ public class MainActivity extends BaseActivity
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_exit) {
-            logout();
+            quite("确认退出？",mContext);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -359,24 +360,5 @@ public class MainActivity extends BaseActivity
         getInfo();
     }
 
-    private void logout(){
-        LinkedHashMap<String,String> map = new LinkedHashMap<>();
-        map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
-        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.LOGOUT, map, TAG, new SpotsCallBack<BaseData>(mContext) {
-            @Override
-            public void onSuccess(Response response, BaseData data) {
-                if (data.getCode().equals("200")){
-                    startActivity(new Intent(mContext,LoginActivity.class));
-                    finish();
-                    showToast(data.getMessage());
-                }
 
-            }
-
-            @Override
-            public void onError(Response response, int code, Exception e) {
-
-            }
-        });
-    }
 }

@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.text.util.Linkify;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
@@ -125,10 +126,25 @@ public class ViewHolder extends RecyclerView.ViewHolder
         view.setImageBitmap(bitmap);
         return this;
     }
-    public ViewHolder setImageUrl(int viewId,String url)
+    public ViewHolder setImageUrl(int viewId,String url,String sex)
     {
         view = getView(viewId);
-        Picasso.with(mContext).load(url).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).config(Bitmap.Config.RGB_565).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).transform(transformation).into(view);
+        if (sex.equals("1")){
+            if (url == null || TextUtils.isEmpty(url)){
+                Picasso.with(mContext).load(R.drawable.image_b).into(view);
+            }else {
+                Picasso.with(mContext).load(url).placeholder(R.drawable.image_b).error(R.drawable.image_b).config(Bitmap.Config.RGB_565).transform(transformation).into(view);
+            }
+        }else if (sex.equals("0")){
+            if (url == null || TextUtils.isEmpty(url)){
+                Picasso.with(mContext).load(R.drawable.image_g).into(view);
+            }else {
+                Picasso.with(mContext).load(url).placeholder(R.drawable.image_g).error(R.drawable.image_g).config(Bitmap.Config.RGB_565).transform(transformation).into(view);
+            }
+        }else if (sex.equals("2")){
+            Picasso.with(mContext).load(url).placeholder(R.drawable.imag_demo).error(R.drawable.imag_demo).config(Bitmap.Config.RGB_565).transform(transformation).into(view);
+
+        }
         return this;
     }
 

@@ -30,14 +30,16 @@
 
 
 
-    <string name="open_class">q</string>
-    <string name="edit_menu">qw</string>
-    <string name="remarks_menu_complete">e</string>
-    <string name="my_obligatory">r</string>
-    <string name="all_check">t</string>
-    <string name="downing">y</string>
-    <string name="down">u</string>
-    <string name="my_schedule">i</string>
-    <string name="email_address">o</string>
-    <string name="forget_pass">p</string>
+    <string name="open_class">Open</string>
+    <string name="edit_menu">Edit</string>
+    <string name="remarks_menu_complete">Complete</string>
+    <string name="my_obligatory">Obligatory</string>
+    <string name="all_check">All</string>
+    <string name="downing">Confirm</string>
+    <string name="down">Load</string>
+    <string name="my_schedule">Schedule</string>
+    <string name="email_address">Address</string>
+    <string name="forget_pass">Forget Password</string>
+    <string name="elective_data">Elective</string>
+    <string name="my_class">My Class</string>
 </resources>

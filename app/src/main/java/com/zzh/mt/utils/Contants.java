@@ -50,8 +50,14 @@ public class Contants {
     public static final String ReditRemarks ="/mtms-gateway/appRemarks/editRemarks";
     //查询所属小组活动信息
     public static final String GroupActivityInformation = "/mtms-gateway/appActivity/queryGroupActivityInformation";
+    //查询课程资料列表
+    public static final String getCoursewareById = "/mtms-gateway/appCurriculum/getCoursewareById";
+    //查询我的备注列表
+    public static final String AppRemarks = "/mtms-gateway/appRemarks/getAppRemarks";
+
     //编辑界面
     public static String Deparmentid = null;
     public static String Deparmentname = null;
+    //语言问题
     public static int LANGUAGENEM = 0;
 }

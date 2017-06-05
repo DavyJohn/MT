@@ -38,4 +38,6 @@
     <string name="email_address">请输入您的邮箱地址</string>
     <string name="forget_pass">忘记密码</string>
     <string name="depar_name">部门列表</string>
+    <string name="elective_data">选修列表</string>
+    <string name="my_class">我的选课</string>
 </resources>

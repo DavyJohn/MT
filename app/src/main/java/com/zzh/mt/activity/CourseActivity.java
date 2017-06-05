@@ -68,13 +68,22 @@ public class CourseActivity extends BaseActivity {
             @Override
             protected void convert(ViewHolder holder, final CurriculumData.Curriculum s, final int position) {
                 holder.setText(R.id.elevtive_date,s.getClassHours()+"天");
-                holder.setText(R.id.course_name,s.getChineseName());
-                holder.setImageUrl(R.id.courrse_image,s.getPictureUrl());
+                if (Contants.LANGUAGENEM == 0){
+                    holder.setText(R.id.course_name,s.getChineseName());
+                }else if (Contants.LANGUAGENEM == 1){
+                    holder.setText(R.id.course_name,s.getEnglishName());
+                }
+
+                holder.setImageUrl(R.id.courrse_image,s.getPictureUrl(),"2");
                 holder.setOnClickListener(R.id.elevtive_recycler_item_detail, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext,CourseDetailsActivity.class);
-                        intent.putExtra("Course",s.getChineseName());
+                        if (Contants.LANGUAGENEM == 0){
+                            intent.putExtra("Course",s.getChineseName());
+                        }else if (Contants.LANGUAGENEM == 1){
+                            intent.putExtra("Course",s.getEnglishName());
+                        }
                         intent.putExtra("courseId",s.getId());
                         startActivity(intent);
 
@@ -112,8 +121,8 @@ public class CourseActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, ClassTimeData data) {
                 if (data.getCode().equals("200")){
-                    int sumtotal = Integer.parseInt(data.getTotalClassHoursElective())+Integer.parseInt(data.getTotalClassHoursRequired());
-                    int sunhave = Integer.parseInt(data.getHaveClassHoursElective())+Integer.parseInt(data.getHaveClassHoursRequired());
+                    int sumtotal = Integer.parseInt(data.getTotalClassHoursElective());
+                    int sunhave = Integer.parseInt(data.getHaveClassHoursElective());
                     item.setTitle("已修："+sunhave+"/"+sumtotal);
                     mTextTime.setText(data.getStartTime().substring(6,7)+"月"+data.getStartTime().substring(8,10)+"日"+"——"+data.getEndTime().substring(6,7)+"月"+data.getEndTime().substring(8,10)+"日");
                 }else {

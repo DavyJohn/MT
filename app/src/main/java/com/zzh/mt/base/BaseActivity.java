@@ -20,7 +20,12 @@ import android.widget.Toast;
 
 
 import com.zzh.mt.R;
+import com.zzh.mt.activity.LoginActivity;
+import com.zzh.mt.activity.MainActivity;
 import com.zzh.mt.http.OkHttpHelper;
+import com.zzh.mt.http.callback.SpotsCallBack;
+import com.zzh.mt.mode.BaseData;
+import com.zzh.mt.utils.Contants;
 import com.zzh.mt.utils.ObserverUtils;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 
@@ -76,6 +81,11 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
         SharedPreferences preferences = getSharedPreferences("lang", Context.MODE_PRIVATE);
         String sta = preferences.getString("lang", "zh");//这是SharedPreferences工具类，用于保存设置，代码很简单，自己实现吧
         // 本地语言设置
+        if (sta.equals("zh")){
+            Contants.LANGUAGENEM = 0;
+        }else if (sta.equals("en")){
+            Contants.LANGUAGENEM = 1;
+        }
         Locale myLocale = new Locale(sta);
         Resources res = getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
@@ -205,6 +215,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //退出接口
+                        logout();
+                        dialog.dismiss();
 
                     }
                 }).create();
@@ -232,5 +244,27 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
         ObserverUtils.getInstance().deleteObserver(this);
         unbinder.unbind();
     }
+    private void logout(){
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.LOGOUT, map, TAG, new SpotsCallBack<BaseData>(mContext) {
+            @Override
+            public void onSuccess(Response response, BaseData data) {
+                if (data.getCode().equals("200")){
+                    SharedPreferencesUtil.getInstance(mContext).putString("userid","");
+                    Intent intent = new Intent(mContext,MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|
+                            Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK );
+                    startActivity(intent);
+                    finish();
+                }
 
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
 }

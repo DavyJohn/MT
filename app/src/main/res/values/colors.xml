@@ -4,7 +4,10 @@
     <color name="colorPrimary">#F4B335</color>
     //修改状态栏颜色
     <color name="colorPrimaryDark">#D2F557</color>
+
     <color name="colorAccent">#FF4081</color>
+
+
     <color name="black">#000</color>
     <color name="main_color">#D2F557</color>
     <color name="toolbarTextColor">#fff</color>

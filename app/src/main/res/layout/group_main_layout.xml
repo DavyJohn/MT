@@ -69,6 +69,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Note"
+            android:id="@+id/group_remark"
             android:textColor="#6c6c6c"/>
     </LinearLayout>
     <LinearLayout

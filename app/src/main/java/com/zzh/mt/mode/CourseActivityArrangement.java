@@ -52,6 +52,15 @@ public class CourseActivityArrangement {
         private String activityTypeName;
         private String groupId;
         private String updatrt;
+        private String hasRemark;
+
+        public String getHasRemark() {
+            return hasRemark;
+        }
+
+        public void setHasRemark(String hasRemark) {
+            this.hasRemark = hasRemark;
+        }
 
         public String getId() {
             return id;

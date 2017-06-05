@@ -97,9 +97,10 @@ public class MyRemarksTwoActivity extends BaseActivity {
             map.put("operation","c");
         }else {
             map.put("operation","u");
+            map.put("remarkId",remarkId);
         }
         map.put("remark",mEtText.getText().toString());
-        map.put("remarkId",remarkId);
+
         map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.ReditRemarks, map, TAG, new SpotsCallBack<BaseData>(mContext) {
             @Override
@@ -132,17 +133,20 @@ public class MyRemarksTwoActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, AppRemarksByGroupId data) {
                 if (data.getCode().equals("200")){
-                    remarkId = data.getRemarks().getId();
-                    if (remarkId == null || TextUtils.isEmpty(remarkId)){
-                        mEtText.setVisibility(View.VISIBLE);
-                        mText.setVisibility(View.GONE);
-                        item.setTitle("完成");
-                    }else {
-                        mEtText.setVisibility(View.GONE);
-                        mText.setVisibility(View.VISIBLE);
-                        item.setTitle("编辑");
-                        mText.setText(data.getRemarks().getInformation());
+                    if (data.getRemarks() != null) {
+                        remarkId = data.getRemarks().getId();
+                        if (remarkId == null || TextUtils.isEmpty(remarkId)) {
+                            mEtText.setVisibility(View.VISIBLE);
+                            mText.setVisibility(View.GONE);
+                            item.setTitle("完成");
+                        } else {
+                            mEtText.setVisibility(View.GONE);
+                            mText.setVisibility(View.VISIBLE);
+                            item.setTitle("编辑");
+                            mText.setText(data.getRemarks().getInformation());
+                        }
                     }
+
 
                 }else {
                     showMessageDialog(data.getMessage(),mContext);

@@ -43,7 +43,7 @@ public class ElectiveListActivity extends BaseActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyApplication.getInstance().add(this);
-        getToolBar().setTitle("选修列表");
+        getToolBar().setTitle(getString(R.string.elective_data));
         getinfo();
         initview();
     }
@@ -72,7 +72,12 @@ public class ElectiveListActivity extends BaseActivity{
                     public void onClick(View v) {
                         //查询课程培训场次
                         Intent intent = new Intent(mContext,ElectiveListTwoActivity.class);
-                        intent.putExtra("Course",d.getChineseName());
+                        if (Contants.LANGUAGENEM == 0){
+                            intent.putExtra("Course",d.getChineseName());
+                        }else if (Contants.LANGUAGENEM == 1){
+                            intent.putExtra("Course",d.getEnglishName());
+                        }
+
                         intent.putExtra("courseId",d.getId());
                         startActivity(intent);
                     }
@@ -82,7 +87,11 @@ public class ElectiveListActivity extends BaseActivity{
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext,CourseDetailsActivity.class);
-                        intent.putExtra("Course",d.getChineseName());
+                        if (Contants.LANGUAGENEM == 0){
+                            intent.putExtra("Course",d.getChineseName());
+                        }else if (Contants.LANGUAGENEM == 1){
+                            intent.putExtra("Course",d.getEnglishName());
+                        }
                         intent.putExtra("courseId",d.getId());
                         startActivity(intent);
                     }
@@ -91,8 +100,13 @@ public class ElectiveListActivity extends BaseActivity{
                     holder.setClick(R.id.training_num,false);
                     holder.setImageDrawable(R.id.training_num, ContextCompat.getDrawable(mContext,R.drawable.click_training_unsel));
                 }
-                holder.setImageUrl(R.id.elective_list_image,d.getPictureUrl());
-                holder.setText(R.id.course_title,d.getChineseName());
+                holder.setImageUrl(R.id.elective_list_image,d.getPictureUrl(),"2");
+                if (Contants.LANGUAGENEM == 0){
+                    holder.setText(R.id.course_title,d.getChineseName());
+                }else if (Contants.LANGUAGENEM == 1){
+                    holder.setText(R.id.course_title,d.getEnglishName());
+                }
+
                 holder.setText(R.id.elective_list_time,d.getClassHours()+"天");
             }
 

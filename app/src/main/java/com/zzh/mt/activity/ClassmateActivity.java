@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.zzh.mt.R;
@@ -44,7 +45,6 @@ public class ClassmateActivity extends BaseActivity {
     LinkedList<String> index = new LinkedList<>();
 
     String [] data = null;
-    String [] name = {"张三","里斯","王马死","王麻子","历史","请示黄","你妈妈"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,6 @@ public class ClassmateActivity extends BaseActivity {
         getToolBar().setTitle(getString(R.string.check_out_classmate));
         MyApplication.getInstance().add(this);
         classmate();
-
     }
 
     private void initview(){
@@ -63,11 +62,13 @@ public class ClassmateActivity extends BaseActivity {
             protected void convert(ViewHolder holder, ClassMateData.PersonListData s, int position) {
                 holder.setText(R.id.class_en_name,s.getNickName());
                 holder.setText(R.id.class_china_name,s.getChineseName());
-                holder.setImageUrl(R.id.classmate_image,s.getHeadUrl());
-                if (position ==0 || list.get(position-1).equals(list.get(position))){
+                if (s.getHeadUrl() != null ||!TextUtils.isEmpty(s.getHeadUrl())){
+                    holder.setImageUrl(R.id.classmate_image,s.getHeadUrl(),s.getSex());
+                }
+
+                if (position ==0 || !list.get(position-1).equals(list.get(position))){
                     holder.setVisible(R.id.tv_index,true);
                     holder.setText(R.id.tv_index,index.get(position));
-
                 }else
                     {
                         holder.setVisible(R.id.tv_index,false);
@@ -78,7 +79,12 @@ public class ClassmateActivity extends BaseActivity {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                 Intent intent = new Intent(mContext,ClassmateInfoActivity.class);
-                intent.putExtra("name",list.get(position).getChineseName());
+                if (Contants.LANGUAGENEM == 0){
+                    intent.putExtra("name",list.get(position).getChineseName());
+                }else {
+                    intent.putExtra("name",list.get(position).getEnglishName());
+                }
+
                 intent.putExtra("id",list.get(position).getId());
                 startActivity(intent);
             }

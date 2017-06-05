@@ -13,20 +13,27 @@ import com.zzh.mt.base.CommonAdapter;
 import com.zzh.mt.base.MultiItemTypeAdapter;
 import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
+import com.zzh.mt.http.callback.SpotsCallBack;
+import com.zzh.mt.mode.AppRemarks;
+import com.zzh.mt.utils.CommonUtil;
+import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.SharedPreferencesUtil;
 
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 
 import butterknife.BindView;
+import okhttp3.Response;
 
 /**
  * Created by 腾翔信息 on 2017/5/23.
  */
 
 public class MyRemarketsActivity extends BaseActivity {
-    private static final String TAG = MyRemarketsActivity.class.getSimpleName();
-    private LinkedList<String> list = new LinkedList<>();
-    private CommonAdapter<String> adapter;
 
+    private static final String TAG = MyRemarketsActivity.class.getSimpleName();
+    private LinkedList<AppRemarks.remarkListData> list = new LinkedList<>();
+    private CommonAdapter<AppRemarks.remarkListData> adapter;
     @BindView(R.id.my_remarks_swipe)
     SwipeRefreshLayout mSwipe;
     @BindView(R.id.my_remarks_recycler)
@@ -36,13 +43,10 @@ public class MyRemarketsActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getToolBar().setTitle(R.string.my_remarks);
         MyApplication.getInstance().add(this);
-        initview();
+        getInfo();
     }
 
     private void initview(){
-        for(int i=0;i<6;i++){
-            list.add(i+"");
-        }
         mSwipe.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
 
@@ -51,15 +55,21 @@ public class MyRemarketsActivity extends BaseActivity {
             public void onRefresh() {
                 if (mSwipe.isRefreshing() == true){
                     mSwipe.setRefreshing(false);
+                    getInfo();
                 }
             }
         });
 
         mRecyler.setHasFixedSize(true);
         mRecyler.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new CommonAdapter<String>(mContext,R.layout.my_remarks_recycler_item_layout,list) {
+        adapter = new CommonAdapter<AppRemarks.remarkListData>(mContext,R.layout.my_remarks_recycler_item_layout,list) {
             @Override
-            protected void convert(ViewHolder holder, String s, int position) {
+            protected void convert(ViewHolder holder, AppRemarks.remarkListData s, int position) {
+                holder.setText(R.id.my_remarks_recycler_item_typename,s.getActivityTypeName());
+                holder.setText(R.id.my_remarks_recycler_item_center,s.getGroupName());
+                holder.setText(R.id.my_remarks_recycler_item_attendtime,s.getAttendTime().substring(0,10));
+                holder.setText(R.id.my_remarks_recycler_item_star_end,s.getStartTime()+"—"+s.getEndTime());
+
 
             }
         };
@@ -67,12 +77,49 @@ public class MyRemarketsActivity extends BaseActivity {
         adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                startActivity(new Intent(mContext,MyRemarksTwoActivity.class));
+                Intent intent = new Intent(mContext,MyRemarksTwoActivity.class);
+                intent.putExtra("activityTypeName",list.get(position).getActivityTypeName());
+                intent.putExtra("time",list.get(position).getStartTime());
+                if (Contants.LANGUAGENEM == 0){
+                    intent.putExtra("name",list.get(position).getChineseName());
+                }else if (Contants.LANGUAGENEM == 1){
+                    intent.putExtra("name",list.get(position).getEnglishName());
+                }
+                intent.putExtra("activityId",list.get(position).getActivityId());
+                intent.putExtra("courseNoId",list.get(position).getCurriculumNoId());
+                startActivity(intent);
             }
 
             @Override
             public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
                 return false;
+            }
+        });
+    }
+    private void getInfo(){
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("digest","");
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.AppRemarks, map, TAG, new SpotsCallBack<AppRemarks>(mContext) {
+            @Override
+            public void onSuccess(Response response, AppRemarks data) {
+                mSwipe.setRefreshing(false);
+                if (data.getCode().equals("200")){
+                    list.clear();
+                    list.addAll(data.getRemarkList());
+                    initview();
+                }else {
+                    showMessageDialog(data.getMessage(),mContext);
+                }
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
             }
         });
     }

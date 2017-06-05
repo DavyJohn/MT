@@ -15,7 +15,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="通过id获取元素.ppt"
+            android:id="@+id/materials_title"
             android:textColor="#333"
             android:textSize="20sp"
             android:layout_marginLeft="10dp"
@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#6c6c6c"
-            android:text="320kb"
+            android:id="@+id/materials_size"
             android:textSize="20sp"/>
     </LinearLayout>
 </LinearLayout>

@@ -65,7 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:text="我的选课"
+                android:text="@string/my_class"
                 android:textColor="#333"
                 android:textSize="20sp" />
 

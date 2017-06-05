@@ -85,17 +85,26 @@ public class ScheduleActivity extends BaseActivity {
                 if (data.getIsArrange().equals("1")){
                     holder.setVisible(R.id.schedule_recycler_item_image_schedule,true);
                 }else if (data.getIsArrange().equals("0")){
-                    holder.setVisible(R.id.schedule_recycler_item_image_schedule,true);
+                    holder.setVisible(R.id.schedule_recycler_item_image_schedule,false);
                 }
-                holder.setImageUrl(R.id.schedule_item_image,data.getPictureUrl());
-                holder.setText(R.id.schedule_recycler_item_title,data.getChineseName());
+                holder.setImageUrl(R.id.schedule_item_image,data.getPictureUrl(),"2");
+                if (Contants.LANGUAGENEM == 0){
+                    holder.setText(R.id.schedule_recycler_item_title,data.getChineseName());
+                }else if (Contants.LANGUAGENEM == 1){
+                    holder.setText(R.id.schedule_recycler_item_title,data.getEnglishName());
+                }
+
 
                 //详情
                 holder.setOnClickListener(R.id.schedule_recycler_item_details, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext,CourseDetailsActivity.class);
-                        intent.putExtra("Course",data.getChineseName());
+                        if (Contants.LANGUAGENEM == 0){
+                            intent.putExtra("Course",data.getChineseName());
+                        }else if (Contants.LANGUAGENEM == 1){
+                            intent.putExtra("Course",data.getEnglishName());
+                        }
                         intent.putExtra("courseId",data.getCurriculumId());
                         startActivity(intent);
                     }
@@ -106,7 +115,12 @@ public class ScheduleActivity extends BaseActivity {
                     public void onClick(View v) {
                         Intent intent = new Intent(mContext,ScheduleDateActivity.class);
                         intent.putExtra("courseNoId",data.getId());
-                        intent.putExtra("Course",data.getChineseName());
+                        if (Contants.LANGUAGENEM == 0){
+                            intent.putExtra("Course",data.getChineseName());
+                        }else if (Contants.LANGUAGENEM == 1){
+                            intent.putExtra("Course",data.getEnglishName());
+                        }
+
                         startActivity(intent);
                     }
                 });

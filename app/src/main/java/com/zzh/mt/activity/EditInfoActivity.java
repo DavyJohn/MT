@@ -127,16 +127,16 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
         super.onCreate(savedInstanceState);
         getToolBar().setTitle("编辑资料");
         MyApplication.getInstance().add(this);
+        CommonUtil.moveCursor2End(mNick);CommonUtil.moveCursor2End(mBrand);
         initview();
     }
 
     private void initview(){
-//        if ( getIntent().getStringExtra("deparname") != null && !TextUtils.isEmpty(getIntent().getStringExtra("deparname"))){
-//            mDeparname.setText(getIntent().getStringExtra("deparname"));
-//        }
         path = getIntent().getStringExtra("headurl");
         mNick.setText(getIntent().getStringExtra("nickname"));
+
         mBrand.setText(getIntent().getStringExtra("brandname"));
+
         Picasso.with(mContext).load(path).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mImage);
     }
     //保存

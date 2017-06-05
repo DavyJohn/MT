@@ -63,7 +63,6 @@ public class ElectiveListTwoActivity extends BaseActivity {
     }
     //更改
     @OnClick(R.id.elective_change) void  change(){
-
         if (courseNoId != null){
             setchange("modify");
             CoursesTrainingSessions();
@@ -82,13 +81,14 @@ public class ElectiveListTwoActivity extends BaseActivity {
         getToolBar().setTitle("选修列表");
         getInfo();
         CoursesTrainingSessions();
+        mRecycler.setLayoutManager(new LinearLayoutManager(this));
+        mRecycler.setHasFixedSize(true);
+        mRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
 
     }
 
     private void initview(){
-        mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        mRecycler.setHasFixedSize(true);
-        mRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
+
         //// TODO: 2017/5/25 checkbox 修改
         adapter = new ElectiveListAdapter(mContext);
         mRecycler.setAdapter(adapter);
@@ -118,8 +118,6 @@ public class ElectiveListTwoActivity extends BaseActivity {
                     if (data.getCourseNoList().size() != 0){
                         list.clear();
                         list.addAll(data.getCourseNoList());
-
-
                         if (data.getCanModify() == true){
                             Picasso.with(mContext).load(R.drawable.change_sel).into(mChange);
                         }else {
@@ -138,6 +136,7 @@ public class ElectiveListTwoActivity extends BaseActivity {
                             }
                         }
                         initview();
+//                        adapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -162,7 +161,12 @@ public class ElectiveListTwoActivity extends BaseActivity {
             public void onSuccess(Response response, CourseInfoData data) {
                 if (data.getCode().equals("200")){
                     Picasso.with(mContext).load(data.getCourseInfo().getPictureUrl()).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mImage);
-                    mText.setText(data.getCourseInfo().getChineseName());
+                    if (Contants.LANGUAGENEM == 0){
+                        mText.setText(data.getCourseInfo().getChineseName());
+                    }else if (Contants.LANGUAGENEM ==1){
+                        mText.setText(data.getCourseInfo().getEnglishName());
+                    }
+
                     mTime.setText(data.getCourseInfo().getClassHours()+"天");
                 }
             }

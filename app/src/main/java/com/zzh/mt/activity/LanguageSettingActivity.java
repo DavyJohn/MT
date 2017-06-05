@@ -45,14 +45,11 @@ public class LanguageSettingActivity extends BaseActivity {
             @Override
             public void onClickItem(CheckBox view, int postion) {
                 adapter.addData(postion);
-
                 if (postion == 0){
-                    Contants.LANGUAGENEM = 0;
                     editor.putString("lang", "zh");
                     editor.commit();
                     ObserverUtils.getInstance().notifyObservers(Integer.parseInt("1"));
                 }else if (postion ==1){
-                    Contants.LANGUAGENEM = 1;
                     editor.putString("lang", "en");
                     editor.commit();
                     ObserverUtils.getInstance().notifyObservers(Integer.parseInt("1"));

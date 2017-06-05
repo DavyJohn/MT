@@ -60,9 +60,9 @@ public class LoginActivity extends BaseActivity {
     }
     @OnClick(R.id.login) void log(){
         if (TextUtils.isEmpty(mEtUserName.getText().toString())){
-            showMessageDialog("用户名不能为空！",mContext);
+            showMessageDialog("账号不能为空！",mContext);
         }else if (!CommonUtil.isEmail(mEtUserName.getText().toString())){
-            showMessageDialog("输入的用户名格式不正确！",mContext);
+            showMessageDialog("输入的账号格式不正确！",mContext);
         } else if (TextUtils.isEmpty(mEtPassword.getText().toString())){
             showMessageDialog("密码不能为空！",mContext);
         }else {
@@ -93,28 +93,26 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         hasToolBar(false);
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+                    | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(Color.TRANSPARENT);
+            window.setNavigationBarColor(Color.TRANSPARENT);
+        }
         MyApplication.getInstance().add(this);
         initView();
     }
 
     private void initView(){
-        // TODO 设置状态栏 透明  导致Toolbar 整体上移
-//   if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-//        getWindow().setStatusBarColor(Color.TRANSPARENT);
-//        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//    }
         //toolbar
         mTool.setTitle("");
         setSupportActionBar(mTool);
-        mTool.setNavigationIcon(R.drawable.ic_backback);
-        mTool.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MyApplication.getInstance().finishAll();
-                android.os.Process.killProcess(android.os.Process.myPid());
-                System.exit(0);
-            }
-        });
+        mTool.setNavigationIcon(null);
         //一开始就为秘闻显示
         isAppearPwd();
         if (SharedPreferencesUtil.getInstance(mContext).getString("companyEmail") !=null && !TextUtils.isEmpty(SharedPreferencesUtil.getInstance(mContext).getString("companyEmail"))){

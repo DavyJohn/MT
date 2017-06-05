@@ -16,6 +16,9 @@ import android.widget.Toast;
 import com.zzh.mt.base.MyApplication;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Matcher;
@@ -56,6 +59,8 @@ public class CommonUtil {
             Editable text = editText.getText();
             int position = text.length();
             Selection.setSelection(text, position);
+//            editText.setSelection(editText.getText().toString().length());
+
         }
     }
 
@@ -115,4 +120,14 @@ public class CommonUtil {
         BigDecimal b2 = new BigDecimal(v2.toString());
         return b1.add(b2).doubleValue();
     }
+
+
+    public static String getData(){
+        String nowTime = null;
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
+        java.sql.Date curDate = new java.sql.Date(System.currentTimeMillis());
+        nowTime = sf.format(curDate);
+        return nowTime;
+    }
+
 }

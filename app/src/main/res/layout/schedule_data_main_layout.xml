@@ -35,7 +35,6 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2017年04月04日"
                 android:textSize="20sp"
                 android:id="@+id/date_schedule_text"
                 android:textColor="#6c6c6c"
