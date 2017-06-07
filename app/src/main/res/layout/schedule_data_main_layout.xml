@@ -6,7 +6,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="59dp"
+        android:layout_height="40dp"
         android:layout_marginTop="?attr/actionBarSize"
         android:orientation="horizontal"
         android:background="@color/white">
@@ -20,8 +20,8 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/left" />
 
         </LinearLayout>
@@ -35,7 +35,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:id="@+id/date_schedule_text"
                 android:textColor="#6c6c6c"
                 android:layout_gravity="center"/>
@@ -48,8 +48,8 @@
             android:id="@+id/schedule_right"
             android:layout_marginRight="10dp">
             <ImageView
-                android:layout_width="30dp"
-                android:layout_height="30dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
                 android:src="@drawable/my_elective_right_icpn"/>
         </LinearLayout>
 

@@ -63,7 +63,12 @@ public class CourseDetailsActivity extends BaseActivity {
             public void onSuccess(Response response, CourseInfoData data) {
                 if (data.getCode().equals("200")){
                     Picasso.with(mContext).load(data.getCourseInfo().getPictureUrl()).into(mImage);
-                    mTextTitle.setText(data.getCourseInfo().getChineseName());
+                    if (Contants.LANGUAGENEM == 0){
+                        mTextTitle.setText(data.getCourseInfo().getChineseName());
+                    }else if (Contants.LANGUAGENEM == 1){
+                        mTextTitle.setText(data.getCourseInfo().getEnglishName());
+                    }
+
                     mIntroduce.setText(data.getCourseInfo().getIntroduce());
                     if (data.getCourseInfo().getCurriculumNo() != null){
                         findViewById(R.id.courrse_details_layout).setVisibility(View.VISIBLE);

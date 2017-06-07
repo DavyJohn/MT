@@ -1,6 +1,5 @@
 package com.zzh.mt.base;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -8,19 +7,16 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-
 import com.zzh.mt.R;
-import com.zzh.mt.activity.LoginActivity;
 import com.zzh.mt.activity.MainActivity;
 import com.zzh.mt.http.OkHttpHelper;
 import com.zzh.mt.http.callback.SpotsCallBack;
@@ -60,7 +56,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
     protected Context mContext;
     protected int screenwidth;
     protected int densityDpi;
-    private AlertDialog dialog;
+    private android.support.v7.app.AlertDialog dialog;
     private Unbinder unbinder;
 
     @Override
@@ -202,25 +198,23 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
 
     //退出
     protected void quite(String str, Context context) {
-        dialog = new AlertDialog.Builder(context)
-                .setMessage(str).setTitle("提示")
+                dialog = new AlertDialog.Builder(context)
+                .setTitle("提示")
+                .setMessage(str)
                 .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
                     }
-                })
-                .setPositiveButton("确认", new DialogInterface.OnClickListener() {
-
+                }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        //退出接口
                         logout();
-                        dialog.dismiss();
-
                     }
                 }).create();
         dialog.show();
+
+
     }
 
     protected void dismissMessageDialog() {

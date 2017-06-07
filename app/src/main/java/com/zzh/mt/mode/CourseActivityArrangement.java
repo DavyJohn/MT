@@ -49,10 +49,19 @@ public class CourseActivityArrangement {
         private String isDisabled;
         private String curriculumNoId;
         private String type;
+        private String colorLabel;
         private String activityTypeName;
         private String groupId;
         private String updatrt;
         private String hasRemark;
+
+        public String getColorLabel() {
+            return colorLabel;
+        }
+
+        public void setColorLabel(String colorLabel) {
+            this.colorLabel = colorLabel;
+        }
 
         public String getHasRemark() {
             return hasRemark;

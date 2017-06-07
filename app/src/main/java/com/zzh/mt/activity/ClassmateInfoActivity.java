@@ -81,7 +81,7 @@ public class ClassmateInfoActivity extends BaseActivity {
                         holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getBirthday());
                         break;
                     case 6:
-                        holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getEntryYear());
+                        holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getEntryYear().substring(0,4));
                         break;
                     case 7:
                         holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getCompanyEmail());

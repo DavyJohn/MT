@@ -213,6 +213,12 @@ public class ViewHolder extends RecyclerView.ViewHolder
         return this;
     }
 
+    public ViewHolder setGone(int viewId, boolean visible)
+    {
+        View view = getView(viewId);
+        view.setVisibility(visible ? View.VISIBLE : View.GONE);
+        return this;
+    }
     public ViewHolder linkify(int viewId)
     {
         TextView view = getView(viewId);
