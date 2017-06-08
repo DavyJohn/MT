@@ -41,10 +41,16 @@ public class ModifyPassActivity extends BaseActivity {
     @OnClick(R.id.modify_btn) void change(){
         if (TextUtils.isEmpty(mOldPassword.getText().toString())){
             showMessageDialog("请填写当前登录密码!",mContext);
+        }else if (mOldPassword.getText().toString().length()<6){
+            showMessageDialog("密码长度不小于6位！",mContext);
         }else if (TextUtils.isEmpty(mNewPass.getText().toString())){
             showMessageDialog("请输入新密码!",mContext);
+        }else if (mNewPass.getText().toString().length() <6){
+            showMessageDialog("密码长度不小于6位！",mContext);
         }else if (TextUtils.isEmpty(mSecNewPass.getText().toString())){
             showMessageDialog("请再次输入新密码!",mContext);
+        }else if (mSecNewPass.getText().toString().length() <6){
+            showMessageDialog("密码长度不小于6位！",mContext);
         }else if (!mNewPass.getText().toString().equals(mSecNewPass.getText().toString())){
             showMessageDialog("两次密码输入不一致！",mContext);
         }else {
@@ -55,7 +61,7 @@ public class ModifyPassActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyApplication.getInstance().add(this);
-        getToolBar().setTitle("密码更新");
+        getToolBar().setTitle(getString(R.string.password_update));
         initview();
 
     }

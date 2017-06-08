@@ -41,6 +41,7 @@ import okhttp3.Response;
  */
 
 public class ScheduleDateActivity extends BaseActivity {
+
     private static final String TAG = ScheduleDateActivity.class.getSimpleName();
     private CommonAdapter<CourseActivityArrangement.activityListData> adapter;
     private LinkedList<CourseActivityArrangement.activityListData> list = new LinkedList<>();
@@ -132,9 +133,15 @@ public class ScheduleDateActivity extends BaseActivity {
         getInfo();
     }
 
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        getInfo();
+    }
+
     private void initview(){
 
-        LinkedList<CourseActivityArrangement.activityListData> hasdata = new LinkedList<>();
+        final LinkedList<CourseActivityArrangement.activityListData> hasdata = new LinkedList<>();
         hasdata.addAll(hashMap.get(mDate.getText().toString()));
         adapter = new CommonAdapter<CourseActivityArrangement.activityListData>(mContext,R.layout.schedule_date_recycler_item_layout,hasdata) {
             @Override
@@ -146,10 +153,10 @@ public class ScheduleDateActivity extends BaseActivity {
                     //普通
                     holder.setVisible(R.id.group_view,true);
                     holder.setVisible(R.id.schedule_date_remarks_image,true);
-                    if (hashMap.get(mDate.getText().toString()).get(position).getColorLabel() == null || TextUtils.isEmpty(hashMap.get(mDate.getText().toString()).get(position).getColorLabel()) ){
+                    if (hashMap.get(mDate.getText().toString()).get(position).getColourLabel() == null || TextUtils.isEmpty(hashMap.get(mDate.getText().toString()).get(position).getColourLabel()) ){
                         holder.setBackgroundColor(R.id.group_view, ContextCompat.getColor(mContext,R.color.main_color));
                     }else {
-                        holder.setBackgroundColor(R.id.group_view, Color.parseColor(hashMap.get(mDate.getText().toString()).get(position).getColorLabel()));
+                        holder.setBackgroundColor(R.id.group_view, Color.parseColor(hashMap.get(mDate.getText().toString()).get(position).getColourLabel().substring(1,8)));
 
                     }
                     if (s.getHasRemark().equals("1")){
@@ -159,11 +166,10 @@ public class ScheduleDateActivity extends BaseActivity {
                     //休息
                     holder.setVisible(R.id.group_view,true);
                     holder.setVisible(R.id.schedule_date_remarks_image,true);
-                    if (hashMap.get(mDate.getText().toString()).get(position).getColorLabel() == null || TextUtils.isEmpty(hashMap.get(mDate.getText().toString()).get(position).getColorLabel()) ){
+                    if (hashMap.get(mDate.getText().toString()).get(position).getColourLabel() == null || TextUtils.isEmpty(hashMap.get(mDate.getText().toString()).get(position).getColourLabel()) ){
                         holder.setBackgroundColor(R.id.group_view, ContextCompat.getColor(mContext,R.color.main_color));
                     }else {
-                        holder.setBackgroundColor(R.id.group_view, Color.parseColor(hashMap.get(mDate.getText().toString()).get(position).getColorLabel()));
-
+                        holder.setBackgroundColor(R.id.group_view, Color.parseColor(hashMap.get(mDate.getText().toString()).get(position).getColourLabel().substring(1,8)));
                     }
                     if (s.getHasRemark().equals("1")){
                         holder.setVisible(R.id.schedule_date_remarks_show_image,true);
@@ -175,6 +181,12 @@ public class ScheduleDateActivity extends BaseActivity {
                     }
                     holder.setVisible(R.id.schedule_date_remarks_image,false);
                     holder.setVisible(R.id.group_view,true);
+
+                    if (hashMap.get(mDate.getText().toString()).get(position).getColourLabel() == null || TextUtils.isEmpty(hashMap.get(mDate.getText().toString()).get(position).getColourLabel()) ){
+                        holder.setBackgroundColor(R.id.group_view, ContextCompat.getColor(mContext,R.color.main_color));
+                    }else {
+                        holder.setBackgroundColor(R.id.group_view, Color.parseColor(hashMap.get(mDate.getText().toString()).get(position).getColourLabel().substring(1,8)));
+                    }
                 }
 
                 // TODO: 2017/6/3  设置备注过的样式
@@ -200,18 +212,18 @@ public class ScheduleDateActivity extends BaseActivity {
         adapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                if (list.get(position).getGroupId() != null || !TextUtils.isEmpty(list.get(position).getGroupId())){
-                    Intent intent = new Intent(mContext,GroupActivity.class);
-                    intent.putExtra("time",list.get(position).getStartTime());
-                    intent.putExtra("endtime",list.get(position).getEndTime());
-                    intent.putExtra("GroupId",list.get(position).getId());
-                    intent.putExtra("courseNoId",getIntent().getStringExtra("courseNoId"));
-                    intent.putExtra("activityTypeName",list.get(position).getActivityTypeName());
-                    intent.putExtra("activityId",list.get(position).getId());
-                    intent.putExtra("time",list.get(position).getStartTime());
-                    intent.putExtra("name",getIntent().getStringExtra("Course"));
-                    startActivity(intent);
-                }
+                    if (hasdata.get(position).getType().equals("3")){
+                        Intent intent = new Intent(mContext,GroupActivity.class);
+                        intent.putExtra("time",list.get(position).getStartTime());
+                        intent.putExtra("endtime",list.get(position).getEndTime());
+                        intent.putExtra("courseNoId",getIntent().getStringExtra("courseNoId"));
+                        intent.putExtra("activityTypeName",list.get(position).getActivityTypeName());
+                        intent.putExtra("activityId",list.get(position).getId());
+                        intent.putExtra("time",list.get(position).getStartTime());
+                        intent.putExtra("name",getIntent().getStringExtra("Course"));
+                        startActivity(intent);
+                    }
+
             }
 
             @Override
@@ -255,7 +267,6 @@ public class ScheduleDateActivity extends BaseActivity {
                                     hashMap.put(key,da);
                                 }
                             }
-                            System.out.print(hashMap);
                         }
 
                         for (int m=0;m<listData.size();m++){
@@ -295,7 +306,6 @@ public class ScheduleDateActivity extends BaseActivity {
 
                     }
                     initview();
-//                    adapter.notifyDataSetChanged();
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
                 }

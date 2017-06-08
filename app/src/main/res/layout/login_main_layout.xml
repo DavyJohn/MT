@@ -80,6 +80,9 @@
                 android:background="@drawable/login_et_shape"
                 android:drawablePadding="15dp"
                 android:hint="@string/input_passworld"
+                android:inputType="textPassword"
+                android:digits="@string/filter_vcode"
+                android:maxLength="18"
                 android:paddingLeft="60dp"
                 android:textColorHint="#999"
                 android:textColor="#333" />

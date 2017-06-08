@@ -18,6 +18,11 @@
         android:name=".base.MyApplication"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <provider
+            android:authorities="com.zzh.mt.sql.MyProvider"
+            android:name=".sql.MyProvider"/>
+
         //裁剪
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"
             android:screenOrientation="portrait"/>

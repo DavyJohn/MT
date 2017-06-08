@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:textColor="#6c6c6c"
-            android:text="头像"/>
+            android:text="@string/avatar"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -46,7 +46,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:textColor="#6c6c6c"
-            android:text="昵称"/>
+            android:text="@string/nickname"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -78,7 +78,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:textColor="#6c6c6c"
-            android:text="品牌"/>
+            android:text="@string/brandname"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -110,7 +110,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="10dp"
             android:textColor="#6c6c6c"
-            android:text="部门"/>
+            android:text="@string/department"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -139,7 +139,7 @@
             android:layout_height="50dp"
             android:background="#f4b335"
             android:textColor="@color/white"
-            android:text="保   存"
+            android:text="@string/save"
             android:textSize="20sp"
             android:id="@+id/edit_save"
             android:gravity="center"/>

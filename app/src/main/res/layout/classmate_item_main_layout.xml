@@ -21,7 +21,6 @@
             android:layout_height="93dp"
             android:layout_gravity="center"
             android:id="@+id/classmate_image"
-            android:src="@drawable/imag_demo"
             android:layout_marginLeft="10dp"/>
         <LinearLayout
             android:layout_width="match_parent"

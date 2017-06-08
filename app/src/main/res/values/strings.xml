@@ -40,4 +40,35 @@
     <string name="depar_name">部门列表</string>
     <string name="elective_data">选修列表</string>
     <string name="my_class">我的选修课</string>
+    <string name="password_update">密码更新</string>
+    <string name="filter_vcode">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="group_activity">小组活动</string>
+    <string name="retrieve_password">密码找回</string>
+    <string name="avatar">头像</string>
+    <string name="brandname">品牌</string>
+    <string name="department">部门</string>
+    <string name="save">保 存</string>
+    <string name="Edit_personal_profile">编辑资料</string>
+
+    <string name="chinese_name">中文名字</string>
+    <string name="englich_name">英文名字</string>
+    <string name="gender">性别</string>
+    <string name="birthday">生日</string>
+    <string name="year_of_work">入职年份</string>
+    <string name="company_email">公司邮箱</string>
+
+    <string name="Language">语言设置</string>
+    <string name="Change_Password">密码更新</string>
+    <string name="Old_Password">登录密码</string>
+    <string name="New_Password">新密码</string>
+    <string name="Comfirm_Password">确认密码</string>
+    <string name="please_set_the_password">请重新设置登录密码</string>
+    <string name="comfirm">确 认</string>
+    <string name="enter_the_password">请输入登录密码</string>
+    <string name="enter_a_new_password">请输入新的密码</string>
+    <string name="enter_the_password_again">请再次输入新密码</string>
+    <string name="number">账号</string>
+    <string name="has">已修</string>
+    <string name="the_courses_and_the_cumulative_class">本次选修课程情况和累计课时：</string>
+    <string name="day">天</string>
 </resources>

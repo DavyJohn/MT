@@ -41,7 +41,7 @@
             android:layout_width="match_parent"
             android:layout_height="45dp"
             android:background="@drawable/login_btn_shape"
-            android:text="密码找回"
+            android:text="@string/retrieve_password"
             android:textSize="20dp"
             android:id="@+id/forget_button"
             android:layout_marginRight="32dp"

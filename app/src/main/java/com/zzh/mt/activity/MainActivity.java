@@ -119,10 +119,7 @@ public class MainActivity extends BaseActivity
         //end
 
         hasToolBar(false);
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-//            getWindow().setStatusBarColor(Color.TRANSPARENT);
-//            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-//        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
@@ -348,6 +345,7 @@ public class MainActivity extends BaseActivity
                 intent.putExtra("headurl",userData.getUserInfo().getHeadUrl());
                 intent.putExtra("nickname",userData.getUserInfo().getNickName());
                 intent.putExtra("brandname",userData.getUserInfo().getBrandName());
+                intent.putExtra("sex",userData.getUserInfo().getSex());
                 startActivity(intent);
                 break;
 

@@ -5,32 +5,32 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
 
-    <string name="nickname">Nick Name</string>
-    <string name="myinfo">Edit your profile</string>
+    <string name="nickname">Nickname</string>
+    <string name="myinfo">Edit personal profile</string>
     <string name="center_info">Personal center</string>
-    <string name="exit">Drop out</string>
-    <string name="main_page">Home</string>
+    <string name="exit">Logout</string>
+    <string name="main_page">Home page</string>
     <string name="check_out_classmate">View contemporaries</string>
-    <string name="my_courde">Elective</string>
-    <string name="my_remarks">Remarks</string>
+    <string name="my_courde">Course Selection</string>
+    <string name="my_remarks">My Remark</string>
 
-    <string name="my_info">Personal center</string>
-    <string name="class_schedule">Class schedule</string>
+    <string name="my_info">Personal Center</string>
+    <string name="class_schedule">Curriculum</string>
     <string name="Course_materials">Course materials</string>
-    <string name="materials">Course materials</string>
-    <string name="my_classmate">Classmate</string>
+    <string name="materials">Course Material</string>
+    <string name="my_classmate">My Classmate</string>
     <string name="login">Login</string>
     <string name="login_btn">Login</string>
-    <string name="input_username">Please input Username</string>
-    <string name="input_passworld">Please enter your password</string>
+    <string name="input_username">Please enter the account</string>
+    <string name="input_passworld">Please enter the password</string>
     <string name="registered">Registered</string>
     <string name="registered_btn">Registered</string>
-    <string name="forget_password">Forget password？</string>
+    <string name="forget_password">Forget？</string>
     <string name="mt_xieyi">Click on the registration that has agreed to 《MT Agreement》</string>
 
 
 
-    <string name="open_class">Open</string>
+    <string name="open_class">Course open time:</string>
     <string name="edit_menu">Edit</string>
     <string name="remarks_menu_complete">Complete</string>
     <string name="my_obligatory">Obligatory</string>
@@ -38,8 +38,37 @@
     <string name="downing">Confirm</string>
     <string name="down">Load</string>
     <string name="my_schedule">Schedule</string>
-    <string name="email_address">Address</string>
-    <string name="forget_pass">Forget Password</string>
-    <string name="elective_data">Elective</string>
-    <string name="my_class">My Class</string>
+    <string name="email_address">Please enter your email address</string>
+    <string name="forget_pass">Forget password</string>
+    <string name="elective_data">Elective course list</string>
+    <string name="my_class">My electives</string>
+    <string name="retrieve_password">Retrieve password</string>
+    <string name="avatar">Avatar</string>
+    <string name="brandname">BrandName</string>
+    <string name="department">Department</string>
+    <string name="save">Save</string>
+    <string name="Edit_personal_profile">Edit personal profile</string>
+
+    <string name="chinese_name">ChineseName</string>
+    <string name="englich_name">EnglishName</string>
+    <string name="gender">Gender</string>
+    <string name="birthday">Birthday</string>
+    <string name="year_of_work">Year of work</string>
+    <string name="company_email">Company Email</string>
+
+    <string name="Language">Language</string>
+    <string name="Change_Password">Change Password</string>
+    <string name="Old_Password">Old Password</string>
+    <string name="New_Password">New Password</string>
+    <string name="Comfirm_Password">Comfirm Password</string>
+    <string name="please_set_the_password">Please set the password</string>
+    <string name="comfirm">Comfirm</string>
+    <string name="enter_the_password">Enter the_password</string>
+    <string name="enter_a_new_password">Enter a new password</string>
+    <string name="enter_the_password_again">Enter the password again</string>
+    <string name="number">Number</string>
+    <string name="has">has</string>
+    <string name="the_courses_and_the_cumulative_class">The courses and the cumulative class:</string>
+    <string name="filter_vcode">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
+    <string name="day">day</string>
 </resources>

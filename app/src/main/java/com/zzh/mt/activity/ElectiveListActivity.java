@@ -106,8 +106,12 @@ public class ElectiveListActivity extends BaseActivity{
                 }else if (Contants.LANGUAGENEM == 1){
                     holder.setText(R.id.course_title,d.getEnglishName());
                 }
+                if (Contants.LANGUAGENEM == 0){
+                    holder.setText(R.id.elective_list_time,d.getClassHours()+getString(R.string.day));
+                }else {
+                    holder.setText(R.id.elective_list_time,d.getClassHours()+getString(R.string.day));
+                }
 
-                holder.setText(R.id.elective_list_time,d.getClassHours()+"天");
             }
 
         };

@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.TextView;
 
 import com.zzh.mt.R;
@@ -33,7 +34,7 @@ public class GroupActivity extends BaseActivity {
     private static final String TAG = GroupActivity.class.getSimpleName();
     @OnClick(R.id.group_note) void note (){
         Intent intent = new Intent(mContext,MyRemarksTwoActivity.class);
-        intent.putExtra("activityId",getIntent().getStringExtra("GroupId"));
+        intent.putExtra("activityId",getIntent().getStringExtra("activityId"));
         intent.putExtra("courseNoId",getIntent().getStringExtra("courseNoId"));
         intent.putExtra("activityTypeName",getIntent().getStringExtra("activityTypeName"));
         intent.putExtra("time",getIntent().getStringExtra("time"));
@@ -50,25 +51,35 @@ public class GroupActivity extends BaseActivity {
     RecyclerView mRecycler;
     @BindView(R.id.group_remark)
     TextView mTextmRenark;
+    @BindView(R.id.group_name)
+    TextView mName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyApplication.getInstance().add(this);
-        getToolBar().setTitle("小组活动");
+        getToolBar().setTitle(getString(R.string.group_activity));
         getInfo();
     }
 
     private void initview(){
+        if (list.size() == 0){
+            mRecycler.setVisibility(View.GONE);
+            mName.setVisibility(View.VISIBLE);
+            mName.setText("随堂分组");
+        }else {
+            mRecycler.setVisibility(View.VISIBLE);
+            mName.setVisibility(View.GONE);
+            mRecycler.setHasFixedSize(true);
+            mRecycler.setLayoutManager(new LinearLayoutManager(this));
+            adapter = new CommonAdapter<GroupActivityInformation.personListData>(mContext,R.layout.group_item_layout,list) {
+                @Override
+                protected void convert(ViewHolder holder, GroupActivityInformation.personListData s, int position) {
+                    holder.setText(R.id.group_iten_name,"-  "+s.getNickName());
+                }
+            };
+            mRecycler.setAdapter(adapter);
+        }
 
-        mRecycler.setHasFixedSize(true);
-        mRecycler.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new CommonAdapter<GroupActivityInformation.personListData>(mContext,R.layout.group_item_layout,list) {
-            @Override
-            protected void convert(ViewHolder holder, GroupActivityInformation.personListData s, int position) {
-                holder.setText(R.id.group_iten_name,"-"+s.getNickName());
-            }
-        };
-        mRecycler.setAdapter(adapter);
     }
     private void getInfo(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
@@ -77,16 +88,16 @@ public class GroupActivity extends BaseActivity {
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
-        map.put("groupId",getIntent().getStringExtra("GroupId"));
+        map.put("groupId",getIntent().getStringExtra("activityId"));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.GroupActivityInformation, map, TAG, new SpotsCallBack<GroupActivityInformation>(mContext) {
             @Override
             public void onSuccess(Response response, GroupActivityInformation data) {
                 if (data.getCode().equals("200")){
                     list.clear();
                     list.addAll(data.getPersonList());
-                    mStart.setText(getIntent().getStringExtra("time"));
-                    mEnd.setText(getIntent().getStringExtra("endtime"));
-                    mTextmRenark.setText(data.getRemarks().getInformation());
+                    mStart.setText(getIntent().getStringExtra("time").substring(0,10));
+                    mEnd.setText(getIntent().getStringExtra("endtime").substring(0,10));
+//                    mTextmRenark.setText(data.getRemarks().getInformation());
                     initview();
                 }else {
                     showMessageDialog(data.getMessage(),mContext);

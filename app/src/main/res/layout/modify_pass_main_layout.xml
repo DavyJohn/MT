@@ -22,7 +22,7 @@
                 android:layout_gravity="center"
                 android:gravity="left"
                 android:paddingLeft="20dp"
-                android:text="账号"
+                android:text="@string/number"
                 android:textColor="#999"
                 android:textSize="18sp" />
 
@@ -48,7 +48,7 @@
                 android:layout_gravity="center"
                 android:gravity="left"
                 android:paddingLeft="20dp"
-                android:text="登录密码"
+                android:text="@string/Old_Password"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -61,8 +61,11 @@
                 android:background="@null"
                 android:singleLine="true"
                 android:maxLines="1"
+                android:inputType="textPassword"
+                android:digits="@string/filter_vcode"
+                android:maxLength="18"
                 android:textSize="18sp"
-                android:hint="请填写当前登录密码" />
+                android:hint="@string/enter_the_password" />
 
         </LinearLayout>
 
@@ -79,7 +82,7 @@
             android:gravity="center"
             android:paddingLeft="20dp"
             android:textSize="18sp"
-            android:text="请重新设置登录密码"/>
+            android:text="@string/please_set_the_password"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -93,7 +96,7 @@
                 android:layout_gravity="center"
                 android:gravity="left"
                 android:paddingLeft="20dp"
-                android:text="新密码"
+                android:text="@string/New_Password"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -104,8 +107,10 @@
                 android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
                 android:background="@null"
-                android:maxLength="64"
-                android:hint="请输入新的密码"
+                android:maxLength="18"
+                android:inputType="textPassword"
+                android:digits="@string/filter_vcode"
+                android:hint="@string/enter_a_new_password"
                 android:maxLines="1"
                 android:textSize="18sp"
                 android:singleLine="true" />
@@ -131,7 +136,7 @@
                 android:layout_gravity="center"
                 android:gravity="left"
                 android:paddingLeft="20dp"
-                android:text="再次输入"
+                android:text="@string/Comfirm_Password"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -144,9 +149,11 @@
                 android:background="@null"
                 android:singleLine="true"
                 android:maxLines="1"
-                android:maxLength="65"
+                android:inputType="textPassword"
+                android:digits="@string/filter_vcode"
+                android:maxLength="18"
                 android:textSize="18sp"
-                android:hint="请再次输入新密码" />
+                android:hint="@string/enter_the_password_again" />
 
         </LinearLayout>
 
@@ -156,7 +163,7 @@
             android:layout_height="50dp"
             android:layout_margin="20dp"
             android:background="@drawable/ordinary_shape_button"
-            android:text="确  认"
+            android:text="@string/comfirm"
             android:textColor="@color/white"
             android:textSize="20sp" />
     </LinearLayout>

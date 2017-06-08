@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.zzh.mt.base.MyApplication;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -129,5 +130,25 @@ public class CommonUtil {
         nowTime = sf.format(curDate);
         return nowTime;
     }
+    public static String getDataSize(long size) {
+        if (size < 0) {
+            size = 0;
+        }
+        DecimalFormat formater = new DecimalFormat("####.00");
+        if (size < 1024) {
+            return size + "bytes";
+        } else if (size < 1024 * 1024) {
+            float kbsize = size / 1024f;
+            return formater.format(kbsize) + "KB";
+        } else if (size < 1024 * 1024 * 1024) {
+            float mbsize = size / 1024f / 1024f;
+            return formater.format(mbsize) + "MB";
+        } else if (size < 1024 * 1024 * 1024 * 1024) {
+            float gbsize = size / 1024f / 1024f / 1024f;
+            return formater.format(gbsize) + "GB";
+        } else {
+            return "size: error";
+        }
 
+    }
 }

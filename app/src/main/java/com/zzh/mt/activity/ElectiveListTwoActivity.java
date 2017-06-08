@@ -136,7 +136,6 @@ public class ElectiveListTwoActivity extends BaseActivity {
                             }
                         }
                         initview();
-//                        adapter.notifyDataSetChanged();
                     }
                 }
             }
@@ -160,7 +159,7 @@ public class ElectiveListTwoActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, CourseInfoData data) {
                 if (data.getCode().equals("200")){
-                    Picasso.with(mContext).load(data.getCourseInfo().getPictureUrl()).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mImage);
+                    Picasso.with(mContext).load(data.getCourseInfo().getPictureUrl()).placeholder(R.drawable.imag_demo).error(R.drawable.imag_demo).into(mImage);
                     if (Contants.LANGUAGENEM == 0){
                         mText.setText(data.getCourseInfo().getChineseName());
                     }else if (Contants.LANGUAGENEM ==1){

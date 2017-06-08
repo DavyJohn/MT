@@ -68,8 +68,8 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Note"
             android:id="@+id/group_remark"
+            android:visibility="gone"
             android:textColor="#6c6c6c"/>
     </LinearLayout>
     <LinearLayout
@@ -91,5 +91,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
+        android:visibility="gone"
         android:id="@+id/group_recycler"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:background="@color/white"
+        android:visibility="gone"
+        android:id="@+id/group_name"
+        android:textColor="#333"
+        android:paddingLeft="10dp"/>
 </LinearLayout>

@@ -142,8 +142,8 @@ public class ViewHolder extends RecyclerView.ViewHolder
                 Picasso.with(mContext).load(url).placeholder(R.drawable.image_g).error(R.drawable.image_g).config(Bitmap.Config.RGB_565).transform(transformation).into(view);
             }
         }else if (sex.equals("2")){
+            //2代表的是课本
             Picasso.with(mContext).load(url).placeholder(R.drawable.imag_demo).error(R.drawable.imag_demo).config(Bitmap.Config.RGB_565).transform(transformation).into(view);
-
         }
         return this;
     }

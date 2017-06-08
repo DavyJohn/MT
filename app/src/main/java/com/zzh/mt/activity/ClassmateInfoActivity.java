@@ -52,7 +52,13 @@ public class ClassmateInfoActivity extends BaseActivity {
         for (int i=0;i<data.length;i++){
             list.add(data[i]);
         }
-        Picasso.with(mContext).load(userData.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mImage);
+        if (userData.getUserInfo().getSex().equals("1")){
+            Picasso.with(mContext).load(userData.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_b).error(R.drawable.image_b).into(mImage);
+        }else {
+            Picasso.with(mContext).load(userData.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_g).error(R.drawable.image_g).into(mImage);
+
+        }
+
         mText.setText(userData.getUserInfo().getNickName());
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRecycler.setHasFixedSize(true);

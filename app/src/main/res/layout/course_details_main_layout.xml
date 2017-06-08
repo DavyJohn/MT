@@ -11,8 +11,9 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="150dp"
+            android:scaleType="fitXY"
             android:id="@+id/course_details_image"
-            android:background="@drawable/course_details_icon"/>
+            android:src="@drawable/course_details_icon"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"

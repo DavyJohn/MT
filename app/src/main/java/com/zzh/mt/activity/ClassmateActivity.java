@@ -86,11 +86,7 @@ public class ClassmateActivity extends BaseActivity {
                 }else if (Contants.LANGUAGENEM == 1){
                     holder.setText(R.id.class_china_name,s.getEnglishName());
                 }
-
-                if (s.getHeadUrl() != null ||!TextUtils.isEmpty(s.getHeadUrl())){
-                    holder.setImageUrl(R.id.classmate_image,s.getHeadUrl(),s.getSex());
-                }
-
+                holder.setImageUrl(R.id.classmate_image,s.getHeadUrl(),s.getSex());
                 Collections.sort(index);
                 if (position ==0 || !index.get(position-1).equals(index.get(position))){
                     holder.setVisible(R.id.tv_index,true);
@@ -164,7 +160,6 @@ public class ClassmateActivity extends BaseActivity {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == event.KEYCODE_ENTER){
                     if (TextUtils.isEmpty(mSearch.getText().toString())){
-//                        initview();
                     }else {
                         findViewById(R.id.no_search_root).setVisibility(View.GONE);
                         findViewById(R.id.classmate_search_recycler).setVisibility(View.VISIBLE);
@@ -258,7 +253,6 @@ public class ClassmateActivity extends BaseActivity {
                                     }
                                 }
                             }
-                            System.out.print(initlist);
                             initview();
                         }
 

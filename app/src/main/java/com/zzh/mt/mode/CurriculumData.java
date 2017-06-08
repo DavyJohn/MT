@@ -10,6 +10,16 @@ public class CurriculumData {
 
     private String message;
     private String code;
+    private Boolean inSelectTime;
+
+    public Boolean getInSelectTime() {
+        return inSelectTime;
+    }
+
+    public void setInSelectTime(Boolean inSelectTime) {
+        this.inSelectTime = inSelectTime;
+    }
+
     private LinkedList<Curriculum> courseList;
 
     public String getMessage() {

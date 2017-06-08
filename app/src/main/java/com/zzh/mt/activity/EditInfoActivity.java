@@ -125,7 +125,7 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getToolBar().setTitle("编辑资料");
+        getToolBar().setTitle(getString(R.string.Edit_personal_profile));
         MyApplication.getInstance().add(this);
         CommonUtil.moveCursor2End(mNick);CommonUtil.moveCursor2End(mBrand);
         initview();
@@ -136,8 +136,11 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
         mNick.setText(getIntent().getStringExtra("nickname"));
 
         mBrand.setText(getIntent().getStringExtra("brandname"));
-
-        Picasso.with(mContext).load(path).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mImage);
+        if (getIntent().getStringExtra("sex").equals("1")){
+            Picasso.with(mContext).load(path).placeholder(R.drawable.image_b).error(R.drawable.image_b).into(mImage);
+        }else {
+            Picasso.with(mContext).load(path).placeholder(R.drawable.image_g).error(R.drawable.image_g).into(mImage);
+        }
     }
     //保存
     private void s(String path){
@@ -398,7 +401,11 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
             @Override
             public void onResponse(UpLoadData response, int id) {
                 if (response.getCode().equals("200")){
-                    Picasso.with(mContext).load(response.getHeadImageUrl()).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mImage);
+                    if (getIntent().getStringExtra("sex").equals("1")){
+                        Picasso.with(mContext).load(response.getHeadImageUrl()).placeholder(R.drawable.image_b).error(R.drawable.image_b).into(mImage);
+                    }else {
+                        Picasso.with(mContext).load(response.getHeadImageUrl()).placeholder(R.drawable.image_g).error(R.drawable.image_g).into(mImage);
+                    }
                     s(response.getHeadImageUrl());
                 }
             }

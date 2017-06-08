@@ -40,8 +40,8 @@ public class CourseActivity extends BaseActivity {
     private LinkedList<CurriculumData.Curriculum> list = new LinkedList<>();
 
     @OnClick(R.id.elective_layout) void elective(){
-        //我要选课
-        startActivity(new Intent(mContext,ElectiveListActivity.class));
+        //我要选课 进去需要判断inSelectTime 是否位true
+        isSelect();
     }
     @BindView(R.id.courrse_time)
     TextView mTextCourrseTime;
@@ -57,6 +57,13 @@ public class CourseActivity extends BaseActivity {
         classTime();
         getCurriculumChoice();
 
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        classTime();
+        getCurriculumChoice();
     }
 
     private void initview(){
@@ -123,7 +130,12 @@ public class CourseActivity extends BaseActivity {
                 if (data.getCode().equals("200")){
                     int sumtotal = Integer.parseInt(data.getTotalClassHoursElective());
                     int sunhave = Integer.parseInt(data.getHaveClassHoursElective());
-                    item.setTitle("已修："+sunhave+"/"+sumtotal);
+                    if (Contants.LANGUAGENEM == 0){
+                        item.setTitle(getString(R.string.has)+"："+sunhave+"/"+sumtotal);
+                    }else {
+                        item.setTitle("已修"+"："+sunhave+"/"+sumtotal);
+                    }
+
                     mTextTime.setText(data.getStartTime().substring(6,7)+"月"+data.getStartTime().substring(8,10)+"日"+"——"+data.getEndTime().substring(6,7)+"月"+data.getEndTime().substring(8,10)+"日");
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
@@ -156,7 +168,12 @@ public class CourseActivity extends BaseActivity {
                         Double add = 0.0;
                         for (int i=0;i<data.getCourseList().size();i++){
                             add = CommonUtil.add(add,Double.valueOf(data.getCourseList().get(i).getClassHours()).doubleValue());
-                            mTextCourrseTime.setText(String.valueOf(add)+"天");
+                            if (Contants.LANGUAGENEM == 0){
+                                mTextCourrseTime.setText(String.valueOf(add)+getString(R.string.day));
+                            }else {
+                                mTextCourrseTime.setText(String.valueOf(add)+getString(R.string.day));
+                            }
+
                         }
                     }else {
                         //模块消失
@@ -165,6 +182,32 @@ public class CourseActivity extends BaseActivity {
                     list.clear();
                     list.addAll(data.getCourseList());
                     initview();
+                }
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
+    private void isSelect(){
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("digest","");
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CurriculumNoChoice, map, TAG, new SpotsCallBack<CurriculumData>(mContext) {
+            @Override
+            public void onSuccess(Response response, CurriculumData data) {
+                if (data.getCode().equals("200")){
+                  if (data.getInSelectTime() == true){
+                      startActivity(new Intent(mContext,ElectiveListActivity.class));
+                  }else {
+                      showMessageDialog("当前时间没有开放选课！",mContext);
+                  }
                 }
             }
 
