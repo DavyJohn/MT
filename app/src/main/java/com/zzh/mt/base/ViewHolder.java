@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.CompoundButton;
@@ -175,6 +176,12 @@ public class ViewHolder extends RecyclerView.ViewHolder
         return this;
     }
 
+    public ViewHolder setEnable(int viewId,boolean click ){
+        View view = getView(viewId);
+        view.setEnabled(click);
+        return this;
+    }
+
     public ViewHolder setTextColor(int viewId, int textColor)
     {
         TextView view = getView(viewId);
@@ -182,6 +189,12 @@ public class ViewHolder extends RecyclerView.ViewHolder
         return this;
     }
 
+    public ViewHolder setButtonTextColor(int viewId, int textColor)
+    {
+        Button view = getView(viewId);
+        view.setTextColor(textColor);
+        return this;
+    }
     public ViewHolder setTextColorRes(int viewId, int textColorRes)
     {
         TextView view = getView(viewId);

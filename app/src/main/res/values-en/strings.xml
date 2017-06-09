@@ -16,7 +16,7 @@
 
     <string name="my_info">Personal Center</string>
     <string name="class_schedule">Curriculum</string>
-    <string name="Course_materials">Course materials</string>
+    <string name="Course_materials">Materials</string>
     <string name="materials">Course Material</string>
     <string name="my_classmate">My Classmate</string>
     <string name="login">Login</string>
@@ -71,4 +71,12 @@
     <string name="the_courses_and_the_cumulative_class">The courses and the cumulative class:</string>
     <string name="filter_vcode">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
     <string name="day">day</string>
+    <string name="deteils">Detail</string>
+    <string name="cancel">Cancel</string>
+    <string name="modify">Modify</string>
+    <string name="Select_training_session">Select training session</string>
+    <string name="Schedule">Schedule</string>
+    <string name="MultiSelect">MultiSelect</string>
+    <string name="Download">Download</string>
+    <string name="Finished">Finished</string>
 </resources>

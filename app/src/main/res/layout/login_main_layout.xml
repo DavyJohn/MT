@@ -80,6 +80,8 @@
                 android:background="@drawable/login_et_shape"
                 android:drawablePadding="15dp"
                 android:hint="@string/input_passworld"
+                android:singleLine="true"
+                android:maxLines="1"
                 android:inputType="textPassword"
                 android:digits="@string/filter_vcode"
                 android:maxLength="18"
@@ -107,6 +109,7 @@
             android:layout_marginTop="30dp"
             android:background="@drawable/login_btn_shape"
             android:text="@string/login_btn"
+            android:textAllCaps="false"
             android:textColor="#fff"
             android:id="@+id/login"
             android:textSize="25dp" />

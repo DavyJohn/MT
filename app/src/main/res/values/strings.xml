@@ -71,4 +71,13 @@
     <string name="has">已修</string>
     <string name="the_courses_and_the_cumulative_class">本次选修课程情况和累计课时：</string>
     <string name="day">天</string>
+    <string name="deteils">详情</string>
+
+    <string name="cancel">取消</string>
+    <string name="modify">更改</string>
+    <string name="Select_training_session">选择培训场次</string>
+    <string name="Schedule">时间安排</string>
+    <string name="MultiSelect">批量下载</string>
+    <string name="Download">确认下载</string>
+    <string name="Finished">已下载</string>
 </resources>

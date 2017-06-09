@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.zzh.mt.R;
 import com.zzh.mt.mode.CoursewareById;
 import com.zzh.mt.sql.MyProvider;
@@ -60,13 +62,14 @@ public class MaterialsAdapter extends RecyclerView.Adapter<MaterialsAdapter.View
         holder.mSize.setText(CommonUtil.getDataSize(Long.parseLong(list.get(position).getCoursewareSize())));
         holder.mProgress.setVisibility(View.GONE);
         holder.mDown.setText("点击下载");
+        Picasso.with(context).load(list.get(position).getCoursewareUrl()).placeholder(R.drawable.imag_demo).error(R.drawable.imag_demo).into(holder.image
+        );
         //数据
         holder.mTitle.setText(list.get(position).getCoursewareName()+"."+list.get(position).getCoursewareType());
         while (cursor.moveToNext()){
                 if (list.get(position).getId().equals(cursor.getString(cursor.getColumnIndex("url")))){
-                    holder.mProgress.setVisibility(View.VISIBLE);
-                    holder.mProgress.setProgress(100);
-                    holder.mDown.setText("已下载");
+                    holder.mProgress.setVisibility(View.GONE);
+                    holder.mDown.setText(R.string.Finished);
                 }else {
                     holder.mSize.setText(CommonUtil.getDataSize(Long.parseLong(list.get(position).getCoursewareSize())));
                     holder.mProgress.setVisibility(View.GONE);
@@ -87,8 +90,8 @@ public class MaterialsAdapter extends RecyclerView.Adapter<MaterialsAdapter.View
         TextView mTitle;
         @BindView(R.id.progress)
         HorizontalProgressBarWithNumber mProgress;
-        @BindView(R.id.materials_check_box)
-        CheckBox mBox;
+        @BindView(R.id.data_image)
+        ImageView image;
         @BindView(R.id.materials_size)
         TextView mSize;
         @BindView(R.id.materials_down)

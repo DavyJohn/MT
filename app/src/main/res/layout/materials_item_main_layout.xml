@@ -3,17 +3,12 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="60dp"
     android:background="@color/white">
-
-    <CheckBox
-        android:id="@+id/materials_check_box"
-        android:layout_width="25dp"
-        android:layout_height="25dp"
+    <ImageView
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_gravity="center"
         android:layout_marginLeft="10dp"
-        android:visibility="gone"
-        android:background="@drawable/checkbox_addpending"
-        android:button="@null" />
-
+        android:id="@+id/data_image"/>
     <LinearLayout
         android:layout_width="0dp"
         android:layout_weight="1"
@@ -33,6 +28,7 @@
             android:layout_height="wrap_content"
             android:textColor="#6c6c6c"
             android:textSize="18sp"
+            android:layout_marginLeft="10dp"
             android:id="@+id/materials_size"/>
         <com.zzh.mt.widget.HorizontalProgressBarWithNumber
             android:layout_width="wrap_content"

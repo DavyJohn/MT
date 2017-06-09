@@ -96,9 +96,14 @@ public class ElectiveListActivity extends BaseActivity{
                         startActivity(intent);
                     }
                 });
-                if (d.getCanModify().equals("0")){
-                    holder.setClick(R.id.training_num,false);
-                    holder.setImageDrawable(R.id.training_num, ContextCompat.getDrawable(mContext,R.drawable.click_training_unsel));
+                if (d.getCanModify().equals("0")){//不可点击
+                    holder.setEnable(R.id.training_num,false);
+                    holder.setBackgroundRes(R.id.training_num,R.drawable.button_unclick_shape);
+                    holder.setButtonTextColor(R.id.training_num,R.color.button_unclick_shape_text_color);
+                }else {
+                    holder.setEnable(R.id.training_num,true);
+                    holder.setBackgroundRes(R.id.training_num,R.drawable.button_click_shape);
+                    holder.setButtonTextColor(R.id.training_num,R.color.white) ;
                 }
                 holder.setImageUrl(R.id.elective_list_image,d.getPictureUrl(),"2");
                 if (Contants.LANGUAGENEM == 0){

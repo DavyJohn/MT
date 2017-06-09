@@ -22,4 +22,6 @@
     <color name="login_btn_color">#F4B335</color>
     <color name="login_text_color">#333</color>
     <color name="text_down_color">#6c6c6c</color>
+    <color name="button_unclick_shape_text_color">#b3b3b3</color>
+
 </resources>

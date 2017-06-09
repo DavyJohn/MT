@@ -60,6 +60,7 @@ public class ElectiveListAdapter extends RecyclerView.Adapter<ElectiveListAdapte
         }else if (list.get(position).getIsSelected().equals("1")){
             Picasso.with(context).load(R.drawable.sel_checkbox).into(holder.mBox);
         }
+
         if ( index != -1){
             if (position == index ) {
                 Picasso.with(context).load(R.drawable.sel_checkbox).into(holder.mBox);
@@ -73,7 +74,7 @@ public class ElectiveListAdapter extends RecyclerView.Adapter<ElectiveListAdapte
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    onClickItemListener.onClickItem(holder.itemView,holder.mBox,position);
+                    onClickItemListener.onClickItem(holder.mNum,holder.mBox,position);
                 }
             });
         }
@@ -98,7 +99,7 @@ public class ElectiveListAdapter extends RecyclerView.Adapter<ElectiveListAdapte
         }
     }
     public interface OnClickItemListener{
-        void onClickItem(View itemview,ImageView view, int postion);
+        void onClickItem(TextView mNum,ImageView view, int postion);
     }
 
     public ElectiveListAdapter.OnClickItemListener onClickItemListener;

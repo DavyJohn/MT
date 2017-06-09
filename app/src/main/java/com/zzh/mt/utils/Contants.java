@@ -5,7 +5,8 @@ package com.zzh.mt.utils;
  */
 
 public class Contants {
-    //首页轮播url api
+
+//    public static final String BASEURL = "http://106.14.210.105";
     public static final String BASEURL = "http://192.168.6.11:8080";
     //查询轮播图列表
     public static final String BANNERURL = "/mtms-gateway/appImage/getImage";

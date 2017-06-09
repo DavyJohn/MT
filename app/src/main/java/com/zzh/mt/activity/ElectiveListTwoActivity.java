@@ -2,9 +2,11 @@ package com.zzh.mt.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -41,6 +43,7 @@ public class ElectiveListTwoActivity extends BaseActivity {
 
     private static final String TAG = ElectiveListActivity.class.getSimpleName();
     private ElectiveListAdapter adapter;
+    private String clickid;
     private LinkedList<CoursesTrainingSessionsData.CourseNoListData> list = new LinkedList<>();
     private String courseNoId = null;
     @BindView(R.id.elective_list_two_recycler)
@@ -48,9 +51,9 @@ public class ElectiveListTwoActivity extends BaseActivity {
     @BindView(R.id.elective_list_title)
     TextView mText;
     @BindView(R.id.elective_change)
-    ImageView mChange;
+    Button mChange;
     @BindView(R.id.elective_cancel)
-    ImageView mCancel;
+    Button mCancel;
     @BindView(R.id.elective_two_time)
     TextView mTime;
     @BindView(R.id.elective_two_image)
@@ -64,14 +67,14 @@ public class ElectiveListTwoActivity extends BaseActivity {
     //更改
     @OnClick(R.id.elective_change) void  change(){
         if (courseNoId != null){
-            setchange("modify");
+            setchange("modify",courseNoId);
             CoursesTrainingSessions();
         }
 
     }
     //取消
     @OnClick(R.id.elective_cancel) void  cancel(){
-        setchange("cancel");
+        setchange("cancel",clickid);
         CoursesTrainingSessions();
     }
     @Override
@@ -95,9 +98,14 @@ public class ElectiveListTwoActivity extends BaseActivity {
         adapter.addData(list);
         adapter.setOnClickItemListener(new ElectiveListAdapter.OnClickItemListener() {
             @Override
-            public void onClickItem(View itemview, ImageView view, int postion) {
-                courseNoId = list.get(postion).getId();
-                adapter.addPostion(postion);
+            public void onClickItem(TextView num, ImageView view, int postion) {
+                if (num.getText().toString().equals("0")){
+                    showMessageDialog("该场次无座位,不可选择！",mContext);
+                }else {
+                    courseNoId = list.get(postion).getId();
+                    adapter.addPostion(postion);
+                }
+
             }
         });
     }
@@ -118,20 +126,27 @@ public class ElectiveListTwoActivity extends BaseActivity {
                     if (data.getCourseNoList().size() != 0){
                         list.clear();
                         list.addAll(data.getCourseNoList());
+
                         if (data.getCanModify() == true){
-                            Picasso.with(mContext).load(R.drawable.change_sel).into(mChange);
+                            mChange.setTextColor(ContextCompat.getColor(mContext,R.color.white));
+                            mChange.setBackground(ContextCompat.getDrawable(mContext,R.drawable.button_click_shape));
+
                         }else {
-                            Picasso.with(mContext).load(R.drawable.change_unsel).into(mChange);
+                            mChange.setTextColor(ContextCompat.getColor(mContext,R.color.button_unclick_shape_text_color));
+                            mChange.setBackground(ContextCompat.getDrawable(mContext,R.drawable.button_unclick_shape));
                         }
                         for (int i=0;i<data.getCourseNoList().size();i++){
 
                             if (data.getCourseNoList().get(i).getIsSelected().equals("1")){
-                                Picasso.with(mContext).load(R.drawable.cancel_sel).into(mCancel);
+                                mCancel.setBackground(ContextCompat.getDrawable(mContext,R.drawable.button_click_shape));
+                                mCancel.setTextColor(ContextCompat.getColor(mContext,R.color.white));
                                 mCancel.setClickable(true);
-                                courseNoId = data.getCourseNoList().get(i).getId();
+//                                courseNoId = data.getCourseNoList().get(i).getId();
+                                clickid = data.getCourseNoList().get(i).getId();
                                 break;
                             }else {
-                                Picasso.with(mContext).load(R.drawable.cancel_unsel).into(mCancel);
+                                mCancel.setBackground(ContextCompat.getDrawable(mContext,R.drawable.button_unclick_shape));
+                                mCancel.setTextColor(ContextCompat.getColor(mContext,R.color.button_unclick_shape_text_color));
                                 mCancel.setClickable(false);
                             }
                         }
@@ -178,7 +193,7 @@ public class ElectiveListTwoActivity extends BaseActivity {
     }
 
 
-    private void setchange(String operation){
+    private void setchange(String operation,String id){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("courseId",getIntent().getStringExtra("courseId"));
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
@@ -187,7 +202,7 @@ public class ElectiveListTwoActivity extends BaseActivity {
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("operation",operation);
-        map.put("courseNoId",courseNoId);
+        map.put("courseNoId",courseNoId);//传入的是后台选中的
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CurriculumNo, map, TAG, new SpotsCallBack<BaseData>(mContext) {
             @Override
             public void onSuccess(Response response, BaseData data) {

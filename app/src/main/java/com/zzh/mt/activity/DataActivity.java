@@ -2,9 +2,11 @@ package com.zzh.mt.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.SimpleCursorTreeAdapter;
 
 import com.zzh.mt.R;
@@ -13,6 +15,7 @@ import com.zzh.mt.base.CommonAdapter;
 import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
 import com.zzh.mt.http.callback.SpotsCallBack;
+import com.zzh.mt.mode.CoursewareById;
 import com.zzh.mt.mode.CurriculumData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
@@ -48,16 +51,15 @@ public class DataActivity extends BaseActivity {
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CommonAdapter<CurriculumData.Curriculum>(mContext,R.layout.data_recyclerview_item_layout,list) {
             @Override
-            protected void convert(ViewHolder holder, final CurriculumData.Curriculum s, int position) {
+            protected void convert(final ViewHolder holder, final CurriculumData.Curriculum s, int position) {
+                isNull(s.getId(), (Button) holder.getView(R.id.data_recycler_item_image_materials));
                 if (Contants.LANGUAGENEM == 0){
                     holder.setText(R.id.data_recycler_item_title,s.getChineseName());
                 }else if (Contants.LANGUAGENEM == 1){
                     holder.setText(R.id.data_recycler_item_title,s.getEnglishName());
                 }
 
-
                 holder.setImageUrl(R.id.data_recycler_item_image,s.getPictureUrl(),"2");
-
                 holder.setOnClickListener(R.id.data_recycler_item_details, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -77,9 +79,10 @@ public class DataActivity extends BaseActivity {
                 holder.setOnClickListener(R.id.data_recycler_item_image_materials, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent  = new Intent(mContext,MaterialsActivity.class);
-                        intent.putExtra("courseId",s.getId());
-                        startActivity(intent);
+                            Intent intent  = new Intent(mContext,MaterialsActivity.class);
+                            intent.putExtra("courseId",s.getId());
+                            startActivity(intent);
+
                     }
                 });
             }
@@ -112,6 +115,41 @@ public class DataActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void isNull(final String id , final Button v){
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("courseId",id);
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("digest","");
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
+        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.getCoursewareById, map, TAG, new SpotsCallBack<CoursewareById>(mContext) {
+            @Override
+            public void onSuccess(Response response, CoursewareById data) {
+                if (data.getCode().equals("200")){
+                    if (data.getFileList().size() == 0){
+                        v.setBackground(ContextCompat.getDrawable(mContext,R.drawable.button_unclick_shape) );
+                        v.setTextColor(ContextCompat.getColor(mContext,R.color.button_unclick_shape_text_color));
+                        v.setEnabled(false);
+                    }else{
+                        v.setBackground(ContextCompat.getDrawable(mContext,R.drawable.button_click_shape) );
+                        v.setTextColor(ContextCompat.getColor(mContext,R.color.white));
+                        v.setEnabled(true);
+                    }
+
+
+                }else {
+                    showMessageDialog(data.getMessage(),mContext);
+                }
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+
     }
     @Override
     public int getLayoutId() {
