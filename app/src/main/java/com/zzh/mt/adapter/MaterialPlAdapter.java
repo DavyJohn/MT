@@ -35,6 +35,7 @@ public class MaterialPlAdapter extends RecyclerView.Adapter<MaterialPlAdapter.Vi
     private Context context;
     private LayoutInflater inflater;
     private Cursor cursor;
+    private float progressnum ;
     LinkedList<Integer> poslist = new LinkedList<>();
     private LinkedList<CoursewareById.CoursewareByIdData> list = new LinkedList<>();
     public MaterialPlAdapter(Context context){
@@ -57,6 +58,10 @@ public class MaterialPlAdapter extends RecyclerView.Adapter<MaterialPlAdapter.Vi
         poslist.addAll(indexs);
         notifyDataSetChanged();
     }
+
+    public void addprogress(float progress){
+        progressnum = progress;
+    }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = inflater.inflate(R.layout.material_pl_main_layout,parent,false);
@@ -69,6 +74,15 @@ public class MaterialPlAdapter extends RecyclerView.Adapter<MaterialPlAdapter.Vi
         holder.mTitle.setText(list.get(position).getCoursewareName()+"."+list.get(position).getCoursewareType());
         holder.mSize.setText(CommonUtil.getDataSize(Long.parseLong(list.get(position).getCoursewareSize())));
         holder.mProgress.setVisibility(View.GONE);
+        if (progressnum >0.0){
+            holder.mProgress.setVisibility(View.VISIBLE);
+            holder.mProgress.setProgress((int)(100*progressnum));
+        }else if (progressnum == 1.1){
+            holder.mSize.setText("下载失败");
+        }else if (progressnum == 1.0){
+            holder.mProgress.setVisibility(View.GONE);
+            holder.mSize.setText(R.string.Finished);
+        }
         if (poslist.size()!= 0){
             for (int i=0;i<poslist.size();i++){
                 if (position == poslist.get(i)){

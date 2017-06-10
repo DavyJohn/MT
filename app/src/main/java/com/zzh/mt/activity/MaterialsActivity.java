@@ -64,9 +64,7 @@ public class MaterialsActivity extends BaseActivity implements SearchView.OnQuer
     private LinkedList<CoursewareById.CoursewareByIdData> list = new LinkedList<>();
     private LinkedList<Integer> postions = new LinkedList<>();
     private LinkedList<String> urllist = new LinkedList<>();
-    private Cursor cursor;
     private AlertDialog dialog;
-    private int success = 1;
     private TextView mTitle;
     private HorizontalProgressBarWithNumber progressbar;
     MenuItem item = null;
@@ -124,13 +122,17 @@ public class MaterialsActivity extends BaseActivity implements SearchView.OnQuer
                         .setTitle("下载")
                         .setView(view)
                         .create();
-                dialog.show();
+//                dialog.show();
                 for ( int m=0;m<urllist.size();m++){
                         num = m;
                         mTitle = (TextView) view.findViewById(R.id.dialog_title);
                         mTitle.setText(list.get(postions.get(m)).getCoursewareName());
                         progressbar = (HorizontalProgressBarWithNumber) view.findViewById(R.id.dialog_progress);
                         final String urlid = list.get(postions.get(m)).getId();
+//                        final RecyclerView.ViewHolder holder = mPlRecycler.findViewHolderForAdapterPosition(postions.get(m));
+//                        if (holder != null && holder instanceof ItemHolder){
+//
+//                        }
                         OkHttpUtils
                                 .get()
                                 .url(urllist.get(m))
@@ -141,11 +143,15 @@ public class MaterialsActivity extends BaseActivity implements SearchView.OnQuer
                                         Log.e(TAG, "onError :" + e.getMessage());
                                         //// TODO: 2017/6/10  会报空指针 
                                         mTextDown.setText("下载失败");
+                                        mPladapter.addprogress((float) 1.1);
+                                        mPladapter.notifyItemChanged(postions.get(postions.size()-num-1));
                                     }
 
                                     @Override
                                     public void inProgress(float progress, long total, int id) {
-                                        progressbar.setProgress((int)(100*progress));
+//                                        progressbar.setProgress((int)(100*progress));
+                                        mPladapter.addprogress((float) 0.1);
+                                        mPladapter.notifyItemChanged(postions.get(num));
                                         System.out.print(progress);
                                     }
 
@@ -159,7 +165,6 @@ public class MaterialsActivity extends BaseActivity implements SearchView.OnQuer
                                             urllist.clear();
                                         }
                                         dialog.dismiss();
-                                        success = 1;
                                     }
 
                                 });
