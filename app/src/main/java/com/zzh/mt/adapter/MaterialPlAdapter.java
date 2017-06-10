@@ -111,7 +111,7 @@ public class MaterialPlAdapter extends RecyclerView.Adapter<MaterialPlAdapter.Vi
         @BindView(R.id.pl_title)
         TextView mTitle;
         @BindView(R.id.pl_progressbar)
-        HorizontalProgressBarWithNumber mProgress;
+        public HorizontalProgressBarWithNumber mProgress;
         @BindView(R.id.pl_size)
         TextView mSize;
         public ViewHolder(View itemView) {

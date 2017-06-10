@@ -124,18 +124,13 @@ public class MaterialsActivity extends BaseActivity implements SearchView.OnQuer
                         .setTitle("下载")
                         .setView(view)
                         .create();
-//                dialog.show();
+                dialog.show();
                 for ( int m=0;m<urllist.size();m++){
-                    LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
-                    View root =   layoutManager.findViewByPosition(1);
-                    LinearLayout layout = (LinearLayout) root;
-                    progressbar = (HorizontalProgressBarWithNumber) layout.findViewById(R.id.pl_progressbar);
                         num = m;
-//                        mTitle = (TextView) view.findViewById(R.id.dialog_title);
-//                        mTitle.setText(list.get(postions.get(m)).getCoursewareName());
-//                        progressbar = (HorizontalProgressBarWithNumber) view.findViewById(R.id.dialog_progress);
+                        mTitle = (TextView) view.findViewById(R.id.dialog_title);
+                        mTitle.setText(list.get(postions.get(m)).getCoursewareName());
+                        progressbar = (HorizontalProgressBarWithNumber) view.findViewById(R.id.dialog_progress);
                         final String urlid = list.get(postions.get(m)).getId();
-
                         OkHttpUtils
                                 .get()
                                 .url(urllist.get(m))
@@ -144,6 +139,7 @@ public class MaterialsActivity extends BaseActivity implements SearchView.OnQuer
                                     @Override
                                     public void onError(Call call, Exception e, int id) {
                                         Log.e(TAG, "onError :" + e.getMessage());
+                                        //// TODO: 2017/6/10  会报空指针 
                                         mTextDown.setText("下载失败");
                                     }
 
@@ -167,11 +163,7 @@ public class MaterialsActivity extends BaseActivity implements SearchView.OnQuer
                                     }
 
                                 });
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    continue;
 
                 }
             }
