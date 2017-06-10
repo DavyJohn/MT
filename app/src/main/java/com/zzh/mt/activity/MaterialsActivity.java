@@ -115,6 +115,7 @@ public class MaterialsActivity extends BaseActivity implements SearchView.OnQuer
             }else {
                 for (int i=0;i<postions.size();i++){
                     urllist.add(list.get(postions.get(i)).getCoursewareUrl());
+
                 }
                 mTextDown.setText("正在下载");
                 //xiazai
@@ -123,13 +124,18 @@ public class MaterialsActivity extends BaseActivity implements SearchView.OnQuer
                         .setTitle("下载")
                         .setView(view)
                         .create();
-                dialog.show();
+//                dialog.show();
                 for ( int m=0;m<urllist.size();m++){
+                    LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
+                    View root =   layoutManager.findViewByPosition(1);
+                    LinearLayout layout = (LinearLayout) root;
+                    progressbar = (HorizontalProgressBarWithNumber) layout.findViewById(R.id.pl_progressbar);
                         num = m;
-                        mTitle = (TextView) view.findViewById(R.id.dialog_title);
-                        mTitle.setText(list.get(postions.get(m)).getCoursewareName());
-                        progressbar = (HorizontalProgressBarWithNumber) view.findViewById(R.id.dialog_progress);
+//                        mTitle = (TextView) view.findViewById(R.id.dialog_title);
+//                        mTitle.setText(list.get(postions.get(m)).getCoursewareName());
+//                        progressbar = (HorizontalProgressBarWithNumber) view.findViewById(R.id.dialog_progress);
                         final String urlid = list.get(postions.get(m)).getId();
+
                         OkHttpUtils
                                 .get()
                                 .url(urllist.get(m))
