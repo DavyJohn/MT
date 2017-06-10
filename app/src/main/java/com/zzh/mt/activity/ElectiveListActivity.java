@@ -103,7 +103,7 @@ public class ElectiveListActivity extends BaseActivity{
                 }else {
                     holder.setEnable(R.id.training_num,true);
                     holder.setBackgroundRes(R.id.training_num,R.drawable.button_click_shape);
-                    holder.setButtonTextColor(R.id.training_num,R.color.white) ;
+//                    holder.setButtonTextColor(R.id.training_num,R.color.white) ;
                 }
                 holder.setImageUrl(R.id.elective_list_image,d.getPictureUrl(),"2");
                 if (Contants.LANGUAGENEM == 0){

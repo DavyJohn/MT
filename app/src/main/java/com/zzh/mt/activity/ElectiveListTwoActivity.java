@@ -202,7 +202,7 @@ public class ElectiveListTwoActivity extends BaseActivity {
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("operation",operation);
-        map.put("courseNoId",courseNoId);//传入的是后台选中的
+        map.put("courseNoId",id);//传入的是后台选中的
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CurriculumNo, map, TAG, new SpotsCallBack<BaseData>(mContext) {
             @Override
             public void onSuccess(Response response, BaseData data) {

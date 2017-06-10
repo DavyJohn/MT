@@ -42,7 +42,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/myinfo"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textColor="@color/login_btn_color"
                 android:layout_alignParentBottom="true"
                 android:layout_alignParentLeft="true"
