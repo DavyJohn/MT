@@ -33,15 +33,16 @@
                 android:layout_marginLeft="20dp"
                 android:text="@string/open_class"
                 android:textColor="#333"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:text="4月2日——4月15日"
+                android:id="@+id/class_time"
                 android:textColor="#333"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -64,13 +65,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:text="我的选课"
+                android:text="@string/my_class"
                 android:textColor="#333"
-                android:textSize="22sp" />
+                android:textSize="20sp" />
 
             <ImageView
                 android:layout_width="25dp"
-                android:layout_height="35dp"
+                android:layout_height="25dp"
                 android:layout_marginRight="20dp"
                 android:layout_gravity="center"
                 android:src="@drawable/my_elective_right_icpn" />
@@ -78,6 +79,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:visibility="gone"
+            android:id="@+id/courrse_layout"
             android:orientation="horizontal">
 
             <TextView
@@ -85,17 +88,17 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:text="本次选修课程情况和累计课时："
+                android:text="@string/the_courses_and_the_cumulative_class"
                 android:textColor="#333"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="3天"
+                android:id="@+id/courrse_time"
                 android:textColor="#333"
-                android:textSize="20sp" />
+                android:textSize="18sp" />
         </LinearLayout>
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

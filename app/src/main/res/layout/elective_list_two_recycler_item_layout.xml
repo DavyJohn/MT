@@ -3,11 +3,12 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="60dp"
     android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+    android:paddingRight="20dp"
+    android:background="@color/white">
 
     <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_gravity="center"
         android:src="@drawable/elective_date_icon"/>
     <TextView
@@ -15,12 +16,11 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
-        android:text="PM13:00"
-        android:textColor="#333"
-        android:textSize="22sp" />
+        android:textColor="#6c6c6c"
+        android:textSize="20sp" />
     <ImageView
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:layout_marginLeft="20dp"
         android:layout_gravity="center"
         android:src="@drawable/elective_icon"/>
@@ -30,15 +30,15 @@
         android:layout_height="match_parent"
         android:text="剩余座位:"
         android:gravity="center"
-        android:textColor="#333"
-        android:textSize="22sp" />
+        android:textColor="#6c6c6c"
+        android:textSize="20sp" />
     <TextView
         android:id="@+id/elective_list_two_item_num"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="#333"
+        android:textColor="#6c6c6c"
         android:gravity="center"
-        android:textSize="22sp"
+        android:textSize="20sp"
         android:text="3"/>
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,12 +46,18 @@
         android:orientation="horizontal"
         android:gravity="end">
 
-        <CheckBox
+        <!--<CheckBox-->
+            <!--android:layout_width="30dp"-->
+            <!--android:layout_height="30dp"-->
+            <!--android:layout_gravity="center"-->
+            <!--android:id="@+id/elective_checkbox"-->
+            <!--android:background="@drawable/checkbox_addpending"-->
+            <!--android:button="@null"/>-->
+        <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="center"
             android:id="@+id/elective_checkbox"
-            android:background="@drawable/checkbox_addpending"
-            android:button="@null"/>
+            android:src="@drawable/un_checkbox"/>
     </LinearLayout>
 </LinearLayout>

@@ -37,7 +37,7 @@
                     android:textColor="#6c6c6c"
                     android:textSize="18sp"
                     android:layout_gravity="center"
-                    android:text="语言设置"
+                    android:text="@string/Language"
                     android:layout_marginLeft="10dp"/>
                 <ImageView
                     android:layout_width="25dp"
@@ -60,7 +60,7 @@
                     android:textColor="#6c6c6c"
                     android:textSize="18sp"
                     android:layout_gravity="center"
-                    android:text="密码更新"
+                    android:text="@string/Change_Password"
                     android:layout_marginLeft="10dp"/>
                 <ImageView
                     android:layout_width="25dp"

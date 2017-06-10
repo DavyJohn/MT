@@ -3,8 +3,11 @@
     //修改menu文字点击颜色
     <color name="colorPrimary">#F4B335</color>
     //修改状态栏颜色
-    <color name="colorPrimaryDark">#D2F557</color>
+    <color name="colorPrimaryDark">#000</color>
+
     <color name="colorAccent">#FF4081</color>
+
+
     <color name="black">#000</color>
     <color name="main_color">#D2F557</color>
     <color name="toolbarTextColor">#fff</color>
@@ -19,4 +22,6 @@
     <color name="login_btn_color">#F4B335</color>
     <color name="login_text_color">#333</color>
     <color name="text_down_color">#6c6c6c</color>
+    <color name="button_unclick_shape_text_color">#b3b3b3</color>
+
 </resources>

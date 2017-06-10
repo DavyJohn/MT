@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:title="已修：3/10"
+        android:title=""
         app:showAsAction="always"
         android:id="@+id/elective_menu_id"/>
 </menu>

@@ -11,6 +11,7 @@ import android.os.StrictMode;
 import android.support.annotation.RequiresApi;
 import android.support.multidex.MultiDex;
 
+import com.pgyersdk.crash.PgyCrashManager;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -92,7 +93,7 @@ public class MyApplication extends Application {
 		Beta.showInterruptedStrategy = true;
 		Beta.canShowUpgradeActs.add(MainActivity.class);
 		Bugly.init(getApplicationContext(),"91cb31c05e",true);
-
+		PgyCrashManager.register(this);
 	}
 
 	public static Handler getHandler()

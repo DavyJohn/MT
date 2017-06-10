@@ -11,7 +11,9 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:background="@drawable/course_details_icon"/>
+            android:scaleType="fitXY"
+            android:id="@+id/course_details_image"
+            android:src="@drawable/course_details_icon"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -20,9 +22,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="22sp"
+                android:textSize="20sp"
+                android:id="@+id/course_details_title"
                 android:textColor="#fefefe"
-                android:text="javascript基础"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"/>
         </LinearLayout>
@@ -32,7 +34,37 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
-        android:background="@color/base_bg"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="15dp"
+            android:text="课程简介"
+            android:textColor="#333"
+            android:textSize="20sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="10dp"
+            android:textColor="#6c6c6c"
+            android:textSize="19sp"
+            android:id="@+id/course_details_introduce"
+            android:layout_marginBottom="20dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/courrse_details_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:visibility="gone"
+        android:background="@color/white"
         android:orientation="vertical">
 
         <TextView
@@ -40,80 +72,71 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
-            android:text="课程简介"
-            android:textColor="#333"
-            android:textSize="22sp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="18dp"
-            android:text="JacaScript一种之一是脚本语言，是一种动态类型，弱类型。基于原型的语言，内置支持类型。他的解释器被称为JavaScript引擎，位浏览器的一部分。"
-            android:textColor="#6c6c6c"
-            android:textSize="20sp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginTop="15dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="20dp"
-            android:layout_marginTop="15dp"
             android:text="课程信息"
             android:textColor="#333"
-            android:textSize="22sp" />
+            android:textSize="20sp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_marginBottom="19dp"
+            android:orientation="horizontal"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp">
+
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/elective_date_icon"/>
-            <TextView
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:gravity="left"
-                android:id="@+id/course_details_date"
-                android:text="PM13:00"
-                android:textColor="#6c6c6c"/>
-            <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginLeft="20dp"
-                android:src="@drawable/elective_icon"/>
+                android:id="@+id/imageView2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:src="@drawable/elective_date_icon" />
 
             <TextView
+                android:id="@+id/course_details_date"
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
-                android:text="PM13:00"
-                android:gravity="left"
-                android:id="@+id/course_details_where"
-                android:textColor="#6c6c6c"/>
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:gravity="left|center"
+                android:textColor="#6c6c6c"
+                android:textSize="16sp" />
+
             <ImageView
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:src="@drawable/cours_details_date"/>
+                android:src="@drawable/elective_icon" />
+
+            <TextView
+                android:id="@+id/course_details_where"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:gravity="left|center"
+                android:textColor="#6c6c6c"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/cours_details_date" />
 
             <TextView
                 android:id="@+id/course_details_clock"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left"
-                android:text="PM13:00"
+                android:gravity="left|center"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:textColor="#6c6c6c"
-                android:textSize="20sp" />
+                android:textSize="16sp" />
 
         </LinearLayout>
     </LinearLayout>

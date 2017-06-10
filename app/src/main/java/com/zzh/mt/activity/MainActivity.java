@@ -1,8 +1,8 @@
 package com.zzh.mt.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.icu.text.UnicodeSetSpanner;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -11,26 +11,36 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+import com.pgyersdk.javabean.AppBean;
+import com.pgyersdk.update.PgyUpdateManager;
+import com.pgyersdk.update.UpdateManagerListener;
 import com.squareup.picasso.Picasso;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.Callback;
+import com.zhy.http.okhttp.callback.StringCallback;
 import com.zzh.mt.R;
 import com.zzh.mt.base.BaseActivity;
 import com.zzh.mt.base.CommonAdapter;
-import com.zzh.mt.base.MultiItemTypeAdapter;
 import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
-import com.zzh.mt.http.SpotsCallBack;
+import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.BannerEntity;
+import com.zzh.mt.mode.BaseData;
+import com.zzh.mt.mode.UserData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.SharedPreferencesUtil;
 import com.zzh.mt.widget.CircleImageView;
 import com.zzh.mt.widget.banner.BannerView;
 import com.zzh.mt.wrapper.HeaderAndFooterWrapper;
@@ -40,6 +50,7 @@ import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import okhttp3.Call;
 import okhttp3.Response;
 
 public class MainActivity extends BaseActivity
@@ -47,11 +58,13 @@ public class MainActivity extends BaseActivity
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private ImageView mNavImage;
+    private android.app.AlertDialog dialog;
     DrawerLayout drawer;
+    private UserData userData;
     ActionBarDrawerToggle toggle;
     private TextView mNickName,mInfo;
     private HeaderAndFooterWrapper mHeaderAndFooterWrapper;
-    private LinkedList<BannerEntity.Head> banners = new LinkedList<>();
+    private LinkedList<BannerEntity.ImageData> banners = new LinkedList<>();
     private CommonAdapter<Integer> adapter;
     private Integer[] imageData = {R.drawable.ic_menu_elective,R.drawable.ic_menu_data,R.drawable.main_item_data};
     private Integer[] data = {R.string.my_courde,R.string.class_schedule,R.string.Course_materials};
@@ -67,16 +80,50 @@ public class MainActivity extends BaseActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (SharedPreferencesUtil.getInstance(mContext).getString("userid") == null ||TextUtils.isEmpty(SharedPreferencesUtil.getInstance(mContext).getString("userid"))){
+            startActivity(new Intent(mContext,LoginActivity.class));
+            finish();
+        }
         MyApplication.getInstance().add(this);
         ButterKnife.bind(this);
+        getInfo();
+        //更新
+        PgyUpdateManager.register(this, "com.zzh.mt.fileprovider", new UpdateManagerListener() {
+            @Override
+            public void onNoUpdateAvailable() {
+
+            }
+
+            @Override
+            public void onUpdateAvailable(String result) {
+                // 将新版本信息封装到AppBean中
+                final AppBean appBean = getAppBeanFromString(result);
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("更新")
+                        .setMessage("检测到新的版本")
+                        .setNegativeButton(
+                                "确定",
+                                new DialogInterface.OnClickListener() {
+
+                                    @Override
+                                    public void onClick(
+                                            DialogInterface dialog,
+                                            int which) {
+                                        startDownloadTask(
+                                                MainActivity.this,
+                                                appBean.getDownloadURL());
+                                    }
+                                }).show();
+            }
+        });
+        //end
+
         hasToolBar(false);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP){
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN|View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
-        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setHomeButtonEnabled(true);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
                 this,
@@ -85,14 +132,15 @@ public class MainActivity extends BaseActivity
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
+        toggle.setDrawerIndicatorEnabled(true);
         toggle.syncState();
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);//防止icon 为灰色
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
         mNavImage = (CircleImageView) headerLayout.findViewById(R.id.nav_header_image);
-        Picasso.with(mContext).load(R.drawable.imag_demo).placeholder(R.drawable.image_ing).error(R.drawable.image_ing).into(mNavImage);
         mInfo = (TextView) headerLayout.findViewById(R.id.nav_header_info);
+        mNickName = (TextView) headerLayout.findViewById(R.id.nav_header_nickname);
         mNavImage.setOnClickListener(this);
         mInfo.setOnClickListener(this);
         initRecycler();
@@ -108,15 +156,6 @@ public class MainActivity extends BaseActivity
         mSwipe.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light, android.R.color.holo_red_light);
 
-        mSwipe.post(new Runnable() {
-            @Override
-            public void run() {
-                if (mSwipe.isRefreshing() == false){
-                    mSwipe.setRefreshing(true);
-                    banner();
-                }
-            }
-        });
         mRecycler.setHasFixedSize(true);
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         adapter = new CommonAdapter<Integer>(this,R.layout.main_recycler_item_layout,list) {
@@ -138,6 +177,7 @@ public class MainActivity extends BaseActivity
             }
         };
         mHeaderAndFooterWrapper = new HeaderAndFooterWrapper(adapter);
+        //设置 banner
         mBanner= new BannerView(mContext);
         mHeaderAndFooterWrapper.addHeaderView(mBanner);
         mRecycler.setAdapter(adapter);
@@ -176,30 +216,64 @@ public class MainActivity extends BaseActivity
                 banner();
             }
         });
-
-
     }
 
     private void banner(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
-        mOkHttpHelper.post(mContext, Contants.BASEBANNERURL+Contants.BANNERURL, map, TAG, new
+        map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("digest","");
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
+        mOkHttpHelper.post(mContext, Contants.BASEURL+Contants.BANNERURL, map, TAG, new
                 SpotsCallBack<BannerEntity>(mContext) {
                     @Override
                     public void onSuccess(Response response, BannerEntity data) {
-                        if (mSwipe.isRefreshing()){
-                            mSwipe.setRefreshing(false);
-                        }
+                        mSwipe.setRefreshing(false);
                         banners.clear();
-                        banners.addAll(data.getResult().getAd().getHead());
+                        banners.addAll(data.getImageList());
                         mBanner.delayTime(5).build(banners);
                     }
-
                     @Override
                     public void onError(Response response, int code, Exception e) {
 
                     }
                 });
+
     }
+    //获取个人信息昵称头像
+    private void getInfo(){
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("digest","");
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.GETUSER, map, TAG, new SpotsCallBack<UserData>(mContext) {
+            @Override
+            public void onSuccess(Response response, UserData data) {
+                if (data.getCode().equals("200")){
+                    userData = data;
+                    Contants.Deparmentname = userData.getUserInfo().getDepartment().getDepartmentName();
+                    Contants.Deparmentid = userData.getUserInfo().getDepartmentId();
+                    if (userData.getUserInfo().getSex().equals("1")){
+                        Picasso.with(mContext).load(data.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_b).error(R.drawable.image_b).into(mNavImage);
+                    }else {
+                        Picasso.with(mContext).load(data.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_g).error(R.drawable.image_g).into(mNavImage);
+                    }
+                    mNickName.setText(data.getUserInfo().getNickName());
+                }else {
+                    showMessageDialog(data.getMessage(),mContext);
+                }
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_main;
@@ -211,7 +285,6 @@ public class MainActivity extends BaseActivity
             return true;
         }
         return super.onOptionsItemSelected(item);
-
     }
 
     @Override
@@ -256,9 +329,7 @@ public class MainActivity extends BaseActivity
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
         } else if (id == R.id.nav_exit) {
-          //退出
-            startActivity(new Intent(mContext,LoginActivity.class));
-            finish();
+            quite("确认退出？",mContext);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -269,13 +340,23 @@ public class MainActivity extends BaseActivity
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.nav_header_image:
-                showToast("修改头像");
-                break;
             case R.id.nav_header_info:
-                showToast("编辑资料");
+                Intent intent = new Intent(mContext,EditInfoActivity.class);
+                intent.putExtra("headurl",userData.getUserInfo().getHeadUrl());
+                intent.putExtra("nickname",userData.getUserInfo().getNickName());
+                intent.putExtra("brandname",userData.getUserInfo().getBrandName());
+                intent.putExtra("sex",userData.getUserInfo().getSex());
+                startActivity(intent);
                 break;
 
         }
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getInfo();
+    }
+
+
 }

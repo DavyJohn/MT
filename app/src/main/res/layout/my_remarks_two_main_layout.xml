@@ -10,6 +10,7 @@
         android:background="@color/white"
         android:orientation="vertical"
         android:paddingRight="20dp"
+        android:layout_marginTop="60dp"
         android:paddingLeft="20dp">
         <LinearLayout
             android:layout_width="match_parent"
@@ -28,7 +29,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#333"
                 android:textSize="20sp"
-                android:text="AM 09:00"
+                android:id="@+id/my_remarks_time"
                 android:layout_gravity="center"/>
         </LinearLayout>
 
@@ -49,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#333"
                 android:textSize="20sp"
-                android:text="javascript基础"
+                android:id="@+id/my_remarks_title"
                 android:layout_gravity="center"/>
         </LinearLayout>
 
@@ -71,11 +72,25 @@
                 android:textColor="#333"
                 android:textSize="20sp"
                 android:text="课堂"
+                android:id="@+id/remarks_type"
                 android:layout_gravity="center"/>
         </LinearLayout>
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center|left"
+        android:orientation="vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#333"
+            android:textSize="20sp"
+            android:layout_marginLeft="10dp"
+            android:text="我的备注"/>
+    </LinearLayout>
     //输入框
     <LinearLayout
         android:layout_width="match_parent"
@@ -84,6 +99,12 @@
         android:layout_marginTop="10dp"
         android:padding="10dp"
         android:background="@color/white">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#6c6c6c"
+            android:visibility="gone"
+            android:id="@+id/remarks_two_text"/>
         <EditText
             android:layout_width="match_parent"
             android:layout_height="160dp"

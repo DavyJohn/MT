@@ -9,7 +9,7 @@ import java.util.LinkedList;
 public class BannerEntity {
     private String code;
     private String message;
-    private ResultData result;
+    private LinkedList<ImageData> imageList;
 
     public String getCode() {
         return code;
@@ -27,44 +27,18 @@ public class BannerEntity {
         this.message = message;
     }
 
-    public ResultData getResult() {
-        return result;
+    public LinkedList<ImageData> getImageList() {
+        return imageList;
     }
 
-    public void setResult(ResultData result) {
-        this.result = result;
+    public void setImageList(LinkedList<ImageData> imageList) {
+        this.imageList = imageList;
     }
 
-    public class ResultData{
-        private AdData ad;
-
-        public AdData getAd() {
-            return ad;
-        }
-
-        public void setAd(AdData ad) {
-            this.ad = ad;
-        }
-    }
-
-    public class AdData{
-        private LinkedList<Head> head;
-
-        public LinkedList<Head> getHead() {
-            return head;
-        }
-
-        public void setHead(LinkedList<Head> head) {
-            this.head = head;
-        }
-    }
-
-    public class Head{
+    public class ImageData{
         private String id;
-        private String img;
-        private String link;
-        private String pub_time;
-        private String title;
+        private String content;
+        private String imageUrl;
 
         public String getId() {
             return id;
@@ -74,36 +48,20 @@ public class BannerEntity {
             this.id = id;
         }
 
-        public String getImg() {
-            return img;
+        public String getContent() {
+            return content;
         }
 
-        public void setImg(String img) {
-            this.img = img;
+        public void setContent(String content) {
+            this.content = content;
         }
 
-        public String getLink() {
-            return link;
+        public String getImageUrl() {
+            return imageUrl;
         }
 
-        public void setLink(String link) {
-            this.link = link;
-        }
-
-        public String getPub_time() {
-            return pub_time;
-        }
-
-        public void setPub_time(String pub_time) {
-            this.pub_time = pub_time;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
+        public void setImageUrl(String imageUrl) {
+            this.imageUrl = imageUrl;
         }
     }
 }

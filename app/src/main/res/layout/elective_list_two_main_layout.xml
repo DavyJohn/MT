@@ -14,6 +14,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/imag_demo"
+            android:id="@+id/elective_two_image"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"/>
         <LinearLayout
@@ -29,7 +30,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="22sp"
+                    android:textSize="20sp"
                     android:textColor="#333"
                     android:id="@+id/elective_list_title"
                     android:text="javascript基础"
@@ -40,14 +41,16 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
                     android:src="@drawable/my_elective_recycler_item_date"/>
+
                 <TextView
+                    android:id="@+id/elective_two_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2天"
                     android:layout_gravity="center"
-                    android:textSize="22sp"
                     android:layout_marginLeft="10dp"
-                    android:textColor="#6c6c6c"/>
+                    android:text="2天"
+                    android:textColor="#6c6c6c"
+                    android:textSize="20sp" />
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -55,25 +58,38 @@
                 android:layout_weight="1"
                 android:layout_marginRight="20dp"
                 android:orientation="horizontal">
-                <ImageView
+                <Button
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="40dp"
-                    android:src="@drawable/change_sel"/>
-                <ImageView
+                    android:id="@+id/elective_change"
+                    android:layout_height="37dp"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:text="@string/modify"
+                    android:textAllCaps="false"
+                    android:background="@drawable/button_click_shape"/>
+                <Button
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="40dp"
+                    android:id="@+id/elective_cancel"
+                    android:layout_height="37dp"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/cancel_sel"/>
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:text="@string/cancel"
+                    android:background="@drawable/button_click_shape"/>
 
-                <ImageView
+                <Button
                     android:layout_width="0dp"
                     android:layout_weight="1"
-                    android:layout_height="40dp"
+                    android:layout_height="37dp"
                     android:id="@+id/elective_list_two_dedails"
                     android:layout_marginLeft="10dp"
-                    android:src="@drawable/my_elective_recycler_item_details_btn"/>
+                    android:text="@string/deteils"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"
+                    android:background="@drawable/button_click_shape"/>
 
             </LinearLayout>
         </LinearLayout>
@@ -82,5 +98,6 @@
     <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
         android:id="@+id/elective_list_two_recycler"/>
 </LinearLayout>

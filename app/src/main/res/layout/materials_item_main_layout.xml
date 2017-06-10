@@ -3,34 +3,52 @@
     android:orientation="horizontal" android:layout_width="match_parent"
     android:layout_height="60dp"
     android:background="@color/white">
-        
-        <CheckBox
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_gravity="center"
-            android:id="@+id/materials_check_box"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/checkbox_addpending"
-            android:button="@null"/>
+    <ImageView
+        android:layout_width="45dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/data_image"/>
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_gravity="center"
+        android:gravity="center|left">
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="通过id获取元素.ppt"
+            android:layout_height="wrap_content"
+            android:id="@+id/materials_title"
             android:textColor="#333"
             android:textSize="20sp"
+            android:layout_marginLeft="10dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#6c6c6c"
+            android:textSize="18sp"
             android:layout_marginLeft="10dp"
-            android:gravity="center"/>
+            android:id="@+id/materials_size"/>
+        <com.zzh.mt.widget.HorizontalProgressBarWithNumber
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/progress"
+            android:paddingLeft="10dp"
+            android:visibility="gone"
+            android:paddingRight="10dp"/>
+    </LinearLayout>
+
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
         android:paddingRight="10dp"
         android:gravity="right|center">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#6c6c6c"
-            android:text="320kb"
+            android:id="@+id/materials_down"
             android:textSize="20sp"/>
     </LinearLayout>
 </LinearLayout>

@@ -8,12 +8,14 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.text.util.Linkify;
 import android.util.SparseArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.CompoundButton;
@@ -26,6 +28,7 @@ import android.widget.TextView;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Transformation;
+import com.zzh.mt.R;
 
 /**
  * Created by 腾翔信息 on 2017/5/11.
@@ -124,10 +127,25 @@ public class ViewHolder extends RecyclerView.ViewHolder
         view.setImageBitmap(bitmap);
         return this;
     }
-    public ViewHolder setImageUrl(int viewId,String url)
+    public ViewHolder setImageUrl(int viewId,String url,String sex)
     {
         view = getView(viewId);
-        Picasso.with(mContext).load(url).config(Bitmap.Config.RGB_565).memoryPolicy(MemoryPolicy.NO_CACHE,MemoryPolicy.NO_STORE).transform(transformation).into(view);
+        if (sex.equals("1")){
+            if (url == null || TextUtils.isEmpty(url)){
+                Picasso.with(mContext).load(R.drawable.image_b).into(view);
+            }else {
+                Picasso.with(mContext).load(url).placeholder(R.drawable.image_b).error(R.drawable.image_b).config(Bitmap.Config.RGB_565).transform(transformation).into(view);
+            }
+        }else if (sex.equals("0")){
+            if (url == null || TextUtils.isEmpty(url)){
+                Picasso.with(mContext).load(R.drawable.image_g).into(view);
+            }else {
+                Picasso.with(mContext).load(url).placeholder(R.drawable.image_g).error(R.drawable.image_g).config(Bitmap.Config.RGB_565).transform(transformation).into(view);
+            }
+        }else if (sex.equals("2")){
+            //2代表的是课本
+            Picasso.with(mContext).load(url).placeholder(R.drawable.imag_demo).error(R.drawable.imag_demo).config(Bitmap.Config.RGB_565).transform(transformation).into(view);
+        }
         return this;
     }
 
@@ -136,6 +154,12 @@ public class ViewHolder extends RecyclerView.ViewHolder
         view = getView(viewId);
         view.setImageDrawable(drawable);
         return this;
+    }
+
+    public ViewHolder setClick(int viewId,boolean isClick){
+        view = getView(viewId);
+        view.setClickable(isClick);
+        return  this;
     }
 
     public ViewHolder setBackgroundColor(int viewId, int color)
@@ -152,6 +176,12 @@ public class ViewHolder extends RecyclerView.ViewHolder
         return this;
     }
 
+    public ViewHolder setEnable(int viewId,boolean click ){
+        View view = getView(viewId);
+        view.setEnabled(click);
+        return this;
+    }
+
     public ViewHolder setTextColor(int viewId, int textColor)
     {
         TextView view = getView(viewId);
@@ -159,6 +189,12 @@ public class ViewHolder extends RecyclerView.ViewHolder
         return this;
     }
 
+    public ViewHolder setButtonTextColor(int viewId, int textColor)
+    {
+        Button view = getView(viewId);
+        view.setTextColor(textColor);
+        return this;
+    }
     public ViewHolder setTextColorRes(int viewId, int textColorRes)
     {
         TextView view = getView(viewId);
@@ -186,10 +222,16 @@ public class ViewHolder extends RecyclerView.ViewHolder
     public ViewHolder setVisible(int viewId, boolean visible)
     {
         View view = getView(viewId);
-        view.setVisibility(visible ? View.VISIBLE : View.GONE);
+        view.setVisibility(visible ? View.VISIBLE : View.INVISIBLE);
         return this;
     }
 
+    public ViewHolder setGone(int viewId, boolean visible)
+    {
+        View view = getView(viewId);
+        view.setVisibility(visible ? View.VISIBLE : View.GONE);
+        return this;
+    }
     public ViewHolder linkify(int viewId)
     {
         TextView view = getView(viewId);
