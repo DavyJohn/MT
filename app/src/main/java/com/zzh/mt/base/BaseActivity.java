@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -23,6 +24,7 @@ import com.zzh.mt.http.OkHttpHelper;
 import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.BaseData;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.LocaleUtils;
 import com.zzh.mt.utils.ObserverUtils;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 
@@ -70,33 +72,64 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
         mContentLayout.addView(view);
         ButterKnife.bind(this);
         unbinder = ButterKnife.bind(this);
-        changeAppLanguage();
+//        changeAppLanguage();
+        SharedPreferencesUtil.getInstance(mContext).init(mContext);
+        switchLanguage(SharedPreferencesUtil.getInstance(mContext).getString("language"));
         ObserverUtils.getInstance().addObserver(this);
+
     }
 
-    public void changeAppLanguage() {
-        SharedPreferences preferences = getSharedPreferences("lang", Context.MODE_PRIVATE);
-        String sta = preferences.getString("lang", "zh");//这是SharedPreferences工具类，用于保存设置，代码很简单，自己实现吧
-        // 本地语言设置
-        if (sta.equals("zh")){
-            Contants.LANGUAGENEM = 0;
-        }else if (sta.equals("en")){
+    protected void switchLanguage(String language){
+        Resources resources = getResources();
+        Configuration configuration = resources.getConfiguration();
+        DisplayMetrics dm = resources.getDisplayMetrics();
+        if (language.equals("en")){
+            configuration.locale =  Locale.ENGLISH;
             Contants.LANGUAGENEM = 1;
+        }else {
+            configuration.locale = Locale.SIMPLIFIED_CHINESE;Contants.LANGUAGENEM = 0;
+
         }
-        Locale myLocale = new Locale(sta);
-        Resources res = getResources();
+        resources.updateConfiguration(configuration,dm);
+        SharedPreferencesUtil.getInstance(mContext).putString("language",language);
+    }
+    public void changeAppLanguage() {
+//        SharedPreferences preferences = getSharedPreferences("lang", Context.MODE_PRIVATE);
+//        String sta = preferences.getString("lang", "zh");//这是SharedPreferences工具类，用于保存设置，代码很简单，自己实现吧
+
+        Locale myLocale = LocaleUtils.getUserLocale(mContext);
+        // 本地语言设置
+//        if (sta.equals("zh")){
+//            Contants.LANGUAGENEM = 0;
+//        }else if (sta.equals("en")){
+//            Contants.LANGUAGENEM = 1;
+//        }
+//        Locale myLocale = new Locale(sta);
+        Resources res = mContext.getResources();
         DisplayMetrics dm = res.getDisplayMetrics();
         Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1){
+            conf.setLocale(myLocale);
+        }else {
+            conf.locale =myLocale;
+        }
         res.updateConfiguration(conf, dm);
     }
 
     @Override
     public void update(Observable o, Object arg) {
-        if (arg instanceof Integer) {
-            changeAppLanguage();
-            recreate();
-        }
+//        if (arg instanceof Integer) {
+//            changeAppLanguage();
+//            recreate();
+//        }
+//        changeAppLanguage();
+
+        Intent intent = new Intent(mContext, MainActivity.class);
+        intent.setAction(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+        recreate();
     }
 
     private void initView() {

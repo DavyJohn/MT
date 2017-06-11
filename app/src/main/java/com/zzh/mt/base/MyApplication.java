@@ -3,6 +3,7 @@ package com.zzh.mt.base;
 import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
+import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
@@ -17,11 +18,14 @@ import com.tencent.bugly.beta.Beta;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zzh.mt.activity.MainActivity;
 import com.zzh.mt.R;
+import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.LocaleUtils;
 import com.zzh.mt.utils.NetworkUtils;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Cache;
@@ -52,7 +56,18 @@ public class MyApplication extends Application {
 		StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
 		StrictMode.setVmPolicy(builder.build());
 		builder.detectFileUriExposure();
-
+		//语言切换
+		Locale _UserLocale= LocaleUtils.getUserLocale(this);
+		if (_UserLocale == null){
+			_UserLocale = LocaleUtils.LOCALE_CHINESE;
+		}
+		if (_UserLocale.equals(LocaleUtils.LOCALE_CHINESE)){
+			Contants.LANGUAGENEM = 0;
+		}else {
+			Contants.LANGUAGENEM = 1;
+		}
+		LocaleUtils.updateLocale(this, _UserLocale);
+		//end
 		// handler,用来子线程和主线程通讯
 		mHandler = new Handler();
 		// 主线程
@@ -74,14 +89,6 @@ public class MyApplication extends Application {
 
 		OkHttpUtils.initClient(okHttpClient);
 
-
-		//自定义崩溃
-//		CrashHandler crashHandler = CrashHandler.getInstance();
-//		crashHandler.init(getApplicationContext());
-//	 	JPushInterface.setDebugMode(true);
-//		JPushInterface.init(this);
-		//注意：如果您之前使用过Bugly SDK，请将以下这句注释掉。
-//		CrashReport.init(getApplicationContext(),"7a9e1dda22",false);
 		Beta.autoInit = true;//自动初始化开关
 		Beta.autoCheckUpgrade = true;//自动检查开关
 		Beta.upgradeCheckPeriod = 60 * 1000;//升级检查周期
@@ -191,6 +198,23 @@ public class MyApplication extends Application {
 			cachePath = context.getCacheDir().getPath();
 		}
 		return cachePath;
+	}
+
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		Locale _UserLocale=LocaleUtils.getUserLocale(this);
+		//系统语言改变了应用保持之前设置的语言
+		if (_UserLocale != null) {
+			Locale.setDefault(_UserLocale);
+			Configuration _Configuration = new Configuration(newConfig);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+				_Configuration.setLocale(_UserLocale);
+			} else {
+				_Configuration.locale =_UserLocale;
+			}
+			getResources().updateConfiguration(_Configuration, getResources().getDisplayMetrics());
+		}
 	}
 
 }

@@ -60,5 +60,5 @@ public class Contants {
     public static String Deparmentid = null;
     public static String Deparmentname = null;
     //语言问题
-    public static int LANGUAGENEM = 0;
+    public static int LANGUAGENEM = -1;
 }

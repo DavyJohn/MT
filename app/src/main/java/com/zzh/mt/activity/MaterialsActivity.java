@@ -142,15 +142,14 @@ public class MaterialsActivity extends BaseActivity implements SearchView.OnQuer
                                     public void onError(Call call, Exception e, int id) {
                                         Log.e(TAG, "onError :" + e.getMessage());
                                         //// TODO: 2017/6/10  会报空指针 
-                                        mTextDown.setText("下载失败");
                                         mPladapter.addprogress((float) 1.1);
-                                        mPladapter.notifyItemChanged(postions.get(postions.size()-num-1));
+                                        mPladapter.notifyItemChanged(postions.get(postions.size()-num-1));//数据倒序取出
                                     }
 
                                     @Override
                                     public void inProgress(float progress, long total, int id) {
 //                                        progressbar.setProgress((int)(100*progress));
-                                        mPladapter.addprogress((float) 0.1);
+                                        mPladapter.addprogress(progress);
                                         mPladapter.notifyItemChanged(postions.get(num));
                                         System.out.print(progress);
                                     }

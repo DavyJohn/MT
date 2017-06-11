@@ -2,6 +2,7 @@ package com.zzh.mt.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 /**
  * Created by come on 2015/12/3.
@@ -28,6 +29,12 @@ public class SharedPreferencesUtil {
 
     public String getString(String key){
         return sp.getString(key, "");
+    }
+
+    public static void init(Context context){
+        if (null == sharedPreferences){
+            sharedPreferences = (SharedPreferencesUtil) PreferenceManager.getDefaultSharedPreferences(context);
+        }
     }
 
     public void putString(String key, String value){

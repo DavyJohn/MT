@@ -58,7 +58,6 @@ public class MainActivity extends BaseActivity
 
     private static final String TAG = MainActivity.class.getSimpleName();
     private ImageView mNavImage;
-    private android.app.AlertDialog dialog;
     DrawerLayout drawer;
     private UserData userData;
     ActionBarDrawerToggle toggle;
@@ -119,10 +118,11 @@ public class MainActivity extends BaseActivity
         //end
 
         hasToolBar(false);
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.main_toolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
+        TextView textView = (TextView) toolbar.findViewById(R.id.toolbar_text);
+        textView.setText(R.string.main_page);
         getSupportActionBar().setHomeButtonEnabled(true);
         drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         toggle = new ActionBarDrawerToggle(
@@ -137,6 +137,7 @@ public class MainActivity extends BaseActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setItemIconTintList(null);//防止icon 为灰色
+        navigationView.inflateMenu(R.menu.activity_main_drawer);
         View headerLayout = navigationView.inflateHeaderView(R.layout.nav_header_main);
         mNavImage = (CircleImageView) headerLayout.findViewById(R.id.nav_header_image);
         mInfo = (TextView) headerLayout.findViewById(R.id.nav_header_info);
@@ -357,6 +358,4 @@ public class MainActivity extends BaseActivity
         super.onResume();
         getInfo();
     }
-
-
 }

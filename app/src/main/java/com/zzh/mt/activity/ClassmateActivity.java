@@ -30,6 +30,7 @@ import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.Observable;
 import java.util.Set;
 
 import butterknife.BindView;
@@ -270,4 +271,6 @@ public class ClassmateActivity extends BaseActivity {
     public int getLayoutId() {
         return R.layout.classmate_main_activity;
     }
+
+
 }
