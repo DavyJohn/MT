@@ -168,8 +168,8 @@ public class ScheduleActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, ClassTimeData data) {
                 if (data.getCode().equals("200")){
-                    mTextrequired.setText("已修:"+data.getHaveClassHoursRequired()+"/"+data.getTotalClassHoursRequired());
-                    mTextelective.setText("已修:"+data.getHaveClassHoursElective()+"/"+data.getTotalClassHoursElective());
+                    mTextrequired.setText(getString(R.string.has)+":"+data.getHaveClassHoursRequired()+"/"+data.getTotalClassHoursRequired());
+                    mTextelective.setText(getString(R.string.has)+":"+data.getHaveClassHoursElective()+"/"+data.getTotalClassHoursElective());
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
                 }

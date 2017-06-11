@@ -79,4 +79,6 @@
     <string name="MultiSelect">MultiSelect</string>
     <string name="Download">Download</string>
     <string name="Finished">Finished</string>
+    <string name="M">M</string>
+    <string name="D">D</string>
 </resources>

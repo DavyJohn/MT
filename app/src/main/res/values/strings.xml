@@ -81,4 +81,6 @@
     <string name="MultiSelect">批量下载</string>
     <string name="Download">确认下载</string>
     <string name="Finished">已下载</string>
+    <string name="M">月</string>
+    <string name="D">日</string>
 </resources>

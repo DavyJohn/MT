@@ -74,7 +74,7 @@ public class CourseActivity extends BaseActivity {
         adapter = new CommonAdapter<CurriculumData.Curriculum>(mContext,R.layout.elevtive_recycer_item_layout,list) {
             @Override
             protected void convert(ViewHolder holder, final CurriculumData.Curriculum s, final int position) {
-                holder.setText(R.id.elevtive_date,s.getClassHours()+"天");
+                holder.setText(R.id.elevtive_date,s.getClassHours()+getString(R.string.day));
                 if (Contants.LANGUAGENEM == 0){
                     holder.setText(R.id.course_name,s.getChineseName());
                 }else if (Contants.LANGUAGENEM == 1){
@@ -133,10 +133,10 @@ public class CourseActivity extends BaseActivity {
                     if (Contants.LANGUAGENEM == 0){
                         item.setTitle(getString(R.string.has)+"："+sunhave+"/"+sumtotal);
                     }else {
-                        item.setTitle("已修"+"："+sunhave+"/"+sumtotal);
+                        item.setTitle(getString(R.string.has)+"："+sunhave+"/"+sumtotal);
                     }
 
-                    mTextTime.setText(data.getStartTime().substring(6,7)+"月"+data.getStartTime().substring(8,10)+"日"+"——"+data.getEndTime().substring(6,7)+"月"+data.getEndTime().substring(8,10)+"日");
+                    mTextTime.setText(data.getStartTime().substring(6,7)+getString(R.string.M)+data.getStartTime().substring(8,10)+getString(R.string.D)+"——"+data.getEndTime().substring(6,7)+getString(R.string.M)+data.getEndTime().substring(8,10)+getString(R.string.D));
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
                 }

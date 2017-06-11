@@ -81,7 +81,7 @@ public class ElectiveListTwoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyApplication.getInstance().add(this);
-        getToolBar().setTitle("选修列表");
+        getToolBar().setTitle(getString(R.string.elective_data));
         getInfo();
         CoursesTrainingSessions();
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
