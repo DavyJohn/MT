@@ -43,7 +43,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
-            android:text="课程简介"
+            android:text="@string/course_introduction"
             android:textColor="#333"
             android:textSize="20sp" />
 
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginTop="15dp"
-            android:text="课程信息"
+            android:text="@string/course_information"
             android:textColor="#333"
             android:textSize="20sp" />
 

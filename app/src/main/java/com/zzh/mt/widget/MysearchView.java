@@ -51,7 +51,7 @@ public class MysearchView extends android.support.v7.widget.AppCompatEditText {
 
     private void DrawSearchIcon(Canvas canvas) {
         if (this.getText().toString().length() == 0) {
-            float textWidth = paint.measureText("搜索");
+            float textWidth = paint.measureText(getContext().getString(R.string.search));
             float textHeight = getFontLeading(paint);
 
             float dx = (getWidth() - searchSize - textWidth - 8) / 2;

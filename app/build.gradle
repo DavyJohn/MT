@@ -52,4 +52,6 @@ dependencies {
 
     //裁剪
     compile 'com.soundcloud.android:android-crop:1.0.1@aar'
+    //xuyils
+    compile 'org.xutils:xutils:3.5.0'
 }

@@ -79,7 +79,8 @@ public class DataActivity extends BaseActivity {
                 holder.setOnClickListener(R.id.data_recycler_item_image_materials, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                            Intent intent  = new Intent(mContext,MaterialsActivity.class);
+                        // TODO: 2017/6/12 xutils  测试
+                            Intent intent  = new Intent(mContext,MaterialsTwoActivity.class);
                             intent.putExtra("courseId",s.getId());
                             startActivity(intent);
 

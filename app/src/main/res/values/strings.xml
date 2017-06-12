@@ -83,4 +83,20 @@
     <string name="Finished">已下载</string>
     <string name="M">月</string>
     <string name="D">日</string>
+    <string name="Downloading">正在下载</string>
+    <string name="cancel_all">全不选</string>
+    <string name="Failed">下载失败</string>
+    <string name="seat">剩余座位:</string>
+    <string name="required_list">我的必修课</string>
+    <string name="elective_list">我的选修课</string>
+    <string name="course_introduction">课程简介</string>
+    <string name="course_information">课程信息</string>
+    <string name="click_down">点击下载</string>
+    <string name="search">搜索</string>
+    <string name="download_management">下载管理</string>
+    <string name="stop">停止</string>
+    <string name="delete">删除</string>
+    <string name="start">开始</string>
+    <string name="waiting">下载中</string>
+
 </resources>

@@ -74,11 +74,12 @@ public class MaterialPlAdapter extends RecyclerView.Adapter<MaterialPlAdapter.Vi
         holder.mTitle.setText(list.get(position).getCoursewareName()+"."+list.get(position).getCoursewareType());
         holder.mSize.setText(CommonUtil.getDataSize(Long.parseLong(list.get(position).getCoursewareSize())));
         holder.mProgress.setVisibility(View.GONE);
-        if (progressnum >0.0){
+
+        if (progressnum > 1.0){
+            holder.mSize.setText(R.string.Failed);
+        }else if ( progressnum > 0.0){
             holder.mProgress.setVisibility(View.VISIBLE);
             holder.mProgress.setProgress((int)(100*progressnum));
-        }else if (progressnum == 1.1){
-            holder.mSize.setText("下载失败");
         }else if (progressnum == 1.0){
             holder.mProgress.setVisibility(View.GONE);
             holder.mSize.setText(R.string.Finished);
@@ -99,6 +100,7 @@ public class MaterialPlAdapter extends RecyclerView.Adapter<MaterialPlAdapter.Vi
                 //已下载的
                 holder.mSize.setText(R.string.Finished);
                 holder.image.setVisibility(View.INVISIBLE);
+                holder.mProgress.setVisibility(View.GONE);
             }else {
                 //未下载的
 

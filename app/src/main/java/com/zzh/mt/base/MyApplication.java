@@ -16,11 +16,14 @@ import com.pgyersdk.crash.PgyCrashManager;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zzh.mt.BuildConfig;
 import com.zzh.mt.activity.MainActivity;
 import com.zzh.mt.R;
 import com.zzh.mt.utils.Contants;
 import com.zzh.mt.utils.LocaleUtils;
 import com.zzh.mt.utils.NetworkUtils;
+
+import org.xutils.x;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -101,6 +104,9 @@ public class MyApplication extends Application {
 		Beta.canShowUpgradeActs.add(MainActivity.class);
 		Bugly.init(getApplicationContext(),"91cb31c05e",true);
 		PgyCrashManager.register(this);
+		//xutils
+		x.Ext.init(mcontext);
+		x.Ext.setDebug(BuildConfig.DEBUG);
 	}
 
 	public static Handler getHandler()

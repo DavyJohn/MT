@@ -92,6 +92,11 @@
         <activity android:name=".activity.MaterialsActivity"
             android:configChanges="locale"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+
+        <activity android:name=".activity.DownloadActivity"/>
+        <activity android:name=".activity.MaterialsTwoActivity"/>
+
+
         <activity android:name=".activity.ClassmateInfoActivity"
             android:configChanges="locale"/>
         <activity android:name=".activity.ModifyPassActivity"

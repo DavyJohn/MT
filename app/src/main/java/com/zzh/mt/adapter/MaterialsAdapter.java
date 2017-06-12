@@ -61,7 +61,7 @@ public class MaterialsAdapter extends RecyclerView.Adapter<MaterialsAdapter.View
         cursor = context.getContentResolver().query(MyProvider.URI,null,null,null,null);
         holder.mSize.setText(CommonUtil.getDataSize(Long.parseLong(list.get(position).getCoursewareSize())));
         holder.mProgress.setVisibility(View.GONE);
-        holder.mDown.setText("点击下载");
+        holder.mDown.setText(R.string.click_down);
         Picasso.with(context).load(list.get(position).getCoursewareUrl()).placeholder(R.drawable.imag_demo).error(R.drawable.imag_demo).into(holder.image
         );
         //数据

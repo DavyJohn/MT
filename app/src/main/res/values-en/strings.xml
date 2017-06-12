@@ -10,7 +10,7 @@
     <string name="center_info">Personal center</string>
     <string name="exit">Logout</string>
     <string name="main_page">Home page</string>
-    <string name="check_out_classmate">View contemporaries</string>
+    <string name="check_out_classmate">My Classmate</string>
     <string name="my_courde">Course Selection</string>
     <string name="my_remarks">My Remark</string>
 
@@ -79,6 +79,22 @@
     <string name="MultiSelect">MultiSelect</string>
     <string name="Download">Download</string>
     <string name="Finished">Finished</string>
-    <string name="M">M</string>
-    <string name="D">D</string>
+    <string name="M">月</string>
+    <string name="D">日</string>
+    <string name="Downloading">Downloading</string>
+    <string name="cancel_all">Cancel All</string>
+    <string name="Failed">Failed</string>
+    <string name="seat">seat:</string>
+    <string name="required_list">Required list</string>
+    <string name="elective_list">Elective list</string>
+    <string name="course_introduction">Course introduction</string>
+    <string name="course_information">Course information</string>
+    <string name="click_down">Download</string>
+    <string name="search">search</string>
+    <string name="download_management">DownLoad Management</string>
+    <string name="stop">Stop</string>
+    <string name="delete">Delete</string>
+    <string name="start">Start</string>
+    <string name="waiting">Waiting</string>
+
 </resources>

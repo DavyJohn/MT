@@ -34,7 +34,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
-                    android:text="我的必修课"
+                    android:text="@string/required_list"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textColor="#333"/>
@@ -83,7 +83,7 @@
                     android:textSize="20sp"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="我的选修课"
+                    android:text="@string/elective_list"
                     android:textColor="#333"/>
                 <TextView
                     android:layout_width="wrap_content"

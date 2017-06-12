@@ -20,6 +20,9 @@ import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.regex.Matcher;
@@ -151,4 +154,22 @@ public class CommonUtil {
         }
 
     }
+
+    //去重STRING
+    public static LinkedList<String> setString(LinkedList<String> data){
+        HashSet<String> set = new LinkedHashSet<String>();
+        set.addAll(data);
+        data.clear();
+        data.addAll(set);
+        return data;
+    }
+    //去重INT
+    public static LinkedList<Integer> setInteger(LinkedList<Integer> data){
+        HashSet<Integer> set = new LinkedHashSet<Integer>();
+        set.addAll(data);
+        data.clear();
+        data.addAll(set);
+        return data;
+    }
+
 }

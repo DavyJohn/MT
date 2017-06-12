@@ -28,6 +28,8 @@ import com.zzh.mt.utils.LocaleUtils;
 import com.zzh.mt.utils.ObserverUtils;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 
+import org.xutils.x;
+
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Observable;
@@ -76,6 +78,8 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
         SharedPreferencesUtil.getInstance(mContext).init(mContext);
         switchLanguage(SharedPreferencesUtil.getInstance(mContext).getString("language"));
         ObserverUtils.getInstance().addObserver(this);
+        //xutils
+        x.view().inject(this);
 
     }
 

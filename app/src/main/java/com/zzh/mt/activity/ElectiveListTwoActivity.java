@@ -181,7 +181,7 @@ public class ElectiveListTwoActivity extends BaseActivity {
                         mText.setText(data.getCourseInfo().getEnglishName());
                     }
 
-                    mTime.setText(data.getCourseInfo().getClassHours()+"天");
+                    mTime.setText(data.getCourseInfo().getClassHours()+getString(R.string.day));
                 }
             }
 
