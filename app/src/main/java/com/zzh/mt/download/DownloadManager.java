@@ -108,7 +108,8 @@ public final class DownloadManager {
         if (downloadInfo == null) {
             downloadInfo = new DownloadInfo();
             downloadInfo.setUrl(url);
-            downloadInfo.setId(Long.parseLong(id));
+            downloadInfo.setUrlid(id);
+//            downloadInfo.setId(Long.parseLong(id));
             downloadInfo.setAutoRename(autoRename);
             downloadInfo.setAutoResume(autoResume);
             downloadInfo.setLabel(label);

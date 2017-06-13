@@ -23,8 +23,8 @@ public class DownloadInfo {
     @Column(name = "url")
     private String url;
 
-//    @Column(name = "urlid")
-//    private String urlid;
+    @Column(name = "urlid")
+    private String urlid;
 
     @Column(name = "label")
     private String label;
@@ -48,13 +48,13 @@ public class DownloadInfo {
         return id;
     }
 
-//    public String getUrlid() {
-//        return urlid;
-//    }
-//
-//    public void setUrlid(String urlid) {
-//        this.urlid = urlid;
-//    }
+    public String getUrlid() {
+        return urlid;
+    }
+
+    public void setUrlid(String urlid) {
+        this.urlid = urlid;
+    }
 
     public void setId(long id) {
         this.id = id;

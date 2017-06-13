@@ -147,7 +147,7 @@ public class MaterialsTwoActivity extends BaseActivity  {
                     DownloadManager.getInstance().startDownload(url,
                             name,
                             list.get(postions.get(i)).getId(),
-                            Environment.getExternalStorageDirectory().getAbsolutePath(),
+                            "/sdcard/MT/" + list.get(postions.get(i)).getCoursewareName()+"."+list.get(postions.get(i)).getCoursewareType(),
                             true,
                             false,null);
                 } catch (DbException e) {
@@ -195,13 +195,12 @@ public class MaterialsTwoActivity extends BaseActivity  {
                         //是wifi
                         try {
                             DownloadManager.getInstance().startDownload(
-//                                    list.get(postion).getCoursewareUrl()
+                                    list.get(postion).getCoursewareUrl()
                                     // TODO: 2017/6/13 测试下载
-                                    "http://dl.bintray.com/wyouflf/maven/org/xutils/xutils/3.5.0/xutils-3.5.0.aar"
+//                                    "http://dl.bintray.com/wyouflf/maven/org/xutils/xutils/3.5.0/xutils-3.5.0.aar"
                                     ,list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
                                     ,list.get(postion).getId()
-//                                    ,Environment.getExternalStorageDirectory().getAbsolutePath()
-                                    ,"/sdcard/xUtils/" + "name" + ".aar"
+                                    ,"/sdcard/MT/" + list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
                                     ,true
                                     ,false
                                     ,null);
@@ -222,7 +221,7 @@ public class MaterialsTwoActivity extends BaseActivity  {
                                                     list.get(postion).getCoursewareUrl()
                                                     ,list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
                                                     ,list.get(postion).getId()
-                                                    ,Environment.getExternalStorageDirectory().getAbsolutePath()
+                                                    ,"/sdcard/MT/" + list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
                                                     ,true
                                                     ,false
                                                     ,null);
@@ -385,6 +384,18 @@ public class MaterialsTwoActivity extends BaseActivity  {
 //        root.setFocusable(true);
 //        root.setFocusableInTouchMode(true);
 //        root.requestFocus();
+
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        if (item.getTitle().equals(getString(R.string.MultiSelect))){
+            initview();
+        }else {
+            initpl();
+        }
     }
 
     @Override

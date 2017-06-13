@@ -21,6 +21,7 @@ import com.zzh.mt.download.DownloadState;
 import com.zzh.mt.download.DownloadViewHolder;
 import com.zzh.mt.sql.MyDatabaseHelper;
 import com.zzh.mt.utils.SqliteTool;
+import com.zzh.mt.widget.HorizontalProgressBarWithNumber;
 
 import org.xutils.common.Callback;
 import org.xutils.ex.DbException;
@@ -120,7 +121,7 @@ public class DownloadActivity extends BaseActivity {
         @ViewInject(R.id.download_state)
         TextView state;
         @ViewInject(R.id.download_pb)
-        ProgressBar progressBar;
+        HorizontalProgressBarWithNumber progressBar;
         @ViewInject(R.id.download_stop_btn)
         Button stopBtn;
 
@@ -154,8 +155,7 @@ public class DownloadActivity extends BaseActivity {
                     break;
                 case FINISHED:
                     Toast.makeText(x.app(), "已经下载完成", Toast.LENGTH_LONG).show();
-                    SqliteTool.getInstance().addData(mContext,String.valueOf(downloadInfo.getId()));
-                    break;
+                    SqliteTool.getInstance().addData(mContext,downloadInfo.getUrlid());                    break;
                 default:
                     break;
             }
@@ -166,8 +166,7 @@ public class DownloadActivity extends BaseActivity {
             try {
                 downloadManager.removeDownload(downloadInfo);
                 downloadListAdapter.notifyDataSetChanged();
-                SqliteTool.getInstance().delete(mContext,String.valueOf(downloadInfo.getId()));
-            } catch (DbException e) {
+                SqliteTool.getInstance().delete(mContext,downloadInfo.getUrlid());            } catch (DbException e) {
                 Toast.makeText(x.app(), "移除任务失败", Toast.LENGTH_LONG).show();
             }
         }
@@ -231,7 +230,7 @@ public class DownloadActivity extends BaseActivity {
                 case FINISHED:
                     state.setText(R.string.Finished);
                     stopBtn.setVisibility(View.INVISIBLE);
-                    SqliteTool.getInstance().addData(mContext,String.valueOf(downloadInfo.getId()));
+                    SqliteTool.getInstance().addData(mContext,downloadInfo.getUrlid());
                     break;
                 default:
                     stopBtn.setText(R.string.start);
