@@ -347,45 +347,9 @@ public class MaterialsTwoActivity extends BaseActivity  {
 
     }
 
-    private void downlist(final HorizontalProgressBarWithNumber progressbar, final TextView size,final TextView down,final String url, final String urlid, String name){
-        OkHttpUtils
-                .get()
-                .url(url)
-                .build()
-                .execute(new FileCallBack(Environment.getExternalStorageDirectory().getAbsolutePath(),name) {
-                    @Override
-                    public void inProgress(float progress, long total, int id) {
-                        progressbar.setProgress((int)(100*progress));
-                        down.setText("正在下载");
-                        size.setVisibility(View.GONE);
-                        progressbar.setVisibility(View.VISIBLE);
-                    }
-
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-                        Log.e(TAG, "onError :" + e.getMessage());
-                        down.setText("下载失败");
-                    }
-
-                    @Override
-                    public void onResponse(File response, int id) {
-                        Log.e(TAG, "onResponse :" + response.getAbsolutePath());//文件路径
-                        showToast("文件下载至："+response.getAbsolutePath());
-                        down.setText("已下载");
-                        SqliteTool.getInstance().addData(mContext,urlid);
-                        progressbar.setVisibility(View.GONE);
-                        size.setVisibility(View.VISIBLE);
-                    }
-                });
-    }
     @Override
     protected void onResume() {
         super.onResume();
-//        root.setFocusable(true);
-//        root.setFocusableInTouchMode(true);
-//        root.requestFocus();
-
-
     }
 
     @Override

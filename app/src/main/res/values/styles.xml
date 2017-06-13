@@ -17,12 +17,11 @@
         <item name="color">#f4b335</item>
         <item name="android:drawable">@mipmap/ic_launcher</item>
     </style>
-
+    <!--设置menu字体和style-->
     <style name="AppTheme.actionMenuTextSize" parent="Base.TextAppearance.AppCompat.Widget.ActionBar.Menu">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">20sp</item>
         <item name="android:textStyle">normal</item>
     </style>
-
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>

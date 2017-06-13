@@ -64,29 +64,29 @@ public class ScheduleDateActivity extends BaseActivity {
             }
             mDate.setText(listData.get(num));
             findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
-//            switch (listData.size()){
-//                case 1:
-//                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-//                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-//                    break;
-//                case 2:
-//                    if (num==0){
-//                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-//                    }else if (num == 1){
-//                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-//                    }
-//                    break;
-//                case 3:
-//                    if (num==0){
-//                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-//                    }else if (num == 1){
-//                        findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
-//                        findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
-//                    }else if (num == 2){
-//                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-//                    }
-//                    break;
-//            }
+            switch (listData.size()){
+                case 1:
+                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+                    break;
+                case 2:
+                    if (num==0){
+                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+                    }else if (num == 1){
+                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+                    }
+                    break;
+                case 3:
+                    if (num==0){
+                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+                    }else if (num == 1){
+                        findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
+                        findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
+                    }else if (num == 2){
+                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+                    }
+                    break;
+            }
         }
         //处理数据
         initview();
@@ -101,30 +101,30 @@ public class ScheduleDateActivity extends BaseActivity {
             }
             mDate.setText(listData.get(num));
             findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
-//            switch (listData.size()){
-//                case 1:
-//                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-//                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-//                    break;
-//                case 2:
-//                    if (num==0){
-//                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-//                    }else if (num == 1){
-//                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-//                    }
-//                    break;
-//                case 3:
-//                    if (num==0){
-//                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-//                    }else if (num == 1){
-//                        findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
-//                        findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
-//                    }else if (num == 2){
-//                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-//                    }
-//                    break;
-//
-//            }
+            switch (listData.size()){
+                case 1:
+                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+                    break;
+                case 2:
+                    if (num==0){
+                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+                    }else if (num == 1){
+                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+                    }
+                    break;
+                case 3:
+                    if (num==0){
+                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+                    }else if (num == 1){
+                        findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
+                        findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
+                    }else if (num == 2){
+                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+                    }
+                    break;
+
+            }
         }
         //处理数据
         initview();
@@ -310,30 +310,31 @@ public class ScheduleDateActivity extends BaseActivity {
                             findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
                             findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
                         }
-//                        switch (listData.size()){
-//                            case 1:
-//                                findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-//                                findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-//                                break;
-//                            case 2:
-//                                if (num==0){
-//                                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-//                                }else if (num == 1){
-//                                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-//                                }
-//                                break;
-//                            case 3:
-//                                if (num==0){
-//                                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-//                                }else if (num == 1){
-//                                    findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
-//                                    findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
-//                                }else if (num == 2){
-//                                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-//                                }
-//                                break;
-//
-//                        }
+                        //判断特殊数值
+                        switch (listData.size()){
+                            case 1:
+                                findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+                                findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+                                break;
+                            case 2:
+                                if (num==0){
+                                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+                                }else if (num == 1){
+                                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+                                }
+                                break;
+                            case 3:
+                                if (num==0){
+                                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+                                }else if (num == 1){
+                                    findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
+                                    findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
+                                }else if (num == 2){
+                                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+                                }
+                                break;
+
+                        }
 
                     }
                     initview();
