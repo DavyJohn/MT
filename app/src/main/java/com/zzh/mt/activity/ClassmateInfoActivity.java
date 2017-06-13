@@ -43,7 +43,10 @@ public class ClassmateInfoActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getToolBar().setTitle(getIntent().getStringExtra("name"));
+//        if (Contants.LANGUAGENEM == 0){
+//
+//        }
+        getToolBar().setTitle(getString(R.string.center_info));
         MyApplication.getInstance().add(this);
         getinfo();
     }

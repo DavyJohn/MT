@@ -46,6 +46,7 @@ public class ElectiveListTwoActivity extends BaseActivity {
     private String clickid;
     private LinkedList<CoursesTrainingSessionsData.CourseNoListData> list = new LinkedList<>();
     private String courseNoId = null;
+    private String isSelected = null;//监听点击的哪一个postion
     @BindView(R.id.elective_list_two_recycler)
     RecyclerView mRecycler;
     @BindView(R.id.elective_list_title)
@@ -99,13 +100,21 @@ public class ElectiveListTwoActivity extends BaseActivity {
         adapter.setOnClickItemListener(new ElectiveListAdapter.OnClickItemListener() {
             @Override
             public void onClickItem(TextView num, ImageView view, int postion) {
-                if (num.getText().toString().equals("0")){
-                    showMessageDialog("该场次无座位,不可选择！",mContext);
+                //判断点击的是否是默认选中的
+                isSelected = list.get(postion).getIsSelected();
+                if (Contants.ClickPostion != postion){
+                    if (num.getText().toString().equals("0")){
+                        showMessageDialog("该场次无座位,不可选择！",mContext);
+                    }else {
+                        courseNoId = list.get(postion).getId();
+                        adapter.addPostion(postion);
+                        Contants.ClickPostion = postion;
+                    }
                 }else {
+                    Contants.ClickPostion = postion;
                     courseNoId = list.get(postion).getId();
                     adapter.addPostion(postion);
                 }
-
             }
         });
     }
@@ -126,7 +135,12 @@ public class ElectiveListTwoActivity extends BaseActivity {
                     if (data.getCourseNoList().size() != 0){
                         list.clear();
                         list.addAll(data.getCourseNoList());
-
+                        //得到默认postion
+                        for (int i=0;i<list.size();i++){
+                            if (list.get(i).getIsSelected().equals("1")){
+                                Contants.ClickPostion = i;
+                            }
+                        }
                         if (data.getCanModify() == true){
                             mChange.setTextColor(ContextCompat.getColor(mContext,R.color.white));
                             mChange.setBackground(ContextCompat.getDrawable(mContext,R.drawable.button_click_shape));

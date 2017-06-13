@@ -61,4 +61,7 @@ public class Contants {
     public static String Deparmentname = null;
     //语言问题
     public static int LANGUAGENEM = -1;
+    //选修列表 选中不能再次点击问题
+    public static int ClickPostion = -1;
+
 }

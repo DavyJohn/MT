@@ -25,6 +25,7 @@ import com.zzh.mt.utils.SharedPreferencesUtil;
 import com.zzh.mt.utils.StringUtils;
 import com.zzh.mt.widget.DividerItemDecoration;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -52,38 +53,40 @@ public class ScheduleDateActivity extends BaseActivity {
     TextView mDate;
     @BindView(R.id.schedule_date_recycler)
     RecyclerView mRecycler;
-    LinkedList<String> listData = new LinkedList<>();
+    LinkedList<String> listData = new LinkedList<>();//时期
 
     @OnClick(R.id.schedule_left) void sub (){
         if (num != 0){
             num = num -1;
+            if (num == 0){
+                findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+                findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
+            }
             mDate.setText(listData.get(num));
             findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
-
-            switch (listData.size()){
-                case 1:
-                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-                    break;
-                case 2:
-                    if (num==0){
-                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-                    }else if (num == 1){
-                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-                    }
-                    break;
-                case 3:
-                    if (num==0){
-                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-                    }else if (num == 1){
-                        findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
-                        findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
-                    }else if (num == 2){
-                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-                    }
-                    break;
-
-            }
+//            switch (listData.size()){
+//                case 1:
+//                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+//                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+//                    break;
+//                case 2:
+//                    if (num==0){
+//                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+//                    }else if (num == 1){
+//                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+//                    }
+//                    break;
+//                case 3:
+//                    if (num==0){
+//                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+//                    }else if (num == 1){
+//                        findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
+//                        findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
+//                    }else if (num == 2){
+//                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+//                    }
+//                    break;
+//            }
         }
         //处理数据
         initview();
@@ -92,32 +95,36 @@ public class ScheduleDateActivity extends BaseActivity {
     @OnClick(R.id.schedule_right) void add(){
         if (num+1< listData.size()){
             num = num +1;
+            if (num == 3){
+                findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
+                findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+            }
             mDate.setText(listData.get(num));
             findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
-            switch (listData.size()){
-                case 1:
-                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-                    break;
-                case 2:
-                    if (num==0){
-                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-                    }else if (num == 1){
-                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-                    }
-                    break;
-                case 3:
-                    if (num==0){
-                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-                    }else if (num == 1){
-                        findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
-                        findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
-                    }else if (num == 2){
-                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-                    }
-                    break;
-
-            }
+//            switch (listData.size()){
+//                case 1:
+//                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+//                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+//                    break;
+//                case 2:
+//                    if (num==0){
+//                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+//                    }else if (num == 1){
+//                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+//                    }
+//                    break;
+//                case 3:
+//                    if (num==0){
+//                        findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+//                    }else if (num == 1){
+//                        findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
+//                        findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
+//                    }else if (num == 2){
+//                        findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+//                    }
+//                    break;
+//
+//            }
         }
         //处理数据
         initview();
@@ -229,6 +236,7 @@ public class ScheduleDateActivity extends BaseActivity {
                         intent.putExtra("courseNoId",getIntent().getStringExtra("courseNoId"));
                         intent.putExtra("activityTypeName",hasdata.get(position).getActivityTypeName());
                         intent.putExtra("groupId",hasdata.get(position).getGroupId());
+                        intent.putExtra("activityId",hasdata.get(position).getId());
                         intent.putExtra("time",hasdata.get(position).getStartTime());
                         intent.putExtra("hasNote",hasdata.get(position).getHasNote());
                         intent.putExtra("name",getIntent().getStringExtra("Course"));
@@ -268,6 +276,8 @@ public class ScheduleDateActivity extends BaseActivity {
                         listData.clear();
                         listData.addAll(set);
 
+                        Collections.sort(listData);
+
                         for (int b=0;b<listData.size();b++){
                             String key = listData.get(b);
                             LinkedList<CourseActivityArrangement.activityListData> da = new LinkedList<>();
@@ -279,7 +289,7 @@ public class ScheduleDateActivity extends BaseActivity {
                                 }
                             }
                         }
-
+                        //如果今天属于课程安排的时间则将今天直接显示 否 将课程时间的第一天显示
                         for (int m=0;m<listData.size();m++){
                             if (listData.get(m).equals(CommonUtil.getData())){
                                 mDate.setText(listData.get(m));
@@ -290,30 +300,40 @@ public class ScheduleDateActivity extends BaseActivity {
                                 num = 0;
                             }
                         }
-                        switch (listData.size()){
-                            case 1:
-                                findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-                                findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-                                break;
-                            case 2:
-                                if (num==0){
-                                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-                                }else if (num == 1){
-                                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-                                }
-                                break;
-                            case 3:
-                                if (num==0){
-                                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-                                }else if (num == 1){
-                                    findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
-                                    findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
-                                }else if (num == 2){
-                                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-                                }
-                                break;
-
+                        if (num ==0){
+                            findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+                            findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
+                        }else if (num+1 == listData.size() ){
+                            findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
+                            findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+                        }else {
+                            findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
+                            findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
                         }
+//                        switch (listData.size()){
+//                            case 1:
+//                                findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+//                                findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+//                                break;
+//                            case 2:
+//                                if (num==0){
+//                                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+//                                }else if (num == 1){
+//                                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+//                                }
+//                                break;
+//                            case 3:
+//                                if (num==0){
+//                                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+//                                }else if (num == 1){
+//                                    findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
+//                                    findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
+//                                }else if (num == 2){
+//                                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
+//                                }
+//                                break;
+//
+//                        }
 
                     }
                     initview();

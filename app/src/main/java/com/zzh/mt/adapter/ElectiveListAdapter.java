@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 import com.zzh.mt.R;
 import com.zzh.mt.mode.CoursesTrainingSessionsData;
+import com.zzh.mt.utils.Contants;
 
 import java.util.LinkedList;
 
@@ -58,6 +59,7 @@ public class ElectiveListAdapter extends RecyclerView.Adapter<ElectiveListAdapte
         if (list.get(position).getIsSelected().equals("0")){
             Picasso.with(context).load(R.drawable.un_checkbox).into(holder.mBox);
         }else if (list.get(position).getIsSelected().equals("1")){
+
             Picasso.with(context).load(R.drawable.sel_checkbox).into(holder.mBox);
         }
 

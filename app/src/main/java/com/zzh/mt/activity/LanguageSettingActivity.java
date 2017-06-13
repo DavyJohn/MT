@@ -37,7 +37,7 @@ public class LanguageSettingActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getToolBar().setTitle("语言/language");
+        getToolBar().setTitle(getString(R.string.lan_set));
         MyApplication.getInstance().add(this);
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRecycler.setHasFixedSize(true);

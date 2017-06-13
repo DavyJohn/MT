@@ -65,6 +65,7 @@ public class MyRemarketsActivity extends BaseActivity {
         adapter = new CommonAdapter<AppRemarks.remarkListData>(mContext,R.layout.my_remarks_recycler_item_layout,list) {
             @Override
             protected void convert(ViewHolder holder, AppRemarks.remarkListData s, int position) {
+                // TODO: 2017/6/13 活动类型中英文
                 holder.setText(R.id.my_remarks_recycler_item_typename,s.getActivityTypeName());
                 holder.setText(R.id.my_remarks_recycler_item_center,s.getGroupName());
                 holder.setText(R.id.my_remarks_recycler_item_attendtime,s.getAttendTime().substring(0,10));

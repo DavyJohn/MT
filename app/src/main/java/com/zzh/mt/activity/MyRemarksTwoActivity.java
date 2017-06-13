@@ -43,7 +43,6 @@ public class MyRemarksTwoActivity extends BaseActivity {
     TextView mTitle;
     private String remarkId;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +54,7 @@ public class MyRemarksTwoActivity extends BaseActivity {
 
     private void initview(){
         mType.setText(getIntent().getStringExtra("activityTypeName"));
-        mTime.setText(getIntent().getStringExtra("time"));
+        mTime.setText(getIntent().getStringExtra("time").substring(0,10));
         mTitle.setText(getIntent().getStringExtra("name"));
 
     }
@@ -69,13 +68,13 @@ public class MyRemarksTwoActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getTitle().equals("完成")){
+        if (item.getTitle().equals(getString(R.string.remarks_menu_complete))){
             setremark();
-        }else if (item.getTitle().equals("编辑")){
+        }else if (item.getTitle().equals(getString(R.string.edit_menu))){
             mEtText.setVisibility(View.VISIBLE);
             mText.setVisibility(View.GONE);
             mEtText.setText(mText.getText().toString());
-            item.setTitle("完成");
+            item.setTitle(getString(R.string.remarks_menu_complete));
         }
 
 
@@ -138,11 +137,11 @@ public class MyRemarksTwoActivity extends BaseActivity {
                         if (remarkId == null || TextUtils.isEmpty(remarkId)) {
                             mEtText.setVisibility(View.VISIBLE);
                             mText.setVisibility(View.GONE);
-                            item.setTitle("完成");
+                            item.setTitle(getString(R.string.remarks_menu_complete));
                         } else {
                             mEtText.setVisibility(View.GONE);
                             mText.setVisibility(View.VISIBLE);
-                            item.setTitle("编辑");
+                            item.setTitle(getString(R.string.edit_menu));
                             mText.setText(data.getRemarks().getInformation());
                         }
                     }

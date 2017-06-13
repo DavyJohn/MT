@@ -127,7 +127,8 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
         super.onCreate(savedInstanceState);
         getToolBar().setTitle(getString(R.string.Edit_personal_profile));
         MyApplication.getInstance().add(this);
-        CommonUtil.moveCursor2End(mNick);CommonUtil.moveCursor2End(mBrand);
+        CommonUtil.moveCursor2End(mNick);
+        CommonUtil.moveCursor2End(mBrand);
         initview();
     }
 

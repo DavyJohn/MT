@@ -10,6 +10,7 @@ import android.util.AttributeSet;
 import android.widget.EditText;
 
 import com.zzh.mt.R;
+import com.zzh.mt.utils.Contants;
 
 /**
  * Created by 腾翔信息 on 2017/5/24.
@@ -51,9 +52,13 @@ public class MysearchView extends android.support.v7.widget.AppCompatEditText {
 
     private void DrawSearchIcon(Canvas canvas) {
         if (this.getText().toString().length() == 0) {
-            float textWidth = paint.measureText(getContext().getString(R.string.search));
+            float textWidth;
+            if (Contants.LANGUAGENEM == 0){
+                textWidth = paint.measureText("搜索");
+            }else {
+                textWidth = paint.measureText("Search");
+            }
             float textHeight = getFontLeading(paint);
-
             float dx = (getWidth() - searchSize - textWidth - 8) / 2;
             float dy = (getHeight() - searchSize) / 2;
 
@@ -62,8 +67,14 @@ public class MysearchView extends android.support.v7.widget.AppCompatEditText {
             if (mDrawable != null) {
                 mDrawable.draw(canvas);
             }
-            canvas.drawText("搜索", getScrollX() + searchSize + 8, getScrollY() + (getHeight() - (getHeight() - textHeight) / 2) - paint.getFontMetrics().bottom - dy, paint);
-            canvas.restore();
+            if (Contants.LANGUAGENEM == 0){
+                canvas.drawText("搜索", getScrollX() + searchSize + 8, getScrollY() + (getHeight() - (getHeight() - textHeight) / 2) - paint.getFontMetrics().bottom - dy, paint);
+                canvas.restore();
+            }else {
+                canvas.drawText("Search", getScrollX() + searchSize + 8, getScrollY() + (getHeight() - (getHeight() - textHeight) / 2) - paint.getFontMetrics().bottom - dy, paint);
+                canvas.restore();
+            }
+
         }
     }
 

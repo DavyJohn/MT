@@ -106,7 +106,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColor="#333"
-            android:text="已选课程"
+            android:text="@string/The_selected_course"
             android:layout_gravity="center"
             android:layout_marginLeft="20dp"/>
     </LinearLayout>

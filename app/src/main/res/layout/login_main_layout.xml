@@ -51,11 +51,12 @@
                 android:layout_marginLeft="32dp"
                 android:singleLine="true"
                 android:maxLines="1"
+                android:textSize="18sp"
                 android:layout_centerHorizontal="true"
                 android:layout_marginRight="32dp"
                 android:background="@drawable/login_et_shape"
                 android:hint="@string/input_username"
-                android:paddingLeft="60dp"
+                android:paddingLeft="50dp"
                 android:textColorHint="#999"
                 android:textColor="#333" />
 
@@ -83,11 +84,13 @@
                 android:background="@drawable/login_et_shape"
                 android:drawablePadding="15dp"
                 android:hint="@string/input_passworld"
+                android:textSize="18sp"
                 android:singleLine="true"
                 android:maxLines="1"
                 android:digits="@string/filter_vcode"
                 android:maxLength="18"
-                android:paddingLeft="60dp"
+                android:paddingLeft="50dp"
+                android:paddingRight="50dp"
                 android:textColorHint="#999"
                 android:textColor="#333" />
 
@@ -114,7 +117,7 @@
             android:textAllCaps="false"
             android:textColor="#fff"
             android:id="@+id/login"
-            android:textSize="25dp" />
+            android:textSize="18dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"

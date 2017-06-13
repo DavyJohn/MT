@@ -82,11 +82,12 @@ public class ClassmateActivity extends BaseActivity {
             protected void convert(ViewHolder holder, ClassMateData.PersonListData s, int position) {
                 holder.setGone(R.id.tv_index,true);
                 holder.setText(R.id.class_en_name,s.getNickName());
-                if (Contants.LANGUAGENEM == 0){
-                    holder.setText(R.id.class_china_name,s.getChineseName());
-                }else if (Contants.LANGUAGENEM == 1){
-                    holder.setText(R.id.class_china_name,s.getEnglishName());
-                }
+                holder.setText(R.id.class_china_name,s.getChineseName());
+//                if (Contants.LANGUAGENEM == 0){
+//                    holder.setText(R.id.class_china_name,s.getChineseName());
+//                }else if (Contants.LANGUAGENEM == 1){
+//                    holder.setText(R.id.class_china_name,s.getEnglishName());
+//                }
                 holder.setImageUrl(R.id.classmate_image,s.getHeadUrl(),s.getSex());
                 Collections.sort(index);
                 if (position ==0 || !index.get(position-1).equals(index.get(position))){
@@ -145,10 +146,22 @@ public class ClassmateActivity extends BaseActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (TextUtils.isEmpty(s)){
-                    initview();
+                    if (TextUtils.isEmpty(s)){
+                        initview();
+                    }else {
+                        findViewById(R.id.no_search_root).setVisibility(View.GONE);
+                        findViewById(R.id.classmate_search_recycler).setVisibility(View.VISIBLE);
+                        listdata.clear();
+                        for (int i=0;i<list.size();i++){
+                            /// TODO: 2017/6/7 缺少英文字段
+                            if (list.get(i).getChineseName().toLowerCase().contains(mSearch.getText().toString().toLowerCase()) == true||list.get(i).getNickName().toLowerCase().contains(mSearch.getText().toString().toLowerCase()) == true){
+                                listdata.add(list.get(i));
+                            }
+                        }
+                        initsearch();
+                    }
                 }
-            }
+
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -185,11 +198,12 @@ public class ClassmateActivity extends BaseActivity {
             protected void convert(ViewHolder holder, ClassMateData.PersonListData s, int position) {
                 holder.setGone(R.id.tv_index,false);
                 holder.setText(R.id.class_en_name,s.getNickName());
-                if (Contants.LANGUAGENEM == 0){
-                    holder.setText(R.id.class_china_name,s.getChineseName());
-                }else if (Contants.LANGUAGENEM == 1){
-                    holder.setText(R.id.class_china_name,s.getEnglishName());
-                }
+                holder.setText(R.id.class_china_name,s.getChineseName());
+//                if (Contants.LANGUAGENEM == 0){
+//                    holder.setText(R.id.class_china_name,s.getChineseName());
+//                }else if (Contants.LANGUAGENEM == 1){
+//                    holder.setText(R.id.class_china_name,s.getEnglishName());
+//                }
                 if (s.getHeadUrl() != null ||!TextUtils.isEmpty(s.getHeadUrl())){
                     holder.setImageUrl(R.id.classmate_image,s.getHeadUrl(),s.getSex());
                 }

@@ -60,10 +60,10 @@ public class CommonUtil {
 
     	public static void moveCursor2End(EditText editText) {
         if (editText.hasFocus()) {
-            Editable text = editText.getText();
-            int position = text.length();
-            Selection.setSelection(text, position);
-//            editText.setSelection(editText.getText().toString().length());
+
+            int position = editText.getText().length();
+//            Selection.setSelection(text, position);
+            editText.setSelection(position);
 
         }
     }

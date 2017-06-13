@@ -97,9 +97,17 @@
     <string name="stop">停止</string>
     <string name="delete">删除</string>
     <string name="start">开始</string>
-    <string name="waiting">下载中</string>
+    <string name="waiting">等待下载</string>
     <string name="tips">提示</string>
     <string name="sure">确定</string>
     <string name="care_wifi">当前使用手机流量,请谨慎下载！</string>
+    <string name="The_selected_course">已选课程</string>
+    <string name="EndTime">结束</string>
+    <string name="Team_members">小组成员</string>
+    <string name="time">时间</string>
+    <string name="Course_Name">课程名称</string>
+    <string name="type_of_activity">活动类型</string>
+    <string name="_200">说说你的学习心得吧（200字以内）</string>
+    <string name="lan_set">语言设置</string>
 
 </resources>
