@@ -212,7 +212,6 @@ public class DownloadActivity extends BaseActivity {
             label.setText(downloadInfo.getLabel());
             state.setText(downloadInfo.getState().toString().equals("STOPPED")?getString(R.string.stop):"");
             progressBar.setProgress(downloadInfo.getProgress());
-
             stopBtn.setVisibility(View.VISIBLE);
             stopBtn.setText(getString(R.string.stop));
             DownloadState Dstate = downloadInfo.getState();

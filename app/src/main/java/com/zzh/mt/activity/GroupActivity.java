@@ -5,7 +5,9 @@ import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zzh.mt.R;
@@ -47,6 +49,8 @@ public class GroupActivity extends BaseActivity {
     TextView mStart;
     @BindView(R.id.group_end)
     TextView mEnd;
+    @BindView(R.id.group_note_image)
+    ImageView noteImage;
     @BindView(R.id.group_recycler)
     RecyclerView mRecycler;
     @BindView(R.id.group_remark)
@@ -58,13 +62,24 @@ public class GroupActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         MyApplication.getInstance().add(this);
         getToolBar().setTitle(getString(R.string.group_activity));
-        getInfo();
+        if (getIntent().getStringExtra("groupId") == null || TextUtils.isEmpty(getIntent().getStringExtra("groupId"))){
+            initview();
+        }else {
+            getInfo();
+        }
     }
 
     private void initview(){
-        if (list.size() == 0){
+        if (getIntent().getStringExtra("hasNote").equals("1")){
+            findViewById(R.id.group_note).setVisibility(View.VISIBLE);
+        }else {
+            findViewById(R.id.group_note).setVisibility(View.GONE);
+        }
+        if (getIntent().getStringExtra("groupId") == null || TextUtils.isEmpty(getIntent().getStringExtra("groupId"))){
             mRecycler.setVisibility(View.GONE);
             mName.setVisibility(View.VISIBLE);
+            mStart.setText(getIntent().getStringExtra("time").substring(0,10));
+            mEnd.setText(getIntent().getStringExtra("endtime").substring(0,10));
             mName.setText("随堂分组");
         }else {
             mRecycler.setVisibility(View.VISIBLE);
@@ -79,8 +94,8 @@ public class GroupActivity extends BaseActivity {
             };
             mRecycler.setAdapter(adapter);
         }
-
     }
+
     private void getInfo(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
@@ -88,7 +103,11 @@ public class GroupActivity extends BaseActivity {
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
-        map.put("groupId",getIntent().getStringExtra("activityId"));
+        if (getIntent().getStringExtra("groupId") == null || TextUtils.isEmpty(getIntent().getStringExtra("groupId"))){
+        }else {
+            map.put("groupId",getIntent().getStringExtra("groupId"));
+        }
+
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.GroupActivityInformation, map, TAG, new SpotsCallBack<GroupActivityInformation>(mContext) {
             @Override
             public void onSuccess(Response response, GroupActivityInformation data) {

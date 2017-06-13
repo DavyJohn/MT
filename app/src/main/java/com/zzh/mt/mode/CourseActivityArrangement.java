@@ -53,7 +53,16 @@ public class CourseActivityArrangement {
         private String activityTypeName;
         private String groupId;
         private String updatrt;
+        private String hasNote;
         private String hasRemark;
+
+        public String getHasNote() {
+            return hasNote;
+        }
+
+        public void setHasNote(String hasNote) {
+            this.hasNote = hasNote;
+        }
 
         public String getColourLabel() {
             return colourLabel;

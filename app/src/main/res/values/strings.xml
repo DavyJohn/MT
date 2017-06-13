@@ -98,5 +98,8 @@
     <string name="delete">删除</string>
     <string name="start">开始</string>
     <string name="waiting">下载中</string>
+    <string name="tips">提示</string>
+    <string name="sure">确定</string>
+    <string name="care_wifi">当前使用手机流量,请谨慎下载！</string>
 
 </resources>

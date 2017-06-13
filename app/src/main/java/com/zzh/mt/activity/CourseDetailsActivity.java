@@ -72,10 +72,10 @@ public class CourseDetailsActivity extends BaseActivity {
                     mIntroduce.setText(data.getCourseInfo().getIntroduce());
                     if (data.getCourseInfo().getCurriculumNo() != null){
                         findViewById(R.id.courrse_details_layout).setVisibility(View.VISIBLE);
-                        if (data.getCourseInfo().getCurriculumNo().getClassHours() == null){
+                        if (data.getCourseInfo().getClassHours() == null){
                             mCdc.setText("");
                         }else {
-                            mCdc.setText(data.getCourseInfo().getCurriculumNo().getClassHours()+"天");
+                            mCdc.setText(data.getCourseInfo().getClassHours()+getString(R.string.day));
                         }
                         if (data.getCourseInfo().getCurriculumNo().getAttendPlace() == null){
                             mCdw.setText("");

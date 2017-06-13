@@ -1,11 +1,13 @@
 package com.zzh.mt.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -27,6 +29,7 @@ import com.zzh.mt.mode.CoursewareById;
 import com.zzh.mt.sql.MyProvider;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.NetworkUtils;
 import com.zzh.mt.utils.SqliteTool;
 import com.zzh.mt.widget.DividerItemDecoration;
 import com.zzh.mt.widget.HorizontalProgressBarWithNumber;
@@ -62,6 +65,7 @@ public class MaterialsTwoActivity extends BaseActivity  {
     private LinkedList<String> urllist = new LinkedList<>();
     LinkedList<String> ids = new LinkedList<>();
     MenuItem item = null;
+    private AlertDialog dialog;
     MaterialsAdapter adapter ;
     MaterialPlAdapter mPladapter;
     @BindView(R.id.materials_piliang_recycler)
@@ -100,7 +104,6 @@ public class MaterialsTwoActivity extends BaseActivity  {
             for (int m=0; m<postions.size();m++){
                 urllist.add(list.get(postions.get(m)).getCoursewareUrl());
             }
-            System.out.print(urllist);
             initpl();
         }else {
             mTextCheck.setText(getString(R.string.all_check));
@@ -110,25 +113,52 @@ public class MaterialsTwoActivity extends BaseActivity  {
         }
     }
     @OnClick(R.id.downing) void down(){
-        System.out.print(urllist);
-        for (int i=0;i<urllist.size();i++){
-            String url = urllist.get(i);
-            String name = i+list.get(postions.get(i)).getCoursewareName();
-            try {
-                DownloadManager.getInstance().startDownload(url,
-                        name,
-                        list.get(postions.get(i)).getId(),
-                        Environment.getExternalStorageDirectory().getAbsolutePath(),
-                        true,
-                        false,null);
-            } catch (DbException e) {
-                e.printStackTrace();
-            }
+        if (NetworkUtils.isWifi(mContext)){
+            //是wifi
+            toDown();
+        }else {
+            //手机流量 提示
+            dialog = new AlertDialog.Builder(mContext)
+                    .setTitle(R.string.tips)
+                    .setMessage(R.string.care_wifi)
+                    .setPositiveButton(getString(R.string.sure), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            toDown();
+                        }
+                    })
+                    .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+                        }
+                    })
+                    .create();
+            dialog.show();
         }
-        startActivity(new Intent(mContext,DownloadActivity.class));
-
     }
 
+    private void toDown(){
+        if (urllist.size()>0){
+            for (int i=0;i<urllist.size();i++){
+                String url = urllist.get(i);
+                String name = i+list.get(postions.get(i)).getCoursewareName();
+                try {
+                    DownloadManager.getInstance().startDownload(url,
+                            name,
+                            list.get(postions.get(i)).getId(),
+                            Environment.getExternalStorageDirectory().getAbsolutePath(),
+                            true,
+                            false,null);
+                } catch (DbException e) {
+                    e.printStackTrace();
+                }
+            }
+            startActivity(new Intent(mContext,DownloadActivity.class));
+        }else {
+
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,24 +189,59 @@ public class MaterialsTwoActivity extends BaseActivity  {
         mRecycler.setAdapter(adapter);
         adapter.setOnClickItemListener(new MaterialsAdapter.OnClickItemListener() {
             @Override
-            public void onClickItem(HorizontalProgressBarWithNumber progress, TextView mSize,TextView down, String id, int postion) {
+            public void onClickItem(HorizontalProgressBarWithNumber progress, TextView mSize, TextView down, String id, final int postion) {
                 if (!down.getText().toString().equals(getString(R.string.Finished))){
-//                    progress.setVisibility(View.VISIBLE);
-//                    mSize.setVisibility(View.GONE);
-//                    downlist(progress,mSize,down,list.get(postion).getCoursewareUrl(),id,list.get(postion).getCoursewareName());
-                    try {
-                        DownloadManager.getInstance().startDownload(
-                                list.get(postion).getCoursewareUrl()
-                                ,list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
-                                ,list.get(postion).getId()
-                                ,Environment.getExternalStorageDirectory().getAbsolutePath()
-                                ,true
-                                ,false
-                                ,null);
-                    } catch (DbException e) {
-                        e.printStackTrace();
+                    if (NetworkUtils.isWifi(mContext)){
+                        //是wifi
+                        try {
+                            DownloadManager.getInstance().startDownload(
+//                                    list.get(postion).getCoursewareUrl()
+                                    // TODO: 2017/6/13 测试下载
+                                    "http://dl.bintray.com/wyouflf/maven/org/xutils/xutils/3.5.0/xutils-3.5.0.aar"
+                                    ,list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
+                                    ,list.get(postion).getId()
+//                                    ,Environment.getExternalStorageDirectory().getAbsolutePath()
+                                    ,"/sdcard/xUtils/" + "name" + ".aar"
+                                    ,true
+                                    ,false
+                                    ,null);
+                        } catch (DbException e) {
+                            e.printStackTrace();
+                        }
+                        startActivity(new Intent(mContext,DownloadActivity.class));
+                    }else {
+                        //手机流量 提示
+                        dialog = new AlertDialog.Builder(mContext)
+                                .setTitle(R.string.tips)
+                                .setMessage(R.string.care_wifi)
+                                .setPositiveButton(getString(R.string.sure), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        try {
+                                            DownloadManager.getInstance().startDownload(
+                                                    list.get(postion).getCoursewareUrl()
+                                                    ,list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
+                                                    ,list.get(postion).getId()
+                                                    ,Environment.getExternalStorageDirectory().getAbsolutePath()
+                                                    ,true
+                                                    ,false
+                                                    ,null);
+                                        } catch (DbException e) {
+                                            e.printStackTrace();
+                                        }
+                                        startActivity(new Intent(mContext,DownloadActivity.class));
+                                    }
+                                })
+                                .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                    }
+                                })
+                                .create();
+                        dialog.show();
                     }
-                    startActivity(new Intent(mContext,DownloadActivity.class));
+
                 }
             }
         });

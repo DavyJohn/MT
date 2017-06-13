@@ -105,10 +105,14 @@ public class ModifyPassActivity extends BaseActivity {
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CHANGEPASSWORD, map, TAG, new SpotsCallBack<BaseData>(mContext) {
             @Override
             public void onSuccess(Response response, BaseData data) {
-                if (data.getCode().equals("200"));
-                startActivity(new Intent(mContext,LoginActivity.class));
-                SharedPreferencesUtil.getInstance(mContext).putString("userid","");
-                showToast("修改成功");
+                if (data.getCode().equals("200")){
+                    startActivity(new Intent(mContext,LoginActivity.class));
+                    SharedPreferencesUtil.getInstance(mContext).putString("userid","");
+                    showToast("修改成功");
+                }else {
+                    showMessageDialog(data.getMessage(),mContext);
+                }
+
             }
 
             @Override

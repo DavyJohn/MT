@@ -96,5 +96,9 @@
     <string name="delete">Delete</string>
     <string name="start">Start</string>
     <string name="waiting">Waiting</string>
+    <string name="tips">Tips</string>
+    <string name="sure">Sure</string>
+    <string name="care_wifi">
+The current use of mobile phone traffic, please download carefully!</string>
 
 </resources>

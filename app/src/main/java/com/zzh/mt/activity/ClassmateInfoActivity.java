@@ -37,9 +37,9 @@ public class ClassmateInfoActivity extends BaseActivity {
     @BindView(R.id.class_info_name)
     TextView mText;
     private UserData userData = null;
-    private LinkedList<String> list = new LinkedList<>();
-    private String [] data = {"中文名字","英文名字","品牌","部门","性别","生日","入职年份","公司邮箱"};
-    CommonAdapter<String> adapter;
+    private LinkedList<Integer> list = new LinkedList<>();
+    private Integer [] data = {R.string.chinese_name,R.string.englich_name,R.string.brandname,R.string.department,R.string.gender,R.string.birthday,R.string.year_of_work,R.string.company_email};
+    CommonAdapter<Integer> adapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,10 +63,10 @@ public class ClassmateInfoActivity extends BaseActivity {
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRecycler.setHasFixedSize(true);
         mRecycler.addItemDecoration(new DividerItemDecoration(this,DividerItemDecoration.VERTICAL_LIST));
-        adapter = new CommonAdapter<String>(mContext,R.layout.classmate_info_item_main_layout,list) {
+        adapter = new CommonAdapter<Integer>(mContext,R.layout.classmate_info_item_main_layout,list) {
             @Override
-            protected void convert(ViewHolder holder, String s, int position) {
-                holder.setText(R.id.classmate_info_item_key,s);
+            protected void convert(ViewHolder holder, Integer s, int position) {
+                holder.setText(R.id.classmate_info_item_key,getString(s));
                 switch (position){
                     case 0:
                         holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getChineseName());

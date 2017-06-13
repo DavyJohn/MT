@@ -61,13 +61,17 @@ public class LoginActivity extends BaseActivity {
     @OnClick(R.id.login) void log(){
         if (TextUtils.isEmpty(mEtUserName.getText().toString())){
             showMessageDialog("账号不能为空！",mContext);
-        }else if (!CommonUtil.isEmail(mEtUserName.getText().toString())){
-            showMessageDialog("输入的账号格式不正确！",mContext);
-        } else if (TextUtils.isEmpty(mEtPassword.getText().toString())){
+        }else
+//            if (!CommonUtil.isEmail(mEtUserName.getText().toString())){
+//            showMessageDialog("输入的账号格式不正确！",mContext);
+//        } else
+            if (TextUtils.isEmpty(mEtPassword.getText().toString())){
             showMessageDialog("密码不能为空！",mContext);
-        }else if (mEtPassword.getText().toString().length()<6){
-            showMessageDialog("密码长度不小于6位！",mContext);
-        }else {
+        }
+//        else if (mEtPassword.getText().toString().length()<6){
+//            showMessageDialog("密码长度不小于6位！",mContext);
+//        }
+        else {
             login();
         }
 

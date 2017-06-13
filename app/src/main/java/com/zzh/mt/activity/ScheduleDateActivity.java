@@ -152,7 +152,12 @@ public class ScheduleDateActivity extends BaseActivity {
                 if (s.getType().equals("1")){
                     //普通
                     holder.setVisible(R.id.group_view,true);
-                    holder.setVisible(R.id.schedule_date_remarks_image,true);
+                    if (s.getHasNote().equals("1")){
+                        holder.setVisible(R.id.schedule_date_remarks_image,true);
+                    }else {
+                        holder.setVisible(R.id.schedule_date_remarks_image,false);
+                    }
+
                     if (hashMap.get(mDate.getText().toString()).get(position).getColourLabel() == null || TextUtils.isEmpty(hashMap.get(mDate.getText().toString()).get(position).getColourLabel()) ){
                         holder.setBackgroundColor(R.id.group_view, ContextCompat.getColor(mContext,R.color.main_color));
                     }else {
@@ -165,7 +170,11 @@ public class ScheduleDateActivity extends BaseActivity {
                 }else if (s.getType().equals("2")){
                     //休息
                     holder.setVisible(R.id.group_view,true);
+                     if (s.getHasNote().equals("1")){
                     holder.setVisible(R.id.schedule_date_remarks_image,true);
+                }else {
+                    holder.setVisible(R.id.schedule_date_remarks_image,false);
+                }
                     if (hashMap.get(mDate.getText().toString()).get(position).getColourLabel() == null || TextUtils.isEmpty(hashMap.get(mDate.getText().toString()).get(position).getColourLabel()) ){
                         holder.setBackgroundColor(R.id.group_view, ContextCompat.getColor(mContext,R.color.main_color));
                     }else {
@@ -201,6 +210,7 @@ public class ScheduleDateActivity extends BaseActivity {
                         intent.putExtra("name",getIntent().getStringExtra("Course"));
                         intent.putExtra("activityTypeName",s.getActivityTypeName());
                         intent.putExtra("activityId",s.getId());
+
                         intent.putExtra("courseNoId",getIntent().getStringExtra("courseNoId"));
                         startActivity(intent);
 
@@ -214,12 +224,13 @@ public class ScheduleDateActivity extends BaseActivity {
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                     if (hasdata.get(position).getType().equals("3")){
                         Intent intent = new Intent(mContext,GroupActivity.class);
-                        intent.putExtra("time",list.get(position).getStartTime());
-                        intent.putExtra("endtime",list.get(position).getEndTime());
+                        intent.putExtra("time",hasdata.get(position).getStartTime());
+                        intent.putExtra("endtime",hasdata.get(position).getEndTime());
                         intent.putExtra("courseNoId",getIntent().getStringExtra("courseNoId"));
-                        intent.putExtra("activityTypeName",list.get(position).getActivityTypeName());
-                        intent.putExtra("activityId",list.get(position).getId());
-                        intent.putExtra("time",list.get(position).getStartTime());
+                        intent.putExtra("activityTypeName",hasdata.get(position).getActivityTypeName());
+                        intent.putExtra("groupId",hasdata.get(position).getGroupId());
+                        intent.putExtra("time",hasdata.get(position).getStartTime());
+                        intent.putExtra("hasNote",hasdata.get(position).getHasNote());
                         intent.putExtra("name",getIntent().getStringExtra("Course"));
                         startActivity(intent);
                     }

@@ -31,6 +31,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.SSLSession;
+
 import okhttp3.Cache;
 import okhttp3.OkHttpClient;
 
@@ -107,6 +110,12 @@ public class MyApplication extends Application {
 		//xutils
 		x.Ext.init(mcontext);
 		x.Ext.setDebug(BuildConfig.DEBUG);
+		x.Ext.setDefaultHostnameVerifier(new HostnameVerifier() {
+			@Override
+			public boolean verify(String hostname, SSLSession session) {
+				return true;
+			}
+		});
 	}
 
 	public static Handler getHandler()

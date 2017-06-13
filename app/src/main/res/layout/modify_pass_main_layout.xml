@@ -22,7 +22,7 @@
                 android:layout_gravity="center"
                 android:gravity="left"
                 android:paddingLeft="20dp"
-                android:text="@string/number"
+                android:text="@string/nickname"
                 android:textColor="#999"
                 android:textSize="18sp" />
 
