@@ -88,18 +88,18 @@ public class MaterialsTwoActivity extends BaseActivity  {
             for (int i=0;i<list.size();i++){
                 postions.add(i);
             }
-                Cursor cursor = getContentResolver().query(MyProvider.URI,null,null,null,null);
-                while (cursor.moveToNext()){
-                    ids.add(cursor.getString(cursor.getColumnIndex("url")));
+            Cursor cursor = getContentResolver().query(MyProvider.URI,null,null,null,null);
+            while (cursor.moveToNext()){
+                ids.add(cursor.getString(cursor.getColumnIndex("url")));
+            }
+            for (int i=0;i<postions.size();i++){
+                if (ids.contains(listtwo.get(i).getId())){
+                    postions.remove(i);
+                    listtwo.remove(i);
+                    i--;
                 }
-                for (int i=0;i<postions.size();i++){
-                   if (ids.contains(listtwo.get(i).getId())){
-                       postions.remove(i);
-                       listtwo.remove(i);
-                       i--;
-                   }
 
-                }
+            }
 
             for (int m=0; m<postions.size();m++){
                 urllist.add(list.get(postions.get(m)).getCoursewareUrl());
@@ -172,12 +172,12 @@ public class MaterialsTwoActivity extends BaseActivity  {
         mPlRecycler.setHasFixedSize(true);
         mPlRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
         getInfo();
-
-        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-            showToast("存在");
-        }else {
-            showToast("不存在");
-        }
+//
+//        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+//            showToast("存在");
+//        }else {
+//            showToast("不存在");
+//        }
     }
 
     private void initview(){
@@ -197,13 +197,11 @@ public class MaterialsTwoActivity extends BaseActivity  {
                         //是wifi
                         try {
                             DownloadManager.getInstance().startDownload(
-//                                    list.get(postion).getCoursewareUrl()
+                                    list.get(postion).getCoursewareUrl()
                                     // TODO: 2017/6/13 测试下载
-                                    "http://dl.bintray.com/wyouflf/maven/org/xutils/xutils/3.5.0/xutils-3.5.0.aar"
                                     ,list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
                                     ,list.get(postion).getId()
-                                    ,"/sdcard/xUtils/" + "name" + ".aar"
-//                                    ,"/sdcard/MT/" + list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
+                                    ,"/sdcard/MT/" + list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
                                     ,true
                                     ,false
                                     ,null);

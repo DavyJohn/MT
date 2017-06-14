@@ -62,6 +62,7 @@ public class MyApplication extends Application {
 		StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
 		StrictMode.setVmPolicy(builder.build());
 		builder.detectFileUriExposure();
+
 		//语言切换
 		Locale _UserLocale= LocaleUtils.getUserLocale(this);
 		if (_UserLocale == null){
@@ -94,7 +95,15 @@ public class MyApplication extends Application {
 				.build();
 
 		OkHttpUtils.initClient(okHttpClient);
-
+//xutils
+		x.Ext.init(mcontext);
+		x.Ext.setDebug(BuildConfig.DEBUG);
+		x.Ext.setDefaultHostnameVerifier(new HostnameVerifier() {
+			@Override
+			public boolean verify(String hostname, SSLSession session) {
+				return true;
+			}
+		});
 		Beta.autoInit = true;//自动初始化开关
 		Beta.autoCheckUpgrade = true;//自动检查开关
 		Beta.upgradeCheckPeriod = 60 * 1000;//升级检查周期
@@ -107,15 +116,7 @@ public class MyApplication extends Application {
 		Beta.canShowUpgradeActs.add(MainActivity.class);
 		Bugly.init(getApplicationContext(),"91cb31c05e",true);
 		PgyCrashManager.register(this);
-		//xutils
-		x.Ext.init(mcontext);
-		x.Ext.setDebug(BuildConfig.DEBUG);
-		x.Ext.setDefaultHostnameVerifier(new HostnameVerifier() {
-			@Override
-			public boolean verify(String hostname, SSLSession session) {
-				return true;
-			}
-		});
+
 	}
 
 	public static Handler getHandler()

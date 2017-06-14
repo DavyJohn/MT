@@ -420,8 +420,6 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
             return data;
         }
 
-
-
     }
     @Override
     public int getLayoutId() {

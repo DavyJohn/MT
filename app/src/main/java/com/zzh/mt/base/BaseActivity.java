@@ -69,6 +69,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ac_baselayout);
         mContext = this;
+
         initView();
         View view = getLayoutInflater().inflate(getLayoutId(), mContentLayout, false); //IOC 控制反转：在父类中调用子类的反转
         mContentLayout.addView(view);
@@ -80,7 +81,6 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
         ObserverUtils.getInstance().addObserver(this);
         //xutils
         x.view().inject(this);
-
     }
 
     protected void switchLanguage(String language){

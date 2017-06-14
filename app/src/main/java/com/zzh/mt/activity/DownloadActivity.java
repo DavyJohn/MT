@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +22,11 @@ import com.zzh.mt.download.DownloadInfo;
 import com.zzh.mt.download.DownloadManager;
 import com.zzh.mt.download.DownloadState;
 import com.zzh.mt.download.DownloadViewHolder;
-import com.zzh.mt.sql.MyDatabaseHelper;
 import com.zzh.mt.utils.SqliteTool;
 import com.zzh.mt.widget.HorizontalProgressBarWithNumber;
 
 import org.xutils.common.Callback;
 import org.xutils.ex.DbException;
-
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
@@ -50,6 +47,7 @@ public class DownloadActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         getToolBar().setTitle(getString(R.string.download_management));
         MyApplication.getInstance().add(this);
+        downloadList = (ListView) findViewById(R.id.lv_download);
         downloadManager = DownloadManager.getInstance();
         downloadListAdapter = new DownloadListAdapter();
         downloadList.setAdapter(downloadListAdapter);
@@ -231,7 +229,7 @@ public class DownloadActivity extends BaseActivity {
 
         public void refresh() {
             label.setText(downloadInfo.getLabel());
-            state.setText(downloadInfo.getState().toString().equals("STOPPED")?getString(R.string.stop):"");
+//            state.setText(downloadInfo.getState().toString().equals("STOPPED")?getString(R.string.stop):"");
             progressBar.setProgress(downloadInfo.getProgress());
             stopBtn.setVisibility(View.VISIBLE);
             stopBtn.setText(getString(R.string.stop));
@@ -248,7 +246,6 @@ public class DownloadActivity extends BaseActivity {
                     break;
                 case ERROR:
                     state.setText(R.string.Failed);
-                    removeBtn.setVisibility(View.VISIBLE);
                 case STOPPED:
                     stopBtn.setText(R.string.start);
                     break;
