@@ -69,7 +69,7 @@ public class MyRemarketsActivity extends BaseActivity {
                 holder.setText(R.id.my_remarks_recycler_item_typename,s.getActivityTypeName());
                 holder.setText(R.id.my_remarks_recycler_item_center,s.getGroupName());
                 holder.setText(R.id.my_remarks_recycler_item_attendtime,s.getAttendTime().substring(0,10));
-                holder.setText(R.id.my_remarks_recycler_item_star_end,s.getStartTime()+"—"+s.getEndTime());
+                holder.setText(R.id.my_remarks_recycler_item_star_end,s.getStartTime().substring(0,10)+"—"+s.getEndTime().substring(0,10));
 
 
             }

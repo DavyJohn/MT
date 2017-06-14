@@ -172,14 +172,16 @@ public class MaterialsTwoActivity extends BaseActivity  {
         mPlRecycler.setHasFixedSize(true);
         mPlRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
         getInfo();
+
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+            showToast("存在");
+        }else {
+            showToast("不存在");
+        }
     }
 
     private void initview(){
 
-//        mSearch.clearFocus();
-//        mSearch.setOnQueryTextListener(this);
-//        mSearch.onActionViewExpanded();
-//        mSearch.setIconifiedByDefault(false);
         mTextDown.setText(getString(R.string.Download));
         mTextCheck.setText(getString(R.string.all_check));
         mRecycler.setVisibility(View.VISIBLE);
@@ -195,12 +197,13 @@ public class MaterialsTwoActivity extends BaseActivity  {
                         //是wifi
                         try {
                             DownloadManager.getInstance().startDownload(
-                                    list.get(postion).getCoursewareUrl()
+//                                    list.get(postion).getCoursewareUrl()
                                     // TODO: 2017/6/13 测试下载
-//                                    "http://dl.bintray.com/wyouflf/maven/org/xutils/xutils/3.5.0/xutils-3.5.0.aar"
+                                    "http://dl.bintray.com/wyouflf/maven/org/xutils/xutils/3.5.0/xutils-3.5.0.aar"
                                     ,list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
                                     ,list.get(postion).getId()
-                                    ,"/sdcard/MT/" + list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
+                                    ,"/sdcard/xUtils/" + "name" + ".aar"
+//                                    ,"/sdcard/MT/" + list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
                                     ,true
                                     ,false
                                     ,null);
@@ -241,6 +244,8 @@ public class MaterialsTwoActivity extends BaseActivity  {
                         dialog.show();
                     }
 
+                }else {
+                    startActivity(new Intent(mContext,DownloadActivity.class));
                 }
             }
         });
@@ -257,7 +262,6 @@ public class MaterialsTwoActivity extends BaseActivity  {
         mPladapter.setOnClickItemListener(new MaterialPlAdapter.OnClickItemListener() {
             @Override
             public void onClickItem(HorizontalProgressBarWithNumber view, int postion) {
-//                progressbar = view;
                 HashSet<Integer> set = new LinkedHashSet<Integer>();
                 set.addAll(postions);
                 postions.clear();
@@ -266,8 +270,7 @@ public class MaterialsTwoActivity extends BaseActivity  {
                     LinkedList<Integer> re = new LinkedList<Integer>();
                     re.addAll(postions);
                     postions.clear();
-//                    Iterator it = postions.iterator();
-                    //去掉 重复的postion再删除
+
                     for (int i=0;i<re.size();i++){
                         if (re.get(i) == postion){
 

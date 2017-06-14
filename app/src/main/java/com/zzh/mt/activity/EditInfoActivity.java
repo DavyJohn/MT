@@ -118,7 +118,6 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
            }else {
                upPhoto(file);
            }
-
         }
     }
 

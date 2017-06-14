@@ -1,10 +1,14 @@
 package com.zzh.mt.activity;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
@@ -49,6 +53,22 @@ public class DownloadActivity extends BaseActivity {
         downloadManager = DownloadManager.getInstance();
         downloadListAdapter = new DownloadListAdapter();
         downloadList.setAdapter(downloadListAdapter);
+
+        downloadList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                DownloadInfo downloadInfo = downloadManager.getDownloadInfo(position);
+//                Log.e("下载地址：",downloadInfo.getFileSavePath());
+                Intent intent = new Intent("android.intent.action.VIEW");
+                intent.addCategory("android.intent.category.DEFAULT");
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                Uri uri = Uri.fromFile(new File(downloadInfo.getFileSavePath()));
+                intent.setDataAndType(uri, "application/pdf");
+                startActivity(intent);
+
+
+            }
+        });
     }
 
     @Override
@@ -121,9 +141,11 @@ public class DownloadActivity extends BaseActivity {
         @ViewInject(R.id.download_state)
         TextView state;
         @ViewInject(R.id.download_pb)
-        HorizontalProgressBarWithNumber progressBar;
+        ProgressBar progressBar;
         @ViewInject(R.id.download_stop_btn)
         Button stopBtn;
+        @ViewInject(R.id.download_remove_btn)
+        Button removeBtn;
 
         public DownloadItemViewHolder(View view, DownloadInfo downloadInfo) {
             super(view, downloadInfo);
@@ -213,23 +235,27 @@ public class DownloadActivity extends BaseActivity {
             progressBar.setProgress(downloadInfo.getProgress());
             stopBtn.setVisibility(View.VISIBLE);
             stopBtn.setText(getString(R.string.stop));
+
+            // TODO: 2017/6/14  下载状态有问题基本就显示下载失败 和下载成功 和已下载
             DownloadState Dstate = downloadInfo.getState();
             switch (Dstate) {
                 case WAITING:
                     state.setText(R.string.waiting);
                 case STARTED:
-
+                    state.setText(R.string.Downloading);
                     stopBtn.setText(getString(R.string.stop));
+                    removeBtn.setVisibility(View.INVISIBLE);
                     break;
                 case ERROR:
                     state.setText(R.string.Failed);
+                    removeBtn.setVisibility(View.VISIBLE);
                 case STOPPED:
-
                     stopBtn.setText(R.string.start);
                     break;
                 case FINISHED:
                     state.setText(R.string.Finished);
                     stopBtn.setVisibility(View.INVISIBLE);
+                    removeBtn.setVisibility(View.VISIBLE);
                     SqliteTool.getInstance().addData(mContext,downloadInfo.getUrlid());
                     break;
                 default:
