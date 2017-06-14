@@ -201,7 +201,7 @@ public class MaterialsTwoActivity extends BaseActivity  {
                                     // TODO: 2017/6/13 测试下载
                                     ,list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
                                     ,list.get(postion).getId()
-                                    ,"/sdcard/MT/" + list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
+                                    ,String.valueOf(mContext.getExternalCacheDir())
                                     ,true
                                     ,false
                                     ,null);
@@ -268,14 +268,17 @@ public class MaterialsTwoActivity extends BaseActivity  {
                     LinkedList<Integer> re = new LinkedList<Integer>();
                     re.addAll(postions);
                     postions.clear();
-
                     for (int i=0;i<re.size();i++){
                         if (re.get(i) == postion){
-
                         }else {
                             postions.add(re.get(i));
-                            System.out.print(postions);
+
                         }
+                    }
+                    System.out.print(postions);
+                    urllist.clear();
+                    for (int i=0;i<postions.size();i++){
+                        urllist.add(list.get(postions.get(i)).getCoursewareUrl());
                     }
                 }else {
                     postions.add(postion);
