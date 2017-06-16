@@ -6,8 +6,8 @@ package com.zzh.mt.utils;
 
 public class Contants {
 
-    public static final String BASEURL = "http://106.14.210.105";
-//    public static final String BASEURL = "http://192.168.6.11:8080";
+//    public static final String BASEURL = "http://106.14.210.105";
+    public static final String BASEURL = "http://192.168.6.11:8080";
     //查询轮播图列表
     public static final String BANNERURL = "/mtms-gateway/appImage/getImage";
 
@@ -63,5 +63,8 @@ public class Contants {
     public static int LANGUAGENEM = -1;
     //选修列表 选中不能再次点击问题
     public static int ClickPostion = -1;
+
+    //日期更新标志
+    public static boolean isChange = true;
 
 }

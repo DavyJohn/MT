@@ -73,6 +73,7 @@ public class ScheduleActivity extends BaseActivity {
         mCompulsory.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.compulsory_sel));
         classTime();
         getInfo("1");
+
     }
 
     private void initview(){
@@ -182,6 +183,13 @@ public class ScheduleActivity extends BaseActivity {
             }
         });
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        Contants.isChange = true;
+    }
+
     @Override
     public int getLayoutId() {
         return R.layout.schedule_main_layout;

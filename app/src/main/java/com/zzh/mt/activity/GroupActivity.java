@@ -67,6 +67,7 @@ public class GroupActivity extends BaseActivity {
         }else {
             getInfo();
         }
+        Contants.isChange = false;
     }
 
     private void initview(){

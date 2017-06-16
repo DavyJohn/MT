@@ -97,8 +97,6 @@ public class ClassmateActivity extends BaseActivity {
                 {
                     holder.setVisible(R.id.tv_index,false);
                 }
-
-
             }
         };
         adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {

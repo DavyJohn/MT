@@ -311,27 +311,31 @@ public class ScheduleDateActivity extends BaseActivity {
                 }
             }
             //如果今天属于课程安排的时间则将今天直接显示 否 将课程时间的第一天显示
-            for (int m=0;m<listData.size();m++){
-                if (listData.get(m).equals(CommonUtil.getData())){
-                    mDate.setText(listData.get(m));
-                    num = m;
-                    break;
+            if (Contants.isChange == true){
+                for (int m=0;m<listData.size();m++){
+                    if (listData.get(m).equals(CommonUtil.getData())){
+                        mDate.setText(listData.get(m));
+                        num = m;
+                        break;
+                    }else {
+                        mDate.setText(listData.get(0));
+                        num = 0;
+                    }
+                }
+                if (num ==0){
+                    findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
+                    findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
+                }else if (num+1 == listData.size() ){
+                    findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
+                    findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
                 }else {
-                    mDate.setText(listData.get(0));
-                    num = 0;
+                    findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
+                    findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
                 }
             }
+
             
-            if (num ==0){
-                findViewById(R.id.schedule_left).setVisibility(View.INVISIBLE);
-                findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
-            }else if (num+1 == listData.size() ){
-                findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
-                findViewById(R.id.schedule_right).setVisibility(View.INVISIBLE);
-            }else {
-                findViewById(R.id.schedule_left).setVisibility(View.VISIBLE);
-                findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
-            }
+
             //判断特殊数值
             switch (listData.size()){
                 case 1:
@@ -357,9 +361,9 @@ public class ScheduleDateActivity extends BaseActivity {
                     break;
 
             }
-
+            initview();
         }
-        initview();
+
     }
     @Override
     public int getLayoutId() {

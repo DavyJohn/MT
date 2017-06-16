@@ -3,10 +3,12 @@ package com.zzh.mt.activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -83,6 +85,7 @@ public class MaterialsTwoActivity extends BaseActivity  {
             postions.clear();
             urllist.clear();
             listtwo.clear();
+            ids.clear();
             listtwo.addAll(list);
             //todo 去掉数据库里面存在的id
             for (int i=0;i<list.size();i++){
@@ -142,12 +145,12 @@ public class MaterialsTwoActivity extends BaseActivity  {
         if (urllist.size()>0){
             for (int i=0;i<urllist.size();i++){
                 String url = urllist.get(i);
-                String name = i+list.get(postions.get(i)).getCoursewareName();
+                String name = CommonUtil.getData()+list.get(postions.get(i)).getCoursewareName();
                 try {
                     DownloadManager.getInstance().startDownload(url,
                             name,
                             list.get(postions.get(i)).getId(),
-                            "/sdcard/MT/" + list.get(postions.get(i)).getCoursewareName()+"."+list.get(postions.get(i)).getCoursewareType(),
+                            String.valueOf(mContext.getExternalCacheDir()+list.get(postions.get(i)).getCoursewareName()+"."+list.get(postions.get(i)).getCoursewareType()),
                             true,
                             false,null);
                 } catch (DbException e) {
@@ -164,7 +167,6 @@ public class MaterialsTwoActivity extends BaseActivity  {
         super.onCreate(savedInstanceState);
         getToolBar().setTitle(R.string.Course_materials);
         MyApplication.getInstance().add(this);
-
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRecycler.setHasFixedSize(true);
         mRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
@@ -190,6 +192,7 @@ public class MaterialsTwoActivity extends BaseActivity  {
         adapter.addData(list);
         mRecycler.setAdapter(adapter);
         adapter.setOnClickItemListener(new MaterialsAdapter.OnClickItemListener() {
+            @RequiresApi(api = Build.VERSION_CODES.FROYO)
             @Override
             public void onClickItem(HorizontalProgressBarWithNumber progress, TextView mSize, TextView down, String id, final int postion) {
                 if (!down.getText().toString().equals(getString(R.string.Finished))){
@@ -199,9 +202,9 @@ public class MaterialsTwoActivity extends BaseActivity  {
                             DownloadManager.getInstance().startDownload(
                                     list.get(postion).getCoursewareUrl()
                                     // TODO: 2017/6/13 测试下载
-                                    ,list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
+                                    ,CommonUtil.getData()+list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
                                     ,list.get(postion).getId()
-                                    ,String.valueOf(mContext.getExternalCacheDir())
+                                    ,String.valueOf(mContext.getExternalCacheDir()+list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType())
                                     ,true
                                     ,false
                                     ,null);
@@ -220,9 +223,9 @@ public class MaterialsTwoActivity extends BaseActivity  {
                                         try {
                                             DownloadManager.getInstance().startDownload(
                                                     list.get(postion).getCoursewareUrl()
-                                                    ,list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
+                                                    ,CommonUtil.getData()+list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
                                                     ,list.get(postion).getId()
-                                                    ,"/sdcard/MT/" + list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
+                                                    ,String.valueOf(mContext.getExternalCacheDir()+list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType())
                                                     ,true
                                                     ,false
                                                     ,null);
@@ -275,7 +278,6 @@ public class MaterialsTwoActivity extends BaseActivity  {
 
                         }
                     }
-                    System.out.print(postions);
                     urllist.clear();
                     for (int i=0;i<postions.size();i++){
                         urllist.add(list.get(postions.get(i)).getCoursewareUrl());
@@ -286,8 +288,6 @@ public class MaterialsTwoActivity extends BaseActivity  {
                     for (int i=0;i<postions.size();i++){
                         urllist.add(list.get(postions.get(i)).getCoursewareUrl());
                     }
-                    System.out.print(urllist);
-                    System.out.print(postions);
                 }
                 initpl();
             }

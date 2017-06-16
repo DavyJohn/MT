@@ -154,8 +154,8 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
             @Override
             public void onSuccess(Response response, BaseData data) {
                 if (data.getCode().equals("200")){
-                    Contants.Deparmentname = null;
-                    Contants.Deparmentid = null;
+//                    Contants.Deparmentname = null;
+//                    Contants.Deparmentid = null;
                     finish();
                     showToast(data.getMessage());
                 }else {

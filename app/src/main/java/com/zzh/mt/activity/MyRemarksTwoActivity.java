@@ -49,6 +49,7 @@ public class MyRemarksTwoActivity extends BaseActivity {
         getToolBar().setTitle(R.string.my_remarks);
         MyApplication.getInstance().add(this);
         getID();
+        Contants.isChange = false;
         initview();
     }
 
