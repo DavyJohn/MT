@@ -57,7 +57,6 @@ public class MyRemarksTwoActivity extends BaseActivity {
         mType.setText(getIntent().getStringExtra("activityTypeName"));
         mTime.setText(getIntent().getStringExtra("time").substring(0,10));
         mTitle.setText(getIntent().getStringExtra("name"));
-
     }
 
     @Override
@@ -70,7 +69,12 @@ public class MyRemarksTwoActivity extends BaseActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getTitle().equals(getString(R.string.remarks_menu_complete))){
-            setremark();
+            if (TextUtils.isEmpty(mEtText.getText().toString())){
+                showMessageDialog("备注不能为空",mContext);
+            }else {
+                setremark();
+            }
+
         }else if (item.getTitle().equals(getString(R.string.edit_menu))){
             mEtText.setVisibility(View.VISIBLE);
             mText.setVisibility(View.GONE);

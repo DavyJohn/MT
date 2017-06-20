@@ -82,7 +82,7 @@ public class ElectiveListTwoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         MyApplication.getInstance().add(this);
-        getToolBar().setTitle(getString(R.string.elective_data));
+        getToolBar().setTitle(getString(R.string.Select_training_session));
         getInfo();
         CoursesTrainingSessions();
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -139,6 +139,7 @@ public class ElectiveListTwoActivity extends BaseActivity {
                         for (int i=0;i<list.size();i++){
                             if (list.get(i).getIsSelected().equals("1")){
                                 Contants.ClickPostion = i;
+                                courseNoId = list.get(i).getId();
                             }
                         }
                         if (data.getCanModify() == true){
@@ -155,13 +156,14 @@ public class ElectiveListTwoActivity extends BaseActivity {
                                 mCancel.setBackground(ContextCompat.getDrawable(mContext,R.drawable.button_click_shape));
                                 mCancel.setTextColor(ContextCompat.getColor(mContext,R.color.white));
                                 mCancel.setClickable(true);
-//                                courseNoId = data.getCourseNoList().get(i).getId();
                                 clickid = data.getCourseNoList().get(i).getId();
+                                mChange.setText(R.string.modify);
                                 break;
                             }else {
                                 mCancel.setBackground(ContextCompat.getDrawable(mContext,R.drawable.button_unclick_shape));
                                 mCancel.setTextColor(ContextCompat.getColor(mContext,R.color.button_unclick_shape_text_color));
                                 mCancel.setClickable(false);
+                                mChange.setText(R.string.Choice);
                             }
                         }
                         initview();
@@ -221,7 +223,7 @@ public class ElectiveListTwoActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, BaseData data) {
                 if (data.getCode().equals("200")){
-                    courseNoId = null;
+//                    courseNoId = null;
                     showToast(data.getMessage());
                 }else {
                     showToast(data.getMessage());

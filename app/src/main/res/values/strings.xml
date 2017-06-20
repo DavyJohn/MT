@@ -76,7 +76,7 @@
 
     <string name="cancel">取消</string>
     <string name="modify">更改</string>
-    <string name="Select_training_session">选择培训场次</string>
+    <string name="Select_training_session">培训场次</string>
     <string name="Schedule">时间安排</string>
     <string name="MultiSelect">批量下载</string>
     <string name="Download">确认下载</string>
@@ -109,5 +109,6 @@
     <string name="type_of_activity">活动类型</string>
     <string name="_200">说说你的学习心得吧（200字以内）</string>
     <string name="lan_set">语言设置</string>
+    <string name="Choice">选择</string>
 
 </resources>

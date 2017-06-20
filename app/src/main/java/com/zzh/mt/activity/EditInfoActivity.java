@@ -43,6 +43,7 @@ import com.zzh.mt.utils.Contants;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 import com.zzh.mt.utils.TimeUtil;
 import com.zzh.mt.widget.CircleImageView;
+import com.zzh.mt.widget.ClearEditText;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -74,9 +75,9 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
     private static final int TAKE_PHOTO =  1;
     private static final int REQUEST_CODE_IMAGE = 2;
     @BindView(R.id.edit_nickname)
-    EditText mNick;
+    ClearEditText mNick;
     @BindView(R.id.edit_brand)
-    EditText mBrand;
+    ClearEditText mBrand;
     @BindView(R.id.edit_info_header)
     CircleImageView mImage;
     @BindView(R.id.text_deparname)

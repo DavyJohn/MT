@@ -76,7 +76,7 @@
     <string name="deteils">Detail</string>
     <string name="cancel">Cancel</string>
     <string name="modify">Modify</string>
-    <string name="Select_training_session">Select training session</string>
+    <string name="Select_training_session">Training session</string>
     <string name="Schedule">Schedule</string>
     <string name="MultiSelect">MultiSelect</string>
     <string name="Download">Download</string>
@@ -112,4 +112,5 @@ The current use of mobile phone traffic, please download carefully!</string>
     <string name="_200">Talk about your learning experience (200 words or less)</string>
     <string name="lan_set">Language</string>
     <string name="password_update">Change Password </string>
+    <string name="Choice">Select</string>
 </resources>

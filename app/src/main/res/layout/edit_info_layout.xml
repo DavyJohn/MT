@@ -53,7 +53,7 @@
             android:orientation="horizontal"
             android:paddingRight="10dp"
             android:gravity="center|right">
-            <EditText
+            <com.zzh.mt.widget.ClearEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#333"
@@ -85,7 +85,7 @@
             android:orientation="horizontal"
             android:paddingRight="10dp"
             android:gravity="center|right">
-            <EditText
+            <com.zzh.mt.widget.ClearEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#333"
