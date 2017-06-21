@@ -31,6 +31,7 @@ import com.zzh.mt.mode.CoursewareById;
 import com.zzh.mt.sql.MyProvider;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.NetworkUtils;
 import com.zzh.mt.utils.SqliteTool;
 import com.zzh.mt.widget.DividerItemDecoration;
@@ -328,9 +329,9 @@ public class MaterialsTwoActivity extends BaseActivity  {
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("courseId",getIntent().getStringExtra("courseId"));
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.getCoursewareById, map, TAG, new SpotsCallBack<CoursewareById>(mContext) {
             @Override
             public void onSuccess(Response response, CoursewareById data) {
@@ -338,6 +339,8 @@ public class MaterialsTwoActivity extends BaseActivity  {
                     list.clear();
                     list.addAll(data.getFileList());
                     initview();
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
                 }

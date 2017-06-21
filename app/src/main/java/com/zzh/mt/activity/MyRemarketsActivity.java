@@ -17,6 +17,7 @@ import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.AppRemarks;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 
 import java.util.LinkedHashMap;
@@ -100,10 +101,10 @@ public class MyRemarketsActivity extends BaseActivity {
     private void getInfo(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.AppRemarks, map, TAG, new SpotsCallBack<AppRemarks>(mContext) {
             @Override
             public void onSuccess(Response response, AppRemarks data) {
@@ -112,6 +113,8 @@ public class MyRemarketsActivity extends BaseActivity {
                     list.clear();
                     list.addAll(data.getRemarkList());
                     initview();
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
                 }

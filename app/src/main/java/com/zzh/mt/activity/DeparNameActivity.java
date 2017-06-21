@@ -14,6 +14,7 @@ import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.DepartmentData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.widget.DividerItemDecoration;
 
 import java.util.LinkedHashMap;
@@ -71,9 +72,9 @@ public class DeparNameActivity extends BaseActivity {
     private void getInfo(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.DEPARTMENTLIST, map, TAG, new SpotsCallBack<DepartmentData>(mContext) {
             @Override
             public void onSuccess(Response response, DepartmentData data) {
@@ -81,6 +82,8 @@ public class DeparNameActivity extends BaseActivity {
                     list.clear();
                     list.addAll(data.getDepartmentList());
                     initview();
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
                 }
             }
 

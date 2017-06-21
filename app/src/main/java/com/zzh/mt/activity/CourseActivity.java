@@ -18,6 +18,7 @@ import com.zzh.mt.mode.ClassTimeData;
 import com.zzh.mt.mode.CurriculumData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
@@ -121,9 +122,9 @@ public class CourseActivity extends BaseActivity {
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CLASSGOALS, map, TAG, new SpotsCallBack<ClassTimeData>(mContext) {
             @Override
             public void onSuccess(Response response, ClassTimeData data) {
@@ -154,11 +155,11 @@ public class CourseActivity extends BaseActivity {
     private void getCurriculumChoice(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("type","1");
         map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CurriculumChoice, map, TAG, new SpotsCallBack<CurriculumData>(mContext) {
             @Override
             public void onSuccess(Response response, CurriculumData data) {
@@ -195,10 +196,10 @@ public class CourseActivity extends BaseActivity {
     private void isSelect(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CurriculumNoChoice, map, TAG, new SpotsCallBack<CurriculumData>(mContext) {
             @Override
             public void onSuccess(Response response, CurriculumData data) {
@@ -208,6 +209,8 @@ public class CourseActivity extends BaseActivity {
                   }else {
                       showMessageDialog("当前时间没有开放选课！",mContext);
                   }
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
                 }
             }
 

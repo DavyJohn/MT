@@ -16,6 +16,7 @@ import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.BaseData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 
 import java.util.LinkedHashMap;
 
@@ -67,10 +68,10 @@ public class ForgetPassActivity extends BaseActivity {
     public void getPassword(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("companyEmail",mEditAddress.getText().toString());
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.FORGETPASSWORD, map, TAG, new SpotsCallBack<BaseData>(mContext) {
             @Override
             public void onSuccess(Response response, BaseData data) {
@@ -88,6 +89,8 @@ public class ForgetPassActivity extends BaseActivity {
                     dialog.show();
 
 
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
                 }

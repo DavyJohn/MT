@@ -25,6 +25,7 @@ import com.zzh.mt.mode.CourseInfoData;
 import com.zzh.mt.mode.CoursesTrainingSessionsData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 import com.zzh.mt.widget.DividerItemDecoration;
 
@@ -125,9 +126,9 @@ public class ElectiveListTwoActivity extends BaseActivity {
         map.put("courseId",getIntent().getStringExtra("courseId"));
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CoursesTrainingSessions, map, TAG, new SpotsCallBack<CoursesTrainingSessionsData>(mContext) {
             @Override
             public void onSuccess(Response response, CoursesTrainingSessionsData data) {
@@ -183,9 +184,9 @@ public class ElectiveListTwoActivity extends BaseActivity {
         map.put("courseId",getIntent().getStringExtra("courseId"));
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CurriculumDetails, map, TAG, new SpotsCallBack<CourseInfoData>(mContext) {
             @Override
             public void onSuccess(Response response, CourseInfoData data) {
@@ -214,17 +215,19 @@ public class ElectiveListTwoActivity extends BaseActivity {
         map.put("courseId",getIntent().getStringExtra("courseId"));
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("operation",operation);
         map.put("courseNoId",id);//传入的是后台选中的
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CurriculumNo, map, TAG, new SpotsCallBack<BaseData>(mContext) {
             @Override
             public void onSuccess(Response response, BaseData data) {
                 if (data.getCode().equals("200")){
 //                    courseNoId = null;
                     showToast(data.getMessage());
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
                 }else {
                     showToast(data.getMessage());
                 }

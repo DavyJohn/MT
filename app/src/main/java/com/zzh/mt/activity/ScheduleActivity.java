@@ -19,6 +19,7 @@ import com.zzh.mt.mode.ClassTimeData;
 import com.zzh.mt.mode.CurriculumNoByUser;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 
 import java.util.LinkedHashMap;
@@ -134,9 +135,9 @@ public class ScheduleActivity extends BaseActivity {
         map.put("type",index);
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CurriculumNoByUserId, map, TAG, new SpotsCallBack<CurriculumNoByUser>(mContext) {
             @Override
             public void onSuccess(Response response, CurriculumNoByUser data) {
@@ -144,6 +145,8 @@ public class ScheduleActivity extends BaseActivity {
                     list.clear();
                     list.addAll(data.getCourseNoList());
                     initview();
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
                 }
@@ -162,15 +165,17 @@ public class ScheduleActivity extends BaseActivity {
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CLASSGOALS, map, TAG, new SpotsCallBack<ClassTimeData>(mContext) {
             @Override
             public void onSuccess(Response response, ClassTimeData data) {
                 if (data.getCode().equals("200")){
                     mTextrequired.setText(getString(R.string.has)+":"+data.getHaveClassHoursRequired()+"/"+data.getTotalClassHoursRequired());
                     mTextelective.setText(getString(R.string.has)+":"+data.getHaveClassHoursElective()+"/"+data.getTotalClassHoursElective());
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
                 }

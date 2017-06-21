@@ -40,6 +40,7 @@ import com.zzh.mt.mode.BaseData;
 import com.zzh.mt.mode.UserData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 import com.zzh.mt.widget.CircleImageView;
 import com.zzh.mt.widget.banner.BannerView;
@@ -223,17 +224,24 @@ public class MainActivity extends BaseActivity
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL+Contants.BANNERURL, map, TAG, new
                 SpotsCallBack<BannerEntity>(mContext) {
                     @Override
                     public void onSuccess(Response response, BannerEntity data) {
-                        mSwipe.setRefreshing(false);
-                        banners.clear();
-                        banners.addAll(data.getImageList());
-                        mBanner.delayTime(5).build(banners);
+                        if (data.getCode().equals("200")){
+                            mSwipe.setRefreshing(false);
+                            banners.clear();
+                            banners.addAll(data.getImageList());
+                            mBanner.delayTime(5).build(banners);
+                        }else if (data.getCode().equals("110")){
+                            goBack(data.getMessage(),mContext);
+                        }else {
+                            showMessageDialog(data.getMessage(),mContext);
+                        }
+
                     }
                     @Override
                     public void onError(Response response, int code, Exception e) {
@@ -246,10 +254,11 @@ public class MainActivity extends BaseActivity
     private void getInfo(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
+
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.GETUSER, map, TAG, new SpotsCallBack<UserData>(mContext) {
             @Override
             public void onSuccess(Response response, UserData data) {
@@ -263,6 +272,8 @@ public class MainActivity extends BaseActivity
                         Picasso.with(mContext).load(data.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_g).error(R.drawable.image_g).into(mNavImage);
                     }
                     mNickName.setText(data.getUserInfo().getNickName());
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
                 }

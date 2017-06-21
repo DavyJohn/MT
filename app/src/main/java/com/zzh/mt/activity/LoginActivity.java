@@ -24,7 +24,12 @@ import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.LoginData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
+
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
+import org.xutils.x;
 
 import java.util.LinkedHashMap;
 
@@ -126,11 +131,11 @@ public class LoginActivity extends BaseActivity {
     private void login(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("companyEmail",mEtUserName.getText().toString());
         map.put("password",mEtPassword.getText().toString());
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.LOGIN, map, TAG, new SpotsCallBack<LoginData>(mContext) {
             @Override
             public void onSuccess(Response response, LoginData data) {
@@ -138,6 +143,8 @@ public class LoginActivity extends BaseActivity {
                         SharedPreferencesUtil.getInstance(mContext).putString("companyEmail",mEtUserName.getText().toString());
                         SharedPreferencesUtil.getInstance(mContext).putString("userid",data.getUserId());
                         startActivity(new Intent(mContext,MainActivity.class));
+                    }else if (data.getCode().equals("110")){
+                        goBack(data.getMessage(),mContext);
                     }else {
                         showMessageDialog(data.getMessage(),mContext);
                     }
@@ -146,6 +153,32 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onError(Response response, int code, Exception e) {
 
+            }
+        });
+
+        RequestParams params = new RequestParams(Contants.BASEURL + Contants.LOGIN);
+
+        params.addParameter("companyEmail",mEtUserName.getText().toString());
+        params.addParameter("password",mEtPassword.getText().toString());
+        x.http().post(params, new Callback.CommonCallback<LoginData>() {
+            @Override
+            public void onSuccess(LoginData result) {
+                System.out.print(result);
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                System.out.print("");
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+                System.out.print("");
+            }
+
+            @Override
+            public void onFinished() {
+                System.out.print("");
             }
         });
     }

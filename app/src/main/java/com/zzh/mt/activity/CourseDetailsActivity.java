@@ -15,6 +15,7 @@ import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.CourseInfoData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 
 import org.w3c.dom.Text;
@@ -54,10 +55,10 @@ public class CourseDetailsActivity extends BaseActivity {
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("courseId",getIntent().getStringExtra("courseId"));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CurriculumDetails, map, TAG, new SpotsCallBack<CourseInfoData>(mContext) {
             @Override
             public void onSuccess(Response response, CourseInfoData data) {
@@ -91,6 +92,8 @@ public class CourseDetailsActivity extends BaseActivity {
                         //消失课程信息
                         findViewById(R.id.courrse_details_layout).setVisibility(View.GONE);
                     }
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
                 }

@@ -19,12 +19,15 @@ import android.widget.Toast;
 
 
 import com.zzh.mt.R;
+import com.zzh.mt.activity.LoginActivity;
 import com.zzh.mt.activity.MainActivity;
 import com.zzh.mt.http.OkHttpHelper;
 import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.BaseData;
+import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
 import com.zzh.mt.utils.LocaleUtils;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.ObserverUtils;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 
@@ -251,8 +254,19 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
                     }
                 }).create();
         dialog.show();
-
-
+    }
+    protected void goBack(String str, Context context) {
+        dialog = new AlertDialog.Builder(context)
+                .setTitle("提示")
+                .setMessage(str)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        SharedPreferencesUtil.getInstance(mContext).putString("userid","");
+                        startActivity(new Intent(mContext,LoginActivity.class));
+                    }
+                }).create();
+        dialog.show();
     }
 
     protected void dismissMessageDialog() {
@@ -279,6 +293,10 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
     private void logout(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.LOGOUT, map, TAG, new SpotsCallBack<BaseData>(mContext) {
             @Override
             public void onSuccess(Response response, BaseData data) {

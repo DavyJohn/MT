@@ -17,6 +17,7 @@ import com.zzh.mt.mode.AppRemarksByGroupId;
 import com.zzh.mt.mode.BaseData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 
 import java.util.LinkedHashMap;
@@ -128,11 +129,11 @@ public class MyRemarksTwoActivity extends BaseActivity {
     private void getID (){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("activityId",getIntent().getStringExtra("activityId"));
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.AppRemarksByGroupId, map, TAG, new SpotsCallBack<AppRemarksByGroupId>(mContext) {
             @Override
             public void onSuccess(Response response, AppRemarksByGroupId data) {
@@ -152,6 +153,8 @@ public class MyRemarksTwoActivity extends BaseActivity {
                     }
 
 
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
                 }

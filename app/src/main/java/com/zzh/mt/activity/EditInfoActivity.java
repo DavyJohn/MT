@@ -40,6 +40,7 @@ import com.zzh.mt.mode.BaseData;
 import com.zzh.mt.mode.UpLoadData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 import com.zzh.mt.utils.TimeUtil;
 import com.zzh.mt.widget.CircleImageView;
@@ -151,6 +152,10 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
         map.put("headImageUrl",path);
         map.put("nickname",mNick.getText().toString());
         map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CHANGEINFO, map, TAG, new SpotsCallBack<BaseData>(mContext) {
             @Override
             public void onSuccess(Response response, BaseData data) {
@@ -159,6 +164,8 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
 //                    Contants.Deparmentid = null;
                     finish();
                     showToast(data.getMessage());
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
                 }
@@ -388,10 +395,10 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
     private void upPhoto(File file){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("digest", MdTools.sign_digest(map));
         OkHttpUtils.post().addFile("file","android_head_image.png",file)
                 .url(Contants.BASEURL+Contants.UPLOAD).params(map).build().execute(new HeadCallBack() {
             @Override
@@ -408,6 +415,8 @@ public class EditInfoActivity extends BaseActivity implements ActivityCompat.OnR
                         Picasso.with(mContext).load(response.getHeadImageUrl()).placeholder(R.drawable.image_g).error(R.drawable.image_g).into(mImage);
                     }
                     s(response.getHeadImageUrl());
+                }else if (response.getCode().equals("110")){
+                    goBack(response.getMessage(),mContext);
                 }
             }
         });

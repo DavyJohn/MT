@@ -16,6 +16,7 @@ import com.zzh.mt.mode.BaseData;
 import com.zzh.mt.mode.UserData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 
 import java.util.LinkedHashMap;
@@ -74,15 +75,19 @@ public class ModifyPassActivity extends BaseActivity {
 
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.GETUSER, map, TAG, new SpotsCallBack<UserData>(mContext) {
             @Override
             public void onSuccess(Response response, UserData data) {
                 if (data.getCode().equals("200")){
                     mNickName.setText(data.getUserInfo().getNickName());
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
+                }else {
+                    showMessageDialog(data.getMessage(),mContext);
                 }
             }
 
@@ -96,12 +101,12 @@ public class ModifyPassActivity extends BaseActivity {
     private void modpass(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("newPassword",mNewPass.getText().toString());
         map.put("oldPassword",mOldPassword.getText().toString());
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CHANGEPASSWORD, map, TAG, new SpotsCallBack<BaseData>(mContext) {
             @Override
             public void onSuccess(Response response, BaseData data) {

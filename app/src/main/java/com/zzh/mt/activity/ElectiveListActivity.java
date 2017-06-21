@@ -17,6 +17,7 @@ import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.CurriculumData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 
 import java.util.LinkedHashMap;
@@ -128,10 +129,10 @@ public class ElectiveListActivity extends BaseActivity{
     private void getinfo(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CurriculumNoChoice, map, TAG, new SpotsCallBack<CurriculumData>(mContext) {
             @Override
             public void onSuccess(Response response, CurriculumData data) {
@@ -139,6 +140,8 @@ public class ElectiveListActivity extends BaseActivity{
                     list.clear();
                     list.addAll(data.getCourseList());
                     initview();
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
                 }
             }
 

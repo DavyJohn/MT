@@ -16,6 +16,7 @@ import com.zzh.mt.http.callback.InfoCallback;
 import com.zzh.mt.mode.UserData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.widget.CircleImageView;
 import com.zzh.mt.widget.DividerItemDecoration;
 
@@ -105,10 +106,10 @@ public class ClassmateInfoActivity extends BaseActivity {
     private void getinfo(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("userId",getIntent().getStringExtra("id"));
+        map.put("digest", MdTools.sign_digest(map));
         OkHttpUtils.post().url(Contants.BASEURL+Contants.GETUSER).params(map).build().execute(new InfoCallback() {
             @Override
             public void onError(okhttp3.Call call, Exception e, int id) {
@@ -120,6 +121,8 @@ public class ClassmateInfoActivity extends BaseActivity {
                 if (response.getCode().equals("200")){
                     userData = response;
                     initview();
+                }else if (response.getCode().equals("110")){
+                    goBack(response.getMessage(),mContext);
                 }
             }
         });

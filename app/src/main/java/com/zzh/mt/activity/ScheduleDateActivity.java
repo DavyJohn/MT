@@ -21,6 +21,7 @@ import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.CourseActivityArrangement;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 import com.zzh.mt.utils.StringUtils;
 import com.zzh.mt.widget.DividerItemDecoration;
@@ -263,9 +264,9 @@ public class ScheduleDateActivity extends BaseActivity {
         map.put("courseNoId",getIntent().getStringExtra("courseNoId"));
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CourseActivityArrangement, map, TAG, new SpotsCallBack<CourseActivityArrangement>(mContext) {
             @Override
             public void onSuccess(Response response, CourseActivityArrangement data) {
@@ -275,6 +276,8 @@ public class ScheduleDateActivity extends BaseActivity {
                     list.addAll(data.getActivityList());
                     //需要去判断 当第一次进来时候刷新日期之后去了小组和备注不刷新界面的日期 只刷新当前界面
                     initData();
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
                 }

@@ -19,6 +19,7 @@ import com.zzh.mt.mode.CoursewareById;
 import com.zzh.mt.mode.CurriculumData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 
 import java.util.LinkedHashMap;
@@ -94,11 +95,11 @@ public class DataActivity extends BaseActivity {
     private void getInfo(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("type","3");
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CurriculumChoice, map, TAG, new SpotsCallBack<CurriculumData>(mContext) {
             @Override
             public void onSuccess(Response response, CurriculumData data) {
@@ -106,6 +107,8 @@ public class DataActivity extends BaseActivity {
                     list.clear();
                     list.addAll(data.getCourseList());
                     initview();
+                }else if (data.getCode().equals("110")){
+                    goBack(data.getMessage(),mContext);
                 }else {
                     showMessageDialog(data.getMessage(),mContext);
                 }
@@ -122,9 +125,9 @@ public class DataActivity extends BaseActivity {
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("courseId",id);
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.getCoursewareById, map, TAG, new SpotsCallBack<CoursewareById>(mContext) {
             @Override
             public void onSuccess(Response response, CoursewareById data) {

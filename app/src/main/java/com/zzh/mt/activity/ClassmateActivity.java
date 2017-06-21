@@ -20,6 +20,7 @@ import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.ClassMateData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
+import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 import com.zzh.mt.widget.MysearchView;
 import com.zzh.mt.widget.sidebar.WaveSideBar;
@@ -231,10 +232,10 @@ public class ClassmateActivity extends BaseActivity {
     private void classmate(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CLASSMATE, map, TAG, new SpotsCallBack<ClassMateData>(mContext) {
             @Override
             public void onSuccess(Response response, ClassMateData data) {
@@ -269,6 +270,8 @@ public class ClassmateActivity extends BaseActivity {
                             initview();
                         }
 
+                    }else if (data.getCode().equals("110")){
+                        goBack(data.getMessage(),mContext);
                     }
 
             }
