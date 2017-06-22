@@ -8,6 +8,7 @@ import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -175,8 +176,12 @@ public class ScheduleDateActivity extends BaseActivity {
                     if (hashMap.get(mDate.getText().toString()).get(position).getColourLabel() == null || TextUtils.isEmpty(hashMap.get(mDate.getText().toString()).get(position).getColourLabel()) ){
                         holder.setBackgroundColor(R.id.group_view, ContextCompat.getColor(mContext,R.color.main_color));
                     }else {
-                        holder.setBackgroundColor(R.id.group_view, Color.parseColor(hashMap.get(mDate.getText().toString()).get(position).getColourLabel().substring(1,8)));
-
+                        String color = hashMap.get(mDate.getText().toString()).get(position).getColourLabel();
+                        if (color.contains("\t")){
+                            holder.setBackgroundColor(R.id.group_view, Color.parseColor(hashMap.get(mDate.getText().toString()).get(position).getColourLabel().substring(1,8)));
+                        }else {
+                            holder.setBackgroundColor(R.id.group_view, Color.parseColor(hashMap.get(mDate.getText().toString()).get(position).getColourLabel()));
+                        }
                     }
                     if (s.getHasRemark().equals("1")){
                         holder.setVisible(R.id.schedule_date_remarks_show_image,true);
@@ -192,8 +197,12 @@ public class ScheduleDateActivity extends BaseActivity {
                     if (hashMap.get(mDate.getText().toString()).get(position).getColourLabel() == null || TextUtils.isEmpty(hashMap.get(mDate.getText().toString()).get(position).getColourLabel()) ){
                         holder.setBackgroundColor(R.id.group_view, ContextCompat.getColor(mContext,R.color.main_color));
                     }else {
-                        holder.setBackgroundColor(R.id.group_view, Color.parseColor(hashMap.get(mDate.getText().toString()).get(position).getColourLabel().substring(1,8)));
-                    }
+                        String color = hashMap.get(mDate.getText().toString()).get(position).getColourLabel();
+                        if (color.contains("\t")){
+                            holder.setBackgroundColor(R.id.group_view, Color.parseColor(hashMap.get(mDate.getText().toString()).get(position).getColourLabel().substring(1,8)));
+                        }else {
+                            holder.setBackgroundColor(R.id.group_view, Color.parseColor(hashMap.get(mDate.getText().toString()).get(position).getColourLabel()));
+                        }                    }
                     if (s.getHasRemark().equals("1")){
                         holder.setVisible(R.id.schedule_date_remarks_show_image,true);
                     }
@@ -208,8 +217,12 @@ public class ScheduleDateActivity extends BaseActivity {
                     if (hashMap.get(mDate.getText().toString()).get(position).getColourLabel() == null || TextUtils.isEmpty(hashMap.get(mDate.getText().toString()).get(position).getColourLabel()) ){
                         holder.setBackgroundColor(R.id.group_view, ContextCompat.getColor(mContext,R.color.main_color));
                     }else {
-                        holder.setBackgroundColor(R.id.group_view, Color.parseColor(hashMap.get(mDate.getText().toString()).get(position).getColourLabel().substring(1,8)));
-                    }
+                        String color = hashMap.get(mDate.getText().toString()).get(position).getColourLabel();
+                        if (color.contains("\t")){
+                            holder.setBackgroundColor(R.id.group_view, Color.parseColor(hashMap.get(mDate.getText().toString()).get(position).getColourLabel().substring(1,8)));
+                        }else {
+                            holder.setBackgroundColor(R.id.group_view, Color.parseColor(hashMap.get(mDate.getText().toString()).get(position).getColourLabel()));
+                        }                    }
                 }
 
                 // TODO: 2017/6/3  设置备注过的样式

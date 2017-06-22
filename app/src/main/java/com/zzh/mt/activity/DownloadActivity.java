@@ -63,7 +63,7 @@ public class DownloadActivity extends BaseActivity {
                 Uri uri = Uri.fromFile(new File(downloadInfo.getFileSavePath()));
                 if (downloadInfo.getType().substring(1,downloadInfo.getType().length()).equals("png") || downloadInfo.getType().substring(1,downloadInfo.getType().length()).equals("jpg")){
                     intent.setDataAndType(uri, "image/*");
-                }else if (downloadInfo.getType().substring(1,downloadInfo.getType().length()).equals("pdf")){
+                }else {
                     intent.setDataAndType(uri,"application/pdf");
                 }
                 startActivity(intent);

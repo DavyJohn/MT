@@ -260,6 +260,7 @@ public class MainActivity extends BaseActivity
         map.put("appVersion", CommonUtil.getVersion(mContext));
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("searchUserId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.GETUSER, map, TAG, new SpotsCallBack<UserData>(mContext) {

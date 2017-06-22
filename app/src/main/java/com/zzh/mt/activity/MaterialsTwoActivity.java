@@ -152,7 +152,7 @@ public class MaterialsTwoActivity extends BaseActivity  {
                             name,
                             list.get(postions.get(i)).getId(),
                             list.get(postions.get(i)).getCoursewareType(),
-                            String.valueOf(mContext.getExternalCacheDir()+list.get(postions.get(i)).getCoursewareName()+"."+list.get(postions.get(i)).getCoursewareType()),
+                            String.valueOf(mContext.getExternalCacheDir()+list.get(postions.get(i)).getCoursewareName()+list.get(postions.get(i)).getCoursewareType()),
                             true,
                             false,null);
                 } catch (DbException e) {
@@ -204,10 +204,10 @@ public class MaterialsTwoActivity extends BaseActivity  {
                             DownloadManager.getInstance().startDownload(
                                     list.get(postion).getCoursewareUrl()
                                     // TODO: 2017/6/13 测试下载
-                                    ,CommonUtil.getData()+list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType()
+                                    ,CommonUtil.getData()+list.get(postion).getCoursewareName()+list.get(postion).getCoursewareType()
                                     ,list.get(postion).getId()
                                     ,list.get(postion).getCoursewareType()
-                                    ,String.valueOf(mContext.getExternalCacheDir()+list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType())
+                                    ,String.valueOf(mContext.getExternalCacheDir()+list.get(postion).getCoursewareName()+list.get(postion).getCoursewareType())
                                     ,true
                                     ,false
                                     ,null);
@@ -229,7 +229,7 @@ public class MaterialsTwoActivity extends BaseActivity  {
                                                     ,CommonUtil.getData()+list.get(postion).getCoursewareName()+list.get(postion).getCoursewareType()
                                                     ,list.get(postion).getId()
                                                     ,list.get(postion).getCoursewareType()
-                                                    ,String.valueOf(mContext.getExternalCacheDir()+list.get(postion).getCoursewareName()+"."+list.get(postion).getCoursewareType())
+                                                    ,String.valueOf(mContext.getExternalCacheDir()+list.get(postion).getCoursewareName()+list.get(postion).getCoursewareType())
                                                     ,true
                                                     ,false
                                                     ,null);

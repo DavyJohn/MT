@@ -117,6 +117,7 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
                     case 3:
                         if (userData.getUserInfo().getDepartment() != null){
                             holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getDepartment().getDepartmentName());
+
                         }
                         break;
                     case 4:
@@ -148,6 +149,7 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
         map.put("appVersion", CommonUtil.getVersion(mContext));
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("searchUserId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.GETUSER, map, TAG, new SpotsCallBack<UserData>(mContext) {
