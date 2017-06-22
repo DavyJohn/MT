@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
 import com.zzh.mt.R;
 import com.zzh.mt.base.BaseActivity;
 import com.zzh.mt.base.CommonAdapter;
@@ -89,13 +91,20 @@ public class ScheduleActivity extends BaseActivity {
                 }else if (data.getIsArrange().equals("0")){
                     holder.setVisible(R.id.schedule_recycler_item_image_schedule,false);
                 }
-                holder.setImageUrl(R.id.schedule_item_image,data.getPictureUrl(),"2");
+                if (data.getPictureUrl() != null || !TextUtils.isEmpty(data.getPictureUrl())){
+                    if (!data.getPictureUrl().equals("")){
+                        holder.setImageUrl(R.id.schedule_item_image,data.getPictureUrl(),"2");
+                    }else {
+                        holder.setImageDrawable(R.id.schedule_item_image,ContextCompat.getDrawable(mContext,R.drawable.imag_demo));
+                    }
+                }else {
+                    holder.setImageDrawable(R.id.schedule_item_image,ContextCompat.getDrawable(mContext,R.drawable.imag_demo));
+                }
                 if (Contants.LANGUAGENEM == 0){
                     holder.setText(R.id.schedule_recycler_item_title,data.getChineseName());
                 }else if (Contants.LANGUAGENEM == 1){
                     holder.setText(R.id.schedule_recycler_item_title,data.getEnglishName());
                 }
-
 
                 //详情
                 holder.setOnClickListener(R.id.schedule_recycler_item_details, new View.OnClickListener() {

@@ -155,32 +155,6 @@ public class LoginActivity extends BaseActivity {
 
             }
         });
-
-        RequestParams params = new RequestParams(Contants.BASEURL + Contants.LOGIN);
-
-        params.addParameter("companyEmail",mEtUserName.getText().toString());
-        params.addParameter("password",mEtPassword.getText().toString());
-        x.http().post(params, new Callback.CommonCallback<LoginData>() {
-            @Override
-            public void onSuccess(LoginData result) {
-                System.out.print(result);
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                System.out.print("");
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-                System.out.print("");
-            }
-
-            @Override
-            public void onFinished() {
-                System.out.print("");
-            }
-        });
     }
     @Override
     public int getLayoutId() {

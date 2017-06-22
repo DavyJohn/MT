@@ -129,12 +129,13 @@ public class CourseActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, ClassTimeData data) {
                 if (data.getCode().equals("200")){
-                    int sumtotal = Integer.parseInt(data.getTotalClassHoursElective());
-                    int sunhave = Integer.parseInt(data.getHaveClassHoursElective());
+//                    int sumtotal = Integer.parseInt(data.getTotalClassHoursElective());
+//                    int sunhave = Integer.parseInt(String.valueOf(data.getHaveClassHoursElective()));
+
                     if (Contants.LANGUAGENEM == 0){
-                        item.setTitle(getString(R.string.has)+"："+sunhave+"/"+sumtotal);
+                        item.setTitle(getString(R.string.has)+"："+data.getHaveClassHoursElective()+"/"+data.getTotalClassHoursElective());
                     }else {
-                        item.setTitle(getString(R.string.has)+"："+sunhave+"/"+sumtotal);
+                        item.setTitle(getString(R.string.has)+"："+data.getHaveClassHoursElective()+"/"+data.getTotalClassHoursElective());
                     }
 
                     mTextTime.setText(data.getStartTime().substring(6,7)+getString(R.string.M)+data.getStartTime().substring(8,10)+getString(R.string.D)+"——"+data.getEndTime().substring(6,7)+getString(R.string.M)+data.getEndTime().substring(8,10)+getString(R.string.D));

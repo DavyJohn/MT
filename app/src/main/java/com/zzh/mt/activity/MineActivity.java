@@ -115,7 +115,9 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
                         holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getBrandName());
                         break;
                     case 3:
-                        holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getDepartment().getDepartmentName());
+                        if (userData.getUserInfo().getDepartment() != null){
+                            holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getDepartment().getDepartmentName());
+                        }
                         break;
                     case 4:
                         holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getSex().equals("1")?"男":"女");

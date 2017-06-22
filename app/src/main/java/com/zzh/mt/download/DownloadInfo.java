@@ -23,6 +23,9 @@ public class DownloadInfo {
     @Column(name = "url")
     private String url;
 
+    @Column(name = "type")
+    private String type;
+
     @Column(name = "urlid")
     private String urlid;
 
@@ -43,6 +46,14 @@ public class DownloadInfo {
 
     @Column(name = "autoRename")
     private boolean autoRename;
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public long getId() {
         return id;

@@ -61,7 +61,11 @@ public class DownloadActivity extends BaseActivity {
                 intent.addCategory("android.intent.category.DEFAULT");
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 Uri uri = Uri.fromFile(new File(downloadInfo.getFileSavePath()));
-                intent.setDataAndType(uri, "application/pdf");
+                if (downloadInfo.getType().substring(1,downloadInfo.getType().length()).equals("png") || downloadInfo.getType().substring(1,downloadInfo.getType().length()).equals("jpg")){
+                    intent.setDataAndType(uri, "image/*");
+                }else if (downloadInfo.getType().substring(1,downloadInfo.getType().length()).equals("pdf")){
+                    intent.setDataAndType(uri,"application/pdf");
+                }
                 startActivity(intent);
 
 
@@ -120,6 +124,7 @@ public class DownloadActivity extends BaseActivity {
                             downloadInfo.getUrl(),
                             downloadInfo.getLabel(),
                             String.valueOf(downloadInfo.getId()),
+                            downloadInfo.getType(),
                             downloadInfo.getFileSavePath(),
                             downloadInfo.isAutoResume(),
                             downloadInfo.isAutoRename(),
@@ -165,6 +170,7 @@ public class DownloadActivity extends BaseActivity {
                                 downloadInfo.getUrl(),
                                 downloadInfo.getLabel(),
                                 String.valueOf(downloadInfo.getId()),
+                                downloadInfo.getType(),
                                 downloadInfo.getFileSavePath(),
                                 downloadInfo.isAutoResume(),
                                 downloadInfo.isAutoRename(),

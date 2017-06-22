@@ -235,13 +235,17 @@ public class MainActivity extends BaseActivity
                             mSwipe.setRefreshing(false);
                             banners.clear();
                             banners.addAll(data.getImageList());
-                            mBanner.delayTime(5).build(banners);
+                            if (banners.size() == 1){
+                                mBanner.build(banners);
+                            }else {
+                                mBanner.delayTime(5).build(banners);
+                            }
+
                         }else if (data.getCode().equals("110")){
                             goBack(data.getMessage(),mContext);
                         }else {
                             showMessageDialog(data.getMessage(),mContext);
                         }
-
                     }
                     @Override
                     public void onError(Response response, int code, Exception e) {
@@ -254,7 +258,6 @@ public class MainActivity extends BaseActivity
     private void getInfo(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
@@ -264,8 +267,11 @@ public class MainActivity extends BaseActivity
             public void onSuccess(Response response, UserData data) {
                 if (data.getCode().equals("200")){
                     userData = data;
-                    Contants.Deparmentname = userData.getUserInfo().getDepartment().getDepartmentName();
-                    Contants.Deparmentid = userData.getUserInfo().getDepartmentId();
+                    if (userData.getUserInfo().getDepartment() != null){
+                        Contants.Deparmentname = userData.getUserInfo().getDepartment().getDepartmentName();
+                        Contants.Deparmentid = userData.getUserInfo().getDepartmentId();
+                    }
+
                     if (userData.getUserInfo().getSex().equals("1")){
                         Picasso.with(mContext).load(data.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_b).error(R.drawable.image_b).into(mNavImage);
                     }else {

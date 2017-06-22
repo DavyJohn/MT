@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SimpleCursorTreeAdapter;
@@ -59,8 +60,15 @@ public class DataActivity extends BaseActivity {
                 }else if (Contants.LANGUAGENEM == 1){
                     holder.setText(R.id.data_recycler_item_title,s.getEnglishName());
                 }
-
-                holder.setImageUrl(R.id.data_recycler_item_image,s.getPictureUrl(),"2");
+                if (s.getPictureUrl() != null || !TextUtils.isEmpty(s.getPictureUrl())){
+                    if (!s.getPictureUrl().equals("")){
+                        holder.setImageUrl(R.id.data_recycler_item_image,s.getPictureUrl(),"2");
+                    }else {
+                        holder.setImageDrawable(R.id.data_recycler_item_image,ContextCompat.getDrawable(mContext,R.drawable.imag_demo));
+                    }
+                }else {
+                    holder.setImageDrawable(R.id.data_recycler_item_image,ContextCompat.getDrawable(mContext,R.drawable.imag_demo));
+                }
                 holder.setOnClickListener(R.id.data_recycler_item_details, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
