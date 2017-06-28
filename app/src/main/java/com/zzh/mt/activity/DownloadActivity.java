@@ -144,7 +144,7 @@ public class DownloadActivity extends BaseActivity {
         @ViewInject(R.id.download_state)
         TextView state;
         @ViewInject(R.id.download_pb)
-        ProgressBar progressBar;
+        HorizontalProgressBarWithNumber progressBar;
         @ViewInject(R.id.download_stop_btn)
         Button stopBtn;
         @ViewInject(R.id.download_remove_btn)
@@ -252,6 +252,7 @@ public class DownloadActivity extends BaseActivity {
                     break;
                 case ERROR:
                     state.setText(R.string.Failed);
+                    removeBtn.setVisibility(View.VISIBLE);
                 case STOPPED:
                     stopBtn.setText(R.string.start);
                     break;

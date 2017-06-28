@@ -66,6 +66,8 @@ public class MaterialsTwoActivity extends BaseActivity  {
     private LinkedList<CoursewareById.CoursewareByIdData> listtwo = new LinkedList<>();
     private LinkedList<Integer> postions = new LinkedList<>();
     private LinkedList<String> urllist = new LinkedList<>();
+    private int sizes = 0;//用它来存放多少条数据
+    private int sqlsize = 0;
     LinkedList<String> ids = new LinkedList<>();
     MenuItem item = null;
     private AlertDialog dialog;
@@ -104,10 +106,10 @@ public class MaterialsTwoActivity extends BaseActivity  {
                 }
 
             }
-
             for (int m=0; m<postions.size();m++){
                 urllist.add(list.get(postions.get(m)).getCoursewareUrl());
             }
+            // todo全选 psotions
             initpl();
         }else {
             mTextCheck.setText(getString(R.string.all_check));
@@ -160,6 +162,7 @@ public class MaterialsTwoActivity extends BaseActivity  {
                 }
             }
             startActivity(new Intent(mContext,DownloadActivity.class));
+            postions.clear();
         }else {
 
         }
@@ -176,12 +179,6 @@ public class MaterialsTwoActivity extends BaseActivity  {
         mPlRecycler.setHasFixedSize(true);
         mPlRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
         getInfo();
-//
-//        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-//            showToast("存在");
-//        }else {
-//            showToast("不存在");
-//        }
     }
 
     private void initview(){
@@ -203,7 +200,6 @@ public class MaterialsTwoActivity extends BaseActivity  {
                         try {
                             DownloadManager.getInstance().startDownload(
                                     list.get(postion).getCoursewareUrl()
-                                    // TODO: 2017/6/13 测试下载
                                     ,CommonUtil.getData()+list.get(postion).getCoursewareName()+list.get(postion).getCoursewareType()
                                     ,list.get(postion).getId()
                                     ,list.get(postion).getCoursewareType()
@@ -215,6 +211,7 @@ public class MaterialsTwoActivity extends BaseActivity  {
                             e.printStackTrace();
                         }
                         startActivity(new Intent(mContext,DownloadActivity.class));
+                        postions.clear();
                     }else {
                         //手机流量 提示
                         dialog = new AlertDialog.Builder(mContext)
@@ -237,6 +234,7 @@ public class MaterialsTwoActivity extends BaseActivity  {
                                             e.printStackTrace();
                                         }
                                         startActivity(new Intent(mContext,DownloadActivity.class));
+                                        postions.clear();
                                     }
                                 })
                                 .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
@@ -251,6 +249,7 @@ public class MaterialsTwoActivity extends BaseActivity  {
 
                 }else {
                     startActivity(new Intent(mContext,DownloadActivity.class));
+                    postions.clear();
                 }
             }
         });
@@ -279,7 +278,6 @@ public class MaterialsTwoActivity extends BaseActivity  {
                         if (re.get(i) == postion){
                         }else {
                             postions.add(re.get(i));
-
                         }
                     }
                     urllist.clear();
@@ -292,6 +290,21 @@ public class MaterialsTwoActivity extends BaseActivity  {
                     for (int i=0;i<postions.size();i++){
                         urllist.add(list.get(postions.get(i)).getCoursewareUrl());
                     }
+                }
+                //todo 获得 postions
+                //利用总条数来实现全选的变化
+                Cursor cursor = getContentResolver().query(MyProvider.URI,null,null,null,null);
+                sqlsize = 0;//初始化
+                while (cursor.moveToNext()){
+                    //拿到 数据库存放的数据条数
+                    sqlsize = sqlsize+1;
+                }
+                System.out.print(sqlsize);
+                System.out.print(postions);
+                if (postions.size()+sqlsize == sizes){
+                    mTextCheck.setText(R.string.cancel_all);
+                }else {
+                    mTextCheck.setText(getString(R.string.all_check));
                 }
                 initpl();
             }
@@ -341,6 +354,8 @@ public class MaterialsTwoActivity extends BaseActivity  {
                 if (data.getCode().equals("200")){
                     list.clear();
                     list.addAll(data.getFileList());
+                    //获取存放条数
+                    sizes = list.size();
                     initview();
                 }else if (data.getCode().equals("110")){
                     goBack(data.getMessage(),mContext);

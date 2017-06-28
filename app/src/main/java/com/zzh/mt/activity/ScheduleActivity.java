@@ -181,8 +181,22 @@ public class ScheduleActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, ClassTimeData data) {
                 if (data.getCode().equals("200")){
-                    mTextrequired.setText(getString(R.string.has)+":"+data.getHaveClassHoursRequired()+"/"+data.getTotalClassHoursRequired());
-                    mTextelective.setText(getString(R.string.has)+":"+data.getHaveClassHoursElective()+"/"+data.getTotalClassHoursElective());
+                    String req = data.getHaveClassHoursRequired();
+                    String ele = data.getHaveClassHoursElective();
+                    String haveReq = null;
+                    String haveEle = null;
+                    if (req.contains(".")){
+                        haveReq = req.substring(0,req.lastIndexOf("."));
+                    }else {
+                        haveReq = req;
+                    }
+                    if (ele.contains(".")){
+                        haveEle = ele.substring(0,ele.lastIndexOf("."));
+                    }else {
+                        haveEle = ele;
+                    }
+                    mTextrequired.setText(getString(R.string.has)+":"+haveReq+"/"+data.getTotalClassHoursRequired());
+                    mTextelective.setText(getString(R.string.has)+":"+haveEle+"/"+data.getTotalClassHoursElective());
                 }else if (data.getCode().equals("110")){
                     goBack(data.getMessage(),mContext);
                 }else {
