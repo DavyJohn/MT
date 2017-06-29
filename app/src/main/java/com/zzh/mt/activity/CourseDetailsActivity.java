@@ -3,6 +3,7 @@ package com.zzh.mt.activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -63,7 +64,11 @@ public class CourseDetailsActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, CourseInfoData data) {
                 if (data.getCode().equals("200")){
-                    Picasso.with(mContext).load(data.getCourseInfo().getPictureUrl()).into(mImage);
+                    if (data.getCourseInfo().getPictureUrl() != null || !TextUtils.isEmpty(data.getCourseInfo().getPictureUrl())){
+                        Picasso.with(mContext).load(data.getCourseInfo().getPictureUrl()).error(R.drawable.course_details_icon).placeholder(R.drawable.course_details_icon).into(mImage);
+                    }else {
+                        Picasso.with(mContext).load(R.drawable.course_details_icon).into(mImage);
+                    }
                     if (Contants.LANGUAGENEM == 0){
                         mTextTitle.setText(data.getCourseInfo().getChineseName());
                     }else if (Contants.LANGUAGENEM == 1){

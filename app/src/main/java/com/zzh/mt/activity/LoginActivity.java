@@ -2,10 +2,8 @@ package com.zzh.mt.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -26,10 +24,6 @@ import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
 import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
-
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
 
 import java.util.LinkedHashMap;
 
@@ -65,13 +59,16 @@ public class LoginActivity extends BaseActivity {
     }
     @OnClick(R.id.login) void log(){
         if (TextUtils.isEmpty(mEtUserName.getText().toString())){
-            showMessageDialog("账号不能为空！",mContext);
+            setShakeAnimation(mEtUserName);
+            showToast("账号不能为空！");
+
         }else
 //            if (!CommonUtil.isEmail(mEtUserName.getText().toString())){
 //            showMessageDialog("输入的账号格式不正确！",mContext);
 //        } else
             if (TextUtils.isEmpty(mEtPassword.getText().toString())){
-            showMessageDialog("密码不能为空！",mContext);
+                setShakeAnimation(mEtPassword);
+                showToast("密码不能为空！");
         }
 //        else if (mEtPassword.getText().toString().length()<6){
 //            showMessageDialog("密码长度不小于6位！",mContext);

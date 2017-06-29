@@ -28,6 +28,7 @@ import com.zzh.mt.utils.Contants;
 import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 import com.zzh.mt.widget.DividerItemDecoration;
+import com.zzh.mt.widget.SelectableRoundedImageView;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
@@ -59,7 +60,7 @@ public class ElectiveListTwoActivity extends BaseActivity {
     @BindView(R.id.elective_two_time)
     TextView mTime;
     @BindView(R.id.elective_two_image)
-    ImageView mImage;
+    SelectableRoundedImageView mImage;
     @OnClick(R.id.elective_list_two_dedails) void details(){
         Intent intent = new Intent(mContext,CourseDetailsActivity.class);
         intent.putExtra("Course",mText.getText().toString());

@@ -16,6 +16,7 @@ import com.zzh.mt.mode.CoursewareById;
 import com.zzh.mt.sql.MyProvider;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.widget.HorizontalProgressBarWithNumber;
+import com.zzh.mt.widget.SelectableRoundedImageView;
 
 import java.util.LinkedList;
 
@@ -91,7 +92,7 @@ public class MaterialsAdapter extends RecyclerView.Adapter<MaterialsAdapter.View
         @BindView(R.id.progress)
         HorizontalProgressBarWithNumber mProgress;
         @BindView(R.id.data_image)
-        ImageView image;
+        SelectableRoundedImageView image;
         @BindView(R.id.materials_size)
         TextView mSize;
         @BindView(R.id.materials_down)

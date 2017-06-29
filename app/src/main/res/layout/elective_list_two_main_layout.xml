@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/base_bg">
     //top
@@ -12,11 +14,16 @@
         android:background="@color/white"
         android:orientation="horizontal">
 
-        <ImageView
+        <com.zzh.mt.widget.SelectableRoundedImageView
             android:id="@+id/elective_two_image"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            app:sriv_left_bottom_corner_radius="3dip"
+            app:sriv_left_top_corner_radius="3dip"
+            app:sriv_right_bottom_corner_radius="3dip"
+            app:sriv_right_top_corner_radius="3dip"
             android:layout_marginLeft="20dp"
             android:src="@drawable/imag_demo" />
 

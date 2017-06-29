@@ -123,8 +123,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="#333"
                 android:textSize="20sp"
-                android:id="@+id/text_deparname"
-                android:text="人事部"/>
+                android:id="@+id/text_deparname"/>
         </LinearLayout>
     </LinearLayout>
 
