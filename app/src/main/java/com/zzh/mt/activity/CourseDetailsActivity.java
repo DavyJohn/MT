@@ -91,7 +91,7 @@ public class CourseDetailsActivity extends BaseActivity {
                         if (data.getCourseInfo().getCurriculumNo().getAttendTime() == null){
                             mCdd.setText("");
                         }else {
-                            mCdd.setText(data.getCourseInfo().getCurriculumNo().getAttendTime().substring(0,10));
+                            mCdd.setText(data.getCourseInfo().getCurriculumNo().getAttendTime().substring(0,16));
                         }
                     }else {
                         //消失课程信息

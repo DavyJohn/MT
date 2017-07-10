@@ -53,8 +53,8 @@ public class ElectiveListAdapter extends RecyclerView.Adapter<ElectiveListAdapte
 
     @Override
     public void onBindViewHolder(final ElectiveListAdapter.ViewHolder holder, final int position) {
-
-        holder.mTime.setText(list.get(position).getAttendTime().substring(0,10));
+        String tie = list.get(position).getAttendTime().substring(0,16);
+        holder.mTime.setText(list.get(position).getAttendTime().substring(0,16));
         holder.mNum.setText(list.get(position).getRemainingSeats());
         if (list.get(position).getIsSelected().equals("0")){
             Picasso.with(context).load(R.drawable.un_checkbox).into(holder.mBox);

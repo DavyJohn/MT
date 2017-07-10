@@ -172,4 +172,15 @@ public class CommonUtil {
         return data;
     }
 
+    //判断时间上午下午
+    public static String getTime(String time){
+        String getT = null;
+        if (Integer.parseInt(time.substring(11,13)) > 12){
+            getT = "下午"+String.valueOf(Integer.parseInt(time.substring(11,13))-12)+time.substring(13,16);
+        }else {
+            getT = "上午"+time.substring(11,16);
+        }
+        return getT;
+    }
+
 }

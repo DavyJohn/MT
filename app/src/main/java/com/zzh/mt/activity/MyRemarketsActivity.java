@@ -2,6 +2,8 @@ package com.zzh.mt.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,6 +41,7 @@ public class MyRemarketsActivity extends BaseActivity {
     SwipeRefreshLayout mSwipe;
     @BindView(R.id.my_remarks_recycler)
     RecyclerView mRecyler;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,8 +72,20 @@ public class MyRemarketsActivity extends BaseActivity {
                 // TODO: 2017/6/13 活动类型中英文
                 holder.setText(R.id.my_remarks_recycler_item_typename,s.getActivityTypeName());
                 holder.setText(R.id.my_remarks_recycler_item_center,s.getGroupName());
-                holder.setText(R.id.my_remarks_recycler_item_attendtime,s.getAttendTime().substring(0,10));
-                holder.setText(R.id.my_remarks_recycler_item_star_end,s.getStartTime().substring(0,10)+"—"+s.getEndTime().substring(0,10));
+                holder.setText(R.id.my_remarks_recycler_item_attendtime,s.getStartTime().substring(0,10));
+//                String start = null;
+//                String end = null;
+//                if (Integer.parseInt(s.getStartTime().substring(11,13)) > 12){
+//                    start = "下午"+String.valueOf(Integer.parseInt(s.getStartTime().substring(11,13))-12)+s.getStartTime().substring(13,16);
+//                }else {
+//                    start = "上午"+s.getStartTime().substring(11,16);
+//                }
+//                if (Integer.parseInt(s.getEndTime().substring(11,13)) >12){
+//                    end = "下午"+String.valueOf(Integer.parseInt(s.getEndTime().substring(11,13))-12)+s.getEndTime().substring(13,16);
+//                }else {
+//                    end = "上午"+s.getEndTime().substring(11,16);
+//                }
+                holder.setText(R.id.my_remarks_recycler_item_star_end,CommonUtil.getTime(s.getStartTime())+"—"+CommonUtil.getTime(s.getEndTime()));
 
 
             }
