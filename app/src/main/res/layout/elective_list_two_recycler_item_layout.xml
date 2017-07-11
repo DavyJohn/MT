@@ -1,19 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="60dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="20dp"
+    android:layout_height="50dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
     android:background="@color/white">
     <LinearLayout
-        android:layout_width="0dp"
-        android:layout_weight="1"
+        android:layout_width="wrap_content"
         android:layout_gravity="center"
         android:layout_height="match_parent"
         android:orientation="horizontal">
         <ImageView
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
             android:layout_gravity="center"
             android:src="@drawable/elective_date_icon"/>
         <TextView
@@ -24,7 +23,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="#6c6c6c"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
 
     </LinearLayout>
 
@@ -33,7 +32,6 @@
         android:layout_weight="1"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-
         android:layout_marginLeft="5dp"
         android:orientation="horizontal">
         <ImageView
@@ -47,14 +45,14 @@
             android:text="@string/seat"
             android:gravity="center"
             android:textColor="#6c6c6c"
-            android:textSize="20sp" />
+            android:textSize="18sp" />
         <TextView
             android:id="@+id/elective_list_two_item_num"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="#6c6c6c"
             android:gravity="center"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:text="3"/>
     </LinearLayout>
 
@@ -64,16 +62,9 @@
         android:orientation="horizontal"
         android:gravity="end">
 
-        <!--<CheckBox-->
-            <!--android:layout_width="30dp"-->
-            <!--android:layout_height="30dp"-->
-            <!--android:layout_gravity="center"-->
-            <!--android:id="@+id/elective_checkbox"-->
-            <!--android:background="@drawable/checkbox_addpending"-->
-            <!--android:button="@null"/>-->
         <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
             android:layout_gravity="center"
             android:id="@+id/elective_checkbox"
             android:src="@drawable/un_checkbox"/>
