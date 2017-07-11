@@ -186,15 +186,25 @@ public class ScheduleActivity extends BaseActivity {
                     String haveReq = null;
                     String haveEle = null;
                     if (req.contains(".")){
-                        haveReq = req.substring(0,req.lastIndexOf("."));
+                        if (Integer.parseInt(req.substring(req.indexOf(".")+1,req.length()))>0){
+                            haveReq = req;
+                        }else {
+                            haveReq = req.substring(0,req.lastIndexOf("."));
+                        }
                     }else {
                         haveReq = req;
                     }
+
                     if (ele.contains(".")){
-                        haveEle = ele.substring(0,ele.lastIndexOf("."));
+                        if (Integer.parseInt(ele.substring(ele.indexOf(".")+1,ele.length()))>0){
+                            haveEle = ele;
+                        }else {
+                            haveEle = ele.substring(0,ele.lastIndexOf("."));
+                        }
                     }else {
                         haveEle = ele;
                     }
+
                     mTextrequired.setText(getString(R.string.has)+":"+haveReq+"/"+data.getTotalClassHoursRequired());
                     mTextelective.setText(getString(R.string.has)+":"+haveEle+"/"+data.getTotalClassHoursElective());
                 }else if (data.getCode().equals("110")){

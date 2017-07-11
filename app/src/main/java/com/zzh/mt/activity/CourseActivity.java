@@ -134,10 +134,16 @@ public class CourseActivity extends BaseActivity {
                     String el = data.getHaveClassHoursElective();
                     String have = null;
                     if (el.contains(".")){
-                        have = el.substring(0,el.lastIndexOf("."));
+                        if (Integer.parseInt(el.substring(el.indexOf(".")+1,el.length())) > 0){
+                            have = el;
+                        }else{
+                            have = el.substring(0,el.lastIndexOf("."));
+                        }
+
                     }else {
                         have = el;
                     }
+
                     if (Contants.LANGUAGENEM == 0){
                         item.setTitle(getString(R.string.has)+"："+have+"/"+data.getTotalClassHoursElective());
                     }else {
