@@ -6,8 +6,8 @@ package com.zzh.mt.utils;
 
 public class Contants {
 
-//    public static final String BASEURL = "http://106.14.210.105";
-    public static final String BASEURL = "http://192.168.6.25:8080";
+    public static final String BASEURL = "http://106.14.210.105";
+//    public static final String BASEURL = "http://192.168.6.25:8080";
     //查询轮播图列表
     public static final String BANNERURL = "/mtms-gateway/appImage/getImage";
 
@@ -69,4 +69,6 @@ public class Contants {
 
     public static String secretKey = "qJrSdoqhmYQJuetU3rMwed3gX5kvKUnr2G8ks9A0qxwGSyghrEy3HAxYzP3";
 
+    //删除id
+    public static final String DeleteId = "/mtms-gateway/appRemarks/deleteAppRemarksByRemarkId";
 }

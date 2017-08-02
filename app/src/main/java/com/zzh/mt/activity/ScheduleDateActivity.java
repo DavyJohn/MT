@@ -139,19 +139,24 @@ public class ScheduleDateActivity extends BaseActivity {
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRecycler.setHasFixedSize(true);
         mRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
-        getInfo();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-//        initData();
+        getInfo();
     }
 
     @Override
     protected void onRestart() {
         super.onRestart();
-        getInfo();
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+//        onCreate(null);
     }
 
     private void initview(){
@@ -285,7 +290,6 @@ public class ScheduleDateActivity extends BaseActivity {
             public void onSuccess(Response response, CourseActivityArrangement data) {
                 if (data.getCode().equals("200")){
                     list.clear();
-                    listData.clear();
                     list.addAll(data.getActivityList());
                     //需要去判断 当第一次进来时候刷新日期之后去了小组和备注不刷新界面的日期 只刷新当前界面
                     initData();
@@ -304,6 +308,7 @@ public class ScheduleDateActivity extends BaseActivity {
 
     }
     private void initData(){
+        listData.clear();
         if (list.size() != 0){
             for (int i=0;i<list.size();i++){
                 listData.add(list.get(i).getStartTime().substring(0,10));
@@ -312,9 +317,7 @@ public class ScheduleDateActivity extends BaseActivity {
             set.addAll(listData);
             listData.clear();
             listData.addAll(set);
-
             Collections.sort(listData);
-
             for (int b=0;b<listData.size();b++){
                 String key = listData.get(b);
                 LinkedList<CourseActivityArrangement.activityListData> da = new LinkedList<>();
@@ -334,8 +337,10 @@ public class ScheduleDateActivity extends BaseActivity {
                         num = m;
                         break;
                     }else {
-                        mDate.setText(listData.get(0));
-                        num = 0;
+                        if (listData.size() != 0 && listData.get(0) != null){
+                            mDate.setText(listData.get(0));
+                            num = 0;
+                        }
                     }
                 }
                 if (num ==0){
@@ -349,8 +354,6 @@ public class ScheduleDateActivity extends BaseActivity {
                     findViewById(R.id.schedule_right).setVisibility(View.VISIBLE);
                 }
             }
-
-            
 
             //判断特殊数值
             switch (listData.size()){

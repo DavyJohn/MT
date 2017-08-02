@@ -93,7 +93,7 @@ public class MyRemarksTwoActivity extends BaseActivity {
     private void setremark(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
-        map.put("digest","");
+
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("courseNoId",getIntent().getStringExtra("courseNoId"));
@@ -105,8 +105,8 @@ public class MyRemarksTwoActivity extends BaseActivity {
             map.put("remarkId",remarkId);
         }
         map.put("remark",mEtText.getText().toString());
-
         map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("digest", MdTools.sign_digest(map));
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.ReditRemarks, map, TAG, new SpotsCallBack<BaseData>(mContext) {
             @Override
             public void onSuccess(Response response, BaseData data) {
