@@ -86,6 +86,12 @@ public class ScheduleActivity extends BaseActivity {
         adapter = new CommonAdapter<CurriculumNoByUser.courseNoListData>(mContext,R.layout.schedule_recyclerview_item_layout,list) {
             @Override
             protected void convert(ViewHolder holder, final CurriculumNoByUser.courseNoListData data, int position) {
+                //完成 未完成
+                if (data.getFlag().equals("0")){
+                    holder.setTextid(R.id.schedule_recycler_item_flag,R.string.Incomplete);
+                }else if (data.getFlag().equals("1")){
+                    holder.setTextid(R.id.schedule_recycler_item_flag,R.string.Complete);
+                }
                 if (data.getIsArrange().equals("1")){
                     holder.setVisible(R.id.schedule_recycler_item_image_schedule,true);
                 }else if (data.getIsArrange().equals("0")){

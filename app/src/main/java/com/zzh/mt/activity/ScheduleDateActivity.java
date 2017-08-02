@@ -235,7 +235,7 @@ public class ScheduleDateActivity extends BaseActivity {
                         intent.putExtra("time",s.getStartTime());
                         // TODO: 2017/6/3 课程名称传递
                         intent.putExtra("name",getIntent().getStringExtra("Course"));
-                        intent.putExtra("activityTypeName",s.getActivityTypeName());
+                        intent.putExtra("activityTypeName",s.getGroupName());//传递活动名称
                         intent.putExtra("activityId",s.getId());
 
                         intent.putExtra("courseNoId",getIntent().getStringExtra("courseNoId"));

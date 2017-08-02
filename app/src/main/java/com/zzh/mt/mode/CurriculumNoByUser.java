@@ -37,6 +37,7 @@ public class CurriculumNoByUser {
     }
 
     public class courseNoListData{
+        private String flag;
         private String id;
         private String curriculumId;
         private String remarksId;
@@ -56,6 +57,14 @@ public class CurriculumNoByUser {
         private String classHours;
         private String isSelected;
         private String remainingSeats;
+
+        public String getFlag() {
+            return flag;
+        }
+
+        public void setFlag(String flag) {
+            this.flag = flag;
+        }
 
         public String getId() {
             return id;

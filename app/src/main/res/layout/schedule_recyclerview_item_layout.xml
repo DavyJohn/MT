@@ -14,8 +14,8 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
         <com.zzh.mt.widget.SelectableRoundedImageView
-            android:layout_width="93dp"
-            android:layout_height="93dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
             app:sriv_left_bottom_corner_radius="3dip"
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="5dp"
             android:gravity="center">
             <TextView
                 android:layout_width="wrap_content"
@@ -39,33 +39,53 @@
                 android:layout_gravity="left"
                 android:textSize="20sp"
                 android:textColor="#333"/>
+
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:orientation="horizontal"
-                android:layout_gravity="right"
-                android:gravity="center">
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="37dp"
-                    android:text="@string/Schedule"
-                    android:textSize="16sp"
-                    android:textColor="@color/white"
-                    android:textAllCaps="false"
-                    android:id="@+id/schedule_recycler_item_image_schedule"
-                    android:background="@drawable/button_click_shape"/>
+                android:gravity="center"
+                android:layout_gravity="left"
+                android:orientation="horizontal">
 
-                <Button
-                    android:layout_width="90dp"
-                    android:layout_height="37dp"
-                    android:layout_marginLeft="10dp"
-                    android:textColor="@color/white"
-                    android:text="@string/deteils"
-                    android:textAllCaps="false"
-                    android:textSize="16sp"
-                    android:id="@+id/schedule_recycler_item_details"
-                    android:background="@drawable/button_click_shape"/>
+                <TextView
+                    android:id="@+id/schedule_recycler_item_flag"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:layout_height="wrap_content"
+                    android:text="@string/Incomplete"
+                    android:textSize="18sp" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/schedule_recycler_item_image_schedule"
+                        android:layout_width="wrap_content"
+                        android:layout_height="34dp"
+                        android:background="@drawable/button_click_shape"
+                        android:text="@string/Schedule"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <Button
+                        android:id="@+id/schedule_recycler_item_details"
+                        android:layout_width="90dp"
+                        android:layout_height="34dp"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/button_click_shape"
+                        android:text="@string/deteils"
+                        android:textAllCaps="false"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+                </LinearLayout>
+
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

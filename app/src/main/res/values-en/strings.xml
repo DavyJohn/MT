@@ -108,9 +108,11 @@ The current use of mobile phone traffic, please download carefully!</string>
     <string name="Team_members">Team members</string>
     <string name="time">Actvity Time</string>
     <string name="Course_Name">Course Name</string>
-    <string name="type_of_activity">Type of activity</string>
+    <string name="type_of_activity">Name of activity</string>
     <string name="_200">Talk about your learning experience (200 words or less)</string>
     <string name="lan_set">Language</string>
     <string name="password_update">Change Password </string>
     <string name="Choice">Select</string>
+    <string name="Incomplete">Incomplete</string>
+    <string name="Complete">Complete</string>
 </resources>

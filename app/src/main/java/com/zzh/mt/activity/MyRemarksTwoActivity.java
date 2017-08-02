@@ -37,7 +37,7 @@ public class MyRemarksTwoActivity extends BaseActivity {
     @BindView(R.id.remarks_two_text)
     TextView mText;
     @BindView(R.id.remarks_type)
-    TextView mType;
+    TextView mName;
     @BindView(R.id.my_remarks_time)
     TextView mTime;
     @BindView(R.id.my_remarks_title)
@@ -55,7 +55,7 @@ public class MyRemarksTwoActivity extends BaseActivity {
     }
 
     private void initview(){
-        mType.setText(getIntent().getStringExtra("activityTypeName"));
+        mName.setText(getIntent().getStringExtra("activityTypeName"));//更改为创建活动的名字
         mTime.setText(getIntent().getStringExtra("time").substring(0,10));
         mTitle.setText(getIntent().getStringExtra("name"));
     }
