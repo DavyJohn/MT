@@ -50,6 +50,8 @@ public class ScheduleDateActivity extends BaseActivity {
     private LinkedList<CourseActivityArrangement.activityListData> list = new LinkedList<>();
     private LinkedList<CourseActivityArrangement.activityListData> da = new LinkedList<>();
     int num ;//用来记录选中的第几个
+    private String name = null;
+    private String courseNoId = null;
     Map<String,LinkedList<CourseActivityArrangement.activityListData>> hashMap = new ArrayMap<>();
     @BindView(R.id.date_schedule_text)
     TextView mDate;
@@ -139,6 +141,8 @@ public class ScheduleDateActivity extends BaseActivity {
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRecycler.setHasFixedSize(true);
         mRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
+        name = getIntent().getStringExtra("Course");
+        courseNoId = getIntent().getStringExtra("courseNoId");
     }
 
     @Override
@@ -160,14 +164,20 @@ public class ScheduleDateActivity extends BaseActivity {
     }
 
     private void initview(){
-
         final LinkedList<CourseActivityArrangement.activityListData> hasdata = new LinkedList<>();
-        hasdata.addAll(hashMap.get(mDate.getText().toString()));
+        String d = mDate.getText().toString();
+        System.out.print(d);
+            if (!TextUtils.isEmpty(mDate.getText().toString())){
+            hasdata.addAll(hashMap.get(mDate.getText().toString()));
+        }
+
         adapter = new CommonAdapter<CourseActivityArrangement.activityListData>(mContext,R.layout.schedule_date_recycler_item_layout,hasdata) {
             @Override
             protected void convert(ViewHolder holder, final CourseActivityArrangement.activityListData s, final int position) {
-                holder.setText(R.id.schedule_date_item_time,hashMap.get(mDate.getText().toString()).get(position).getStartTime().substring(0,10));
-                holder.setText(R.id.schedule_date_item_title,hashMap.get(mDate.getText().toString()).get(position).getGroupName());
+                if (!TextUtils.isEmpty(mDate.getText().toString())){
+                    holder.setText(R.id.schedule_date_item_time,hashMap.get(mDate.getText().toString()).get(position).getStartTime().substring(0,10));
+                    holder.setText(R.id.schedule_date_item_title,hashMap.get(mDate.getText().toString()).get(position).getGroupName());
+                }
                 //设置小组颜色 和 备注图标
                 if (s.getType().equals("1")){
                     //普通
@@ -239,11 +249,11 @@ public class ScheduleDateActivity extends BaseActivity {
                         intent.putExtra("GroupId",s.getGroupId());
                         intent.putExtra("time",s.getStartTime());
                         // TODO: 2017/6/3 课程名称传递
-                        intent.putExtra("name",getIntent().getStringExtra("Course"));
+                        intent.putExtra("name",name);
                         intent.putExtra("activityTypeName",s.getGroupName());//传递活动名称
                         intent.putExtra("activityId",s.getId());
 
-                        intent.putExtra("courseNoId",getIntent().getStringExtra("courseNoId"));
+                        intent.putExtra("courseNoId",courseNoId);
                         startActivity(intent);
 
                     }
@@ -335,11 +345,15 @@ public class ScheduleDateActivity extends BaseActivity {
                     if (listData.get(m).equals(CommonUtil.getData())){
                         mDate.setText(listData.get(m));
                         num = m;
-                        break;
+                        return;
                     }else {
                         if (listData.size() != 0 && listData.get(0) != null){
-                            mDate.setText(listData.get(0));
-                            num = 0;
+                            try {
+                                mDate.setText(listData.get(0));
+                                num = 0;
+                            }catch (Exception e){
+
+                            }
                         }
                     }
                 }
@@ -380,7 +394,10 @@ public class ScheduleDateActivity extends BaseActivity {
                     break;
 
             }
-            initview();
+            if (mDate != null){
+                initview();
+            }
+
         }
 
     }
