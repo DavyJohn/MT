@@ -134,6 +134,7 @@ public class ClassmateActivity extends BaseActivity {
                     if (data[i].equals(s)){
                         ((LinearLayoutManager) mRecycler.getLayoutManager()).scrollToPositionWithOffset(i, 0);
                     }
+                    return;
                 }
             }
         });

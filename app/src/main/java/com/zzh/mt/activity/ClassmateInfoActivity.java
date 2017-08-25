@@ -61,7 +61,6 @@ public class ClassmateInfoActivity extends BaseActivity {
             Picasso.with(mContext).load(userData.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_b).error(R.drawable.image_b).into(mImage);
         }else {
             Picasso.with(mContext).load(userData.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_g).error(R.drawable.image_g).into(mImage);
-
         }
 
         mText.setText(userData.getUserInfo().getNickName());
@@ -89,7 +88,7 @@ public class ClassmateInfoActivity extends BaseActivity {
                         holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getSex().equals("1")?"男":"女");
                         break;
                     case 5:
-                        holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getBirthday());
+                        holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getBirthday().substring(5,userData.getUserInfo().getBirthday().length()));
                         break;
                     case 6:
                         holder.setText(R.id.classmate_info_item_view,userData.getUserInfo().getEntryYear().substring(0,4));
