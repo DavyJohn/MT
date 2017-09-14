@@ -70,8 +70,6 @@ public class MainActivity extends BaseActivity
     private Integer[] data = {R.string.my_courde,R.string.class_schedule,R.string.Course_materials};
     private LinkedList<Integer> list = new LinkedList<>();
     BannerView mBanner;
-//    @BindView(R.id.banner)
-//    BannerView mBanner;
     @BindView(R.id.main_recyclerview)
     RecyclerView mRecycler;
     @BindView(R.id.main_swipe)
@@ -91,9 +89,7 @@ public class MainActivity extends BaseActivity
         PgyUpdateManager.register(this, "com.zzh.mt.fileprovider", new UpdateManagerListener() {
             @Override
             public void onNoUpdateAvailable() {
-
             }
-
             @Override
             public void onUpdateAvailable(String result) {
                 // 将新版本信息封装到AppBean中

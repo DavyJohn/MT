@@ -65,7 +65,7 @@ public class CourseDetailsActivity extends BaseActivity {
             public void onSuccess(Response response, CourseInfoData data) {
                 if (data.getCode().equals("200")){
                     if (data.getCourseInfo().getPictureUrl() != null || !TextUtils.isEmpty(data.getCourseInfo().getPictureUrl())){
-                        Picasso.with(mContext).load(data.getCourseInfo().getPictureUrl()).error(R.drawable.course_details_icon).placeholder(R.drawable.course_details_icon).into(mImage);
+                        Picasso.with(mContext).load(data.getCourseInfo().getDetailPictureUrl()).error(R.drawable.course_details_icon).placeholder(R.drawable.course_details_icon).into(mImage);
                     }else {
                         Picasso.with(mContext).load(R.drawable.course_details_icon).into(mImage);
                     }

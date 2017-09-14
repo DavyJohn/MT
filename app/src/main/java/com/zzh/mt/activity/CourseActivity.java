@@ -35,6 +35,7 @@ import okhttp3.Response;
  */
 
 public class CourseActivity extends BaseActivity {
+
     private static final String TAG = CourseActivity.class.getSimpleName();
     private CommonAdapter<CurriculumData.Curriculum> adapter;
     private MenuItem item = null;
@@ -44,9 +45,9 @@ public class CourseActivity extends BaseActivity {
         //我要选课 进去需要判断inSelectTime 是否位true
         isSelect();
     }
+
     @BindView(R.id.courrse_time)
     TextView mTextCourrseTime;
-
     @BindView(R.id.elective_recycler)
     RecyclerView mRecycler;
     @BindView(R.id.class_time)
@@ -57,7 +58,6 @@ public class CourseActivity extends BaseActivity {
         getToolBar().setTitle(getString(R.string.my_courde));
         classTime();
         getCurriculumChoice();
-
     }
 
     @Override
@@ -69,7 +69,6 @@ public class CourseActivity extends BaseActivity {
 
     private void initview(){
         //利用item.setText来跟新menu
-
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
         mRecycler.setHasFixedSize(true);
         adapter = new CommonAdapter<CurriculumData.Curriculum>(mContext,R.layout.elevtive_recycer_item_layout,list) {
@@ -86,6 +85,7 @@ public class CourseActivity extends BaseActivity {
                 holder.setOnClickListener(R.id.elevtive_recycler_item_detail, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        //详情
                         Intent intent = new Intent(mContext,CourseDetailsActivity.class);
                         if (Contants.LANGUAGENEM == 0){
                             intent.putExtra("Course",s.getChineseName());
@@ -129,8 +129,6 @@ public class CourseActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, ClassTimeData data) {
                 if (data.getCode().equals("200")){
-//                    int sumtotal = Integer.parseInt(data.getTotalClassHoursElective());
-//                    int sunhave = Integer.parseInt(String.valueOf(data.getHaveClassHoursElective()));
                     String el = data.getHaveClassHoursElective();
                     String have = null;
                     if (el.contains(".")){

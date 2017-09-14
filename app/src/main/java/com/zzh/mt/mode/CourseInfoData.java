@@ -49,7 +49,16 @@ public class CourseInfoData  {
         private String updateTime;
         private String isDisabled;
         private String canModify;
+        private String detailPictureUrl;
         private Curriculu curriculumNo;
+
+        public String getDetailPictureUrl() {
+            return detailPictureUrl;
+        }
+
+        public void setDetailPictureUrl(String detailPictureUrl) {
+            this.detailPictureUrl = detailPictureUrl;
+        }
 
         public Curriculu getCurriculumNo() {
             return curriculumNo;
