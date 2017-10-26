@@ -1,20 +1,26 @@
-package com.zzh.mt.activity;
+package com.zzh.mt.fragments;
 
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.zzh.mt.R;
-import com.zzh.mt.base.BaseActivity;
+import com.zzh.mt.activity.EditInfoActivity;
+import com.zzh.mt.activity.LanguageSettingActivity;
+import com.zzh.mt.activity.MineActivity;
+import com.zzh.mt.activity.ModifyPassActivity;
+import com.zzh.mt.base.BaseFragment;
 import com.zzh.mt.base.CommonAdapter;
-import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
 import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.UserData;
@@ -33,12 +39,11 @@ import butterknife.OnClick;
 import okhttp3.Response;
 
 /**
- * Created by 腾翔信息 on 2017/5/15.
+ * Created by 腾翔信息 on 2017/10/26.
  */
 
-public class MineActivity extends BaseActivity implements View.OnClickListener{
-
-    private String TAG = MineActivity.class.getSimpleName();
+public class MineFragment  extends BaseFragment{
+    private String TAG = MineFragment.class.getSimpleName();
     @BindView(R.id.mine_recycler)
     RecyclerView mRecycler;
     @BindView(R.id.nav_header_image)
@@ -51,7 +56,9 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
     @OnClick(R.id.mine_passw) void updataPass(){
         startActivity(new Intent(mContext,ModifyPassActivity.class));
     }
-
+    @OnClick(R.id.mine_getout) void out(){
+        quite("确认退出？",mContext);
+    }
     @OnClick(R.id.nav_header_info) void edit(){
         Intent intent = new Intent(mContext,EditInfoActivity.class);
         intent.putExtra("headurl",userData.getUserInfo().getHeadUrl());
@@ -67,22 +74,26 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
     CommonAdapter<Integer> adapter;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getToolBar().setTitle(getString(R.string.my_info));
-        MyApplication.getInstance().add(this);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.mine_main_layout,container,false);
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         mRecycler.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(mContext);
         layoutManager.setSmoothScrollbarEnabled(true);
         mRecycler.setLayoutManager(layoutManager);
         mRecycler.setNestedScrollingEnabled(false);
         mRecycler.addItemDecoration(new DividerItemDecoration(mContext,DividerItemDecoration.VERTICAL_LIST));
-        preferences = getSharedPreferences("lang", Context.MODE_PRIVATE);
+        preferences = mContext.getSharedPreferences("lang", Context.MODE_PRIVATE);
         editor = preferences.edit();
         getInfo();
     }
-
     private void initview(){
         mImage.setImageDrawable(ContextCompat.getDrawable(mContext,R.drawable.imag_demo));
         list.clear();
@@ -132,12 +143,6 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
         };
         mRecycler.setAdapter(adapter);
     }
-
-    @Override
-    public int getLayoutId() {
-        return R.layout.mine_main_layout;
-    }
-
     private void getInfo(){
         //个人资料
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
@@ -168,14 +173,8 @@ public class MineActivity extends BaseActivity implements View.OnClickListener{
     }
 
     @Override
-    protected void onResume() {
+    public void onResume() {
         super.onResume();
         getInfo();
     }
-
-    @Override
-    public void onClick(View v) {
-
-    }
-
 }

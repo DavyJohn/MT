@@ -112,5 +112,10 @@
     <string name="Choice">选择</string>
     <string name="Incomplete">未完成</string>
     <string name="Complete">完成</string>
+    <string name="mail_list">通讯录</string>
+    <string name="news">消息</string>
+    <string name="mine">我的</string>
+    <string name="my_group">我的小组</string>
+    <string name="question">互问互答</string>
 
 </resources>

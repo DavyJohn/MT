@@ -49,4 +49,5 @@ dependencies {
     compile 'com.soundcloud.android:android-crop:1.0.1@aar'
     //xuyils
     compile project(':xutils')
+    compile 'com.ashokvarma.android:bottom-navigation-bar:1.2.0'
 }

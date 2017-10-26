@@ -23,8 +23,8 @@ import android.widget.Toast;
 
 
 import com.zzh.mt.R;
+import com.zzh.mt.activity.HomeActivity;
 import com.zzh.mt.activity.LoginActivity;
-import com.zzh.mt.activity.MainActivity;
 import com.zzh.mt.http.OkHttpHelper;
 import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.BaseData;
@@ -135,7 +135,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
 //        }
 //        changeAppLanguage();
 
-        Intent intent = new Intent(mContext, MainActivity.class);
+        Intent intent = new Intent(mContext, HomeActivity.class);
         intent.setAction(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_LAUNCHER);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -306,7 +306,7 @@ public abstract class BaseActivity extends AppCompatActivity implements Observer
             public void onSuccess(Response response, BaseData data) {
                 if (data.getCode().equals("200")){
                     SharedPreferencesUtil.getInstance(mContext).putString("userid","");
-                    Intent intent = new Intent(mContext,MainActivity.class);
+                    Intent intent = new Intent(mContext,HomeActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|
                             Intent.FLAG_ACTIVITY_NEW_TASK|Intent.FLAG_ACTIVITY_CLEAR_TASK );
                     startActivity(intent);

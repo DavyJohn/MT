@@ -115,4 +115,9 @@ The current use of mobile phone traffic, please download carefully!</string>
     <string name="Choice">Select</string>
     <string name="Incomplete">Incomplete</string>
     <string name="Complete">Complete</string>
+    <string name="mail_list">Mail List</string>
+    <string name="news">News</string>
+    <string name="mine">Mine</string>
+    <string name="my_group">Group</string>
+    <string name="question">Question</string>
 </resources>

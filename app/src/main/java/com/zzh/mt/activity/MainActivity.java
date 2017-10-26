@@ -2,7 +2,6 @@ package com.zzh.mt.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -21,14 +20,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.gson.Gson;
 import com.pgyersdk.javabean.AppBean;
 import com.pgyersdk.update.PgyUpdateManager;
 import com.pgyersdk.update.UpdateManagerListener;
 import com.squareup.picasso.Picasso;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.Callback;
-import com.zhy.http.okhttp.callback.StringCallback;
 import com.zzh.mt.R;
 import com.zzh.mt.base.BaseActivity;
 import com.zzh.mt.base.CommonAdapter;
@@ -36,7 +31,6 @@ import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
 import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.BannerEntity;
-import com.zzh.mt.mode.BaseData;
 import com.zzh.mt.mode.UserData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
@@ -51,7 +45,6 @@ import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import okhttp3.Call;
 import okhttp3.Response;
 
 public class MainActivity extends BaseActivity
@@ -63,6 +56,7 @@ public class MainActivity extends BaseActivity
     private UserData userData;
     ActionBarDrawerToggle toggle;
     private TextView mNickName,mInfo;
+    //给recyclervie 设置头尾
     private HeaderAndFooterWrapper mHeaderAndFooterWrapper;
     private LinkedList<BannerEntity.ImageData> banners = new LinkedList<>();
     private CommonAdapter<Integer> adapter;
@@ -72,8 +66,8 @@ public class MainActivity extends BaseActivity
     BannerView mBanner;
     @BindView(R.id.main_recyclerview)
     RecyclerView mRecycler;
-    @BindView(R.id.main_swipe)
-    SwipeRefreshLayout mSwipe;
+//    @BindView(R.id.main_swipe)
+//    SwipeRefreshLayout mSwipe;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,8 +145,8 @@ public class MainActivity extends BaseActivity
             list.add(data[i]);
         }
 
-        mSwipe.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_green_light,
-                android.R.color.holo_orange_light, android.R.color.holo_red_light);
+//        mSwipe.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_green_light,
+//                android.R.color.holo_orange_light, android.R.color.holo_red_light);
 
         mRecycler.setHasFixedSize(true);
         mRecycler.setLayoutManager(new LinearLayoutManager(this));
@@ -205,15 +199,15 @@ public class MainActivity extends BaseActivity
                 return false;
             }
         });
-        mSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                if (mSwipe.isRefreshing() == true){
-                    mSwipe.setRefreshing(false);
-                }
-                banner();
-            }
-        });
+//        mSwipe.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                if (mSwipe.isRefreshing() == true){
+//                    mSwipe.setRefreshing(false);
+//                }
+//                banner();
+//            }
+//        });
     }
 
     private void banner(){
@@ -228,7 +222,7 @@ public class MainActivity extends BaseActivity
                     @Override
                     public void onSuccess(Response response, BannerEntity data) {
                         if (data.getCode().equals("200")){
-                            mSwipe.setRefreshing(false);
+//                            mSwipe.setRefreshing(false);
                             banners.clear();
                             banners.addAll(data.getImageList());
                             if (banners.size() == 1){

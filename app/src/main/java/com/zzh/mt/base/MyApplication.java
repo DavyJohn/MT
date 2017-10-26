@@ -17,7 +17,7 @@ import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zzh.mt.BuildConfig;
-import com.zzh.mt.activity.MainActivity;
+import com.zzh.mt.activity.HomeActivity;
 import com.zzh.mt.R;
 import com.zzh.mt.utils.Contants;
 import com.zzh.mt.utils.LocaleUtils;
@@ -27,6 +27,7 @@ import org.xutils.x;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
@@ -35,6 +36,9 @@ import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.SSLSession;
 
 import okhttp3.Cache;
+import okhttp3.Cookie;
+import okhttp3.CookieJar;
+import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 
 //import cn.jpush.android.api.JPushInterface;
@@ -85,13 +89,23 @@ public class MyApplication extends Application {
 		// looper
 		mMainThreadLooper = getMainLooper();
 		File cacheFile = new File(getDiskCacheDir(mcontext),"cache");
-		final Cache cache = new Cache(cacheFile,cacheSize);
 		OkHttpClient okHttpClient = new OkHttpClient.Builder()
-//                .addInterceptor(new LoggerInterceptor("TAG"))
 				.connectTimeout(10000L, TimeUnit.MILLISECONDS)
 				.readTimeout(10000L, TimeUnit.MILLISECONDS)
 						//其他配置
-//				.cache(cache)
+				.cookieJar(new CookieJar() {//持久化
+					private final HashMap<String, List<Cookie>> cookieStore = new HashMap<>();
+					@Override
+					public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
+						cookieStore.put(url.host(), cookies);
+					}
+
+					@Override
+					public List<Cookie> loadForRequest(HttpUrl url) {
+						List<Cookie> cookies = cookieStore.get(url.host());
+						return cookies != null ? cookies : new ArrayList<Cookie>();
+					}
+				})
 				.build();
 
 		OkHttpUtils.initClient(okHttpClient);
@@ -104,6 +118,7 @@ public class MyApplication extends Application {
 				return true;
 			}
 		});
+		//腾讯
 		Beta.autoInit = true;//自动初始化开关
 		Beta.autoCheckUpgrade = true;//自动检查开关
 		Beta.upgradeCheckPeriod = 60 * 1000;//升级检查周期
@@ -113,10 +128,10 @@ public class MyApplication extends Application {
 		Beta.defaultBannerId = R.drawable.logo;
 		Beta.storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 		Beta.showInterruptedStrategy = true;
-		Beta.canShowUpgradeActs.add(MainActivity.class);
+		Beta.canShowUpgradeActs.add(HomeActivity.class);
 		Bugly.init(getApplicationContext(),"91cb31c05e",true);
+		//end
 		PgyCrashManager.register(this);
-
 	}
 
 	public static Handler getHandler()
@@ -191,7 +206,7 @@ public class MyApplication extends Application {
 	public void finishAllExceptHome() {
 		try {
 			for (Activity activity : activities) {
-				if (activity != null && !(activity instanceof MainActivity))
+				if (activity != null && !(activity instanceof HomeActivity))
 					activity.finish();
 			}
 		} catch (Exception e) {

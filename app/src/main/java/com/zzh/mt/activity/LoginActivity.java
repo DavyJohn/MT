@@ -26,6 +26,7 @@ import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -96,7 +97,6 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,7 +124,6 @@ public class LoginActivity extends BaseActivity {
         }
     }
 
-
     private void login(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
@@ -133,13 +132,15 @@ public class LoginActivity extends BaseActivity {
         map.put("companyEmail",mEtUserName.getText().toString());
         map.put("password",mEtPassword.getText().toString());
         map.put("digest", MdTools.sign_digest(map));
+
         mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.LOGIN, map, TAG, new SpotsCallBack<LoginData>(mContext) {
             @Override
             public void onSuccess(Response response, LoginData data) {
+                List<String> cookie = response.headers("set-cookie");
                     if (data.getCode().equals("200")){
                         SharedPreferencesUtil.getInstance(mContext).putString("companyEmail",mEtUserName.getText().toString());
                         SharedPreferencesUtil.getInstance(mContext).putString("userid",data.getUserId());
-                        startActivity(new Intent(mContext,MainActivity.class));
+                        startActivity(new Intent(mContext,HomeActivity.class));
                     }else if (data.getCode().equals("110")){
                         goBack(data.getMessage(),mContext);
                     }else {

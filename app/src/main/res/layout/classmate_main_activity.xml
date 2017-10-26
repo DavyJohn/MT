@@ -4,6 +4,18 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/main_color">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/check_out_classmate"
+            android:textSize="22sp"
+            android:textColor="@color/black"
+            android:layout_gravity="center"/>
+    </android.support.v7.widget.Toolbar>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -11,8 +23,7 @@
         android:gravity="center"
         android:paddingRight="10dp"
         android:paddingLeft="10dp"
-        android:background="@color/base_bg"
-        android:layout_marginTop="?attr/actionBarSize">
+        android:background="@color/base_bg">
         <com.zzh.mt.widget.MysearchView
             android:layout_width="match_parent"
             android:layout_height="40dp"

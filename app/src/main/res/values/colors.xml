@@ -7,7 +7,7 @@
 
     <color name="colorAccent">#FF4081</color>
 
-
+    <color name="bottom_color">#5AB31F</color>
     <color name="black">#000</color>
     <color name="main_color">#D2F557</color>
     <color name="toolbarTextColor">#fff</color>
