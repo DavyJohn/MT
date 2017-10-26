@@ -63,10 +63,12 @@ public class MyApplication extends Application {
 	public void onCreate() {
 		super.onCreate();
 		mcontext = this;
-		StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-		StrictMode.setVmPolicy(builder.build());
-		builder.detectFileUriExposure();
 
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N){
+			StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+			StrictMode.setVmPolicy(builder.build());
+			builder.detectFileUriExposure();
+		}
 		//语言切换
 		Locale _UserLocale= LocaleUtils.getUserLocale(this);
 		if (_UserLocale == null){
