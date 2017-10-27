@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -66,15 +67,27 @@ public class HomeFragment extends BaseFragment {
     private TextView mNickName,mInfo;
     private LinkedList<BannerEntity.ImageData> banners = new LinkedList<>();
     private CommonAdapter<Integer> adapter;
+    private CommonAdapter<Integer> groupAdapter;//组
+    private CommonAdapter<Integer> questionAdapter;//提问
     private Integer[] imageData = {R.drawable.index_remark,R.drawable.index_selection,R.drawable.index_curriculum,R.drawable.index_material};
     private Integer[] data = {R.string.my_remarks,R.string.my_courde,R.string.class_schedule,R.string.Course_materials};
     private LinkedList<Integer> list = new LinkedList<>();
+    private LinkedList<Integer> groupList = new LinkedList<>();
+    private LinkedList<Integer> questionList = new LinkedList<>();
     @BindView(R.id.banner)
     BannerView mBanner;
     @BindView(R.id.main_recyclerview)
     RecyclerView mRecycler;
+    @BindView(R.id.home_group)
+    RecyclerView mGroupRecycler;
+    @BindView(R.id.home_question)
+    RecyclerView mQuestionRecycler;
+
     @OnClick(R.id.home_rili) void ri(){
         showToast("日历",mContext);
+    }
+    @OnClick(R.id.home_news) void news(){
+        showToast("生日祝福",mContext);
     }
     @Nullable
     @Override
@@ -93,6 +106,8 @@ public class HomeFragment extends BaseFragment {
         textView.setText(R.string.main_page);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         initRecycler();
+        initGroup();
+        initQuestion();
         banner();
     }
 
@@ -155,7 +170,60 @@ public class HomeFragment extends BaseFragment {
         });
 
     }
+    private void initGroup(){
+        groupList.clear();
+        for (int i=0;i<2;i++){
+            groupList.add(i);
+        }
+        mGroupRecycler.setHasFixedSize(true);
+        mGroupRecycler.setLayoutManager(new LinearLayoutManager(mContext));
+        groupAdapter = new CommonAdapter<Integer>(mContext,R.layout.home_group_item_layout,groupList) {
+            @Override
+            protected void convert(ViewHolder holder, Integer integer, int position) {
+                switch (position){
+                    case 0:
+                        holder.setText(R.id.group_title,"开放型——Excel技能培训小组");
+                        holder.setText(R.id.group_num,"55人");
+                        holder.setImageDrawable(R.id.group_image, ContextCompat.getDrawable(mContext,R.drawable.index_group_excel));
+                        break;
+                    case 1:
+                        holder.setText(R.id.group_title,"开放型——Word技能培训小组");
+                        holder.setText(R.id.group_num,"38人");
+                        holder.setImageDrawable(R.id.group_image, ContextCompat.getDrawable(mContext,R.drawable.index_group_word));
+                        break;
+                }
+            }
+        };
+        mGroupRecycler.setAdapter(groupAdapter);
+    }
 
+    private void initQuestion() {
+        questionList.clear();
+        for (int i = 0; i < 2; i++) {
+            questionList.add(i);
+        }
+        mQuestionRecycler.setHasFixedSize(true);
+        mQuestionRecycler.setLayoutManager(new LinearLayoutManager(mContext));
+        //布局跟小组差不都可复用
+        questionAdapter = new CommonAdapter<Integer>(mContext, R.layout.home_group_item_layout, questionList) {
+            @Override
+            protected void convert(ViewHolder holder, Integer integer, int position) {
+                switch (position) {
+                    case 0:
+                        holder.setText(R.id.group_title, "在Excel中进行除法计算？");
+                        holder.setText(R.id.group_num, "答：创建一个Excel工作表，填入数值——...");
+                        holder.setImageDrawable(R.id.group_image, ContextCompat.getDrawable(mContext, R.drawable.index_interactive));
+                        break;
+                    case 1:
+                        holder.setText(R.id.group_title, "excel函数公式使用教程大全？");
+                        holder.setText(R.id.group_num, "答：创建一个Excel工作表，填入数值——...");
+                        holder.setImageDrawable(R.id.group_image, ContextCompat.getDrawable(mContext, R.drawable.index_interactive));
+                        break;
+                }
+            }
+        };
+        mQuestionRecycler.setAdapter(questionAdapter);
+    }
     private void banner(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("userId", SharedPreferencesUtil.getInstance(mContext).getString("userid"));

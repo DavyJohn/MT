@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:gravity="center">
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/group_image"
+        android:src="@drawable/index_group_word"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开放型——Excel技能培训小组"
+            android:textSize="18sp"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:id="@+id/group_title"
+            android:textColor="#434343"/>
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#A3A3A3"
+            android:text="55人"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:id="@+id/group_num"
+            android:textSize="18sp"/>
+    </LinearLayout>
+</LinearLayout>

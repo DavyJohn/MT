@@ -59,7 +59,7 @@
                                     android:textSize="14sp"
                                     android:layout_marginTop="10dp"
                                     android:drawableLeft="@mipmap/index_gift"
-                                    android:text="关于新开设课程将于下周上线通知"/>
+                                    android:text="您收到生日祝福"/>
 
                         </LinearLayout>
                         <ImageView
@@ -79,6 +79,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginTop="10dp"
                     android:background="@color/white">
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -115,6 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginTop="10dp"
                     android:background="@color/white">
                         <LinearLayout
                             android:layout_width="match_parent"
