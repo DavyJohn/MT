@@ -47,19 +47,22 @@
                             android:orientation="vertical"
                             android:gravity="center|left">
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:textSize="14sp"
-                                    android:gravity="center"
+                                    android:id="@+id/notice_view"
+                                    android:gravity="center|left"
                                     android:text="关于新开设课程将于下周上线通知"/>
                                 <TextView
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:gravity="center"
+                                    android:gravity="center|left"
                                     android:textSize="14sp"
+                                    android:id="@+id/birthday"
+                                    android:drawablePadding="5dp"
                                     android:layout_marginTop="10dp"
                                     android:drawableLeft="@mipmap/index_gift"
-                                    android:text="您收到生日祝福"/>
+                                    android:text="您收到生日祝福~"/>
 
                         </LinearLayout>
                         <ImageView

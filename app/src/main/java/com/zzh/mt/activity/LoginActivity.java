@@ -137,6 +137,9 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void onSuccess(Response response, LoginData data) {
                 List<String> cookie = response.headers("set-cookie");
+                if (cookie != null && cookie.size() != 0 ){
+                    SharedPreferencesUtil.getInstance(mContext).putString("cookie",cookie.get(0));
+                }
                     if (data.getCode().equals("200")){
                         SharedPreferencesUtil.getInstance(mContext).putString("companyEmail",mEtUserName.getText().toString());
                         SharedPreferencesUtil.getInstance(mContext).putString("userid",data.getUserId());

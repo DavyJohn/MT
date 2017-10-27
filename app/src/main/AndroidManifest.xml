@@ -37,6 +37,7 @@
             android:name="com.tencent.bugly.beta.ui.BetaActivity"
             android:theme="@android:style/Theme.Translucent" />
         //版本2 首页
+        <activity android:name=".activity.BirthdayActivity"/>
         <activity
             android:name=".activity.HomeActivity"
             android:configChanges="locale">

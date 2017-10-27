@@ -27,6 +27,7 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 import com.zzh.mt.R;
+import com.zzh.mt.activity.BirthdayActivity;
 import com.zzh.mt.activity.CourseActivity;
 import com.zzh.mt.activity.DataActivity;
 import com.zzh.mt.activity.MainActivity;
@@ -86,8 +87,15 @@ public class HomeFragment extends BaseFragment {
     @OnClick(R.id.home_rili) void ri(){
         showToast("日历",mContext);
     }
-    @OnClick(R.id.home_news) void news(){
-        showToast("生日祝福",mContext);
+    @OnClick(R.id.notice_view) void notice(){
+        Intent intent = new Intent(mContext,BirthdayActivity.class);
+        intent.putExtra("url",Contants.BASEURL+Contants.Notice);
+        startActivity(intent);
+    }
+    @OnClick(R.id.birthday) void birthday(){
+        Intent intent = new Intent(mContext,BirthdayActivity.class);
+        intent.putExtra("url",Contants.BASEURL+Contants.Birthday+"?userId="+SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        startActivity(intent);
     }
     @Nullable
     @Override
@@ -175,6 +183,7 @@ public class HomeFragment extends BaseFragment {
         for (int i=0;i<2;i++){
             groupList.add(i);
         }
+        mGroupRecycler.setNestedScrollingEnabled(false);
         mGroupRecycler.setHasFixedSize(true);
         mGroupRecycler.setLayoutManager(new LinearLayoutManager(mContext));
         groupAdapter = new CommonAdapter<Integer>(mContext,R.layout.home_group_item_layout,groupList) {
@@ -203,6 +212,7 @@ public class HomeFragment extends BaseFragment {
             questionList.add(i);
         }
         mQuestionRecycler.setHasFixedSize(true);
+        mQuestionRecycler.setNestedScrollingEnabled(false);
         mQuestionRecycler.setLayoutManager(new LinearLayoutManager(mContext));
         //布局跟小组差不都可复用
         questionAdapter = new CommonAdapter<Integer>(mContext, R.layout.home_group_item_layout, questionList) {

@@ -16,6 +16,7 @@ import com.pgyersdk.crash.PgyCrashManager;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
 import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.https.HttpsUtils;
 import com.zzh.mt.BuildConfig;
 import com.zzh.mt.activity.HomeActivity;
 import com.zzh.mt.R;
@@ -90,11 +91,18 @@ public class MyApplication extends Application {
 		mMainThreadId = android.os.Process.myTid();
 		// looper
 		mMainThreadLooper = getMainLooper();
-		File cacheFile = new File(getDiskCacheDir(mcontext),"cache");
+		HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
 		OkHttpClient okHttpClient = new OkHttpClient.Builder()
 				.connectTimeout(10000L, TimeUnit.MILLISECONDS)
 				.readTimeout(10000L, TimeUnit.MILLISECONDS)
 						//其他配置
+				.hostnameVerifier(new HostnameVerifier() {
+					@Override
+					public boolean verify(String s, SSLSession sslSession) {
+						return true;
+					}
+				})
+				.sslSocketFactory(sslParams.sSLSocketFactory,sslParams.trustManager)
 				.cookieJar(new CookieJar() {//持久化
 					private final HashMap<String, List<Cookie>> cookieStore = new HashMap<>();
 					@Override

@@ -1,15 +1,13 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
-
 def siteUrl = 'https://github.com/wyouflf/xUtils3'
 def gitUrl = 'https://github.com/wyouflf/xUtils3.git'
 group = "org.xutils"
 version = "3.5.0"
-
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.0'
+    compileSdkVersion 26
+    buildToolsVersion '26.0.2'
 
     defaultConfig {
         minSdkVersion 14
@@ -34,11 +32,10 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_6
-        targetCompatibility JavaVersion.VERSION_1_6
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
-
 install {
     repositories.mavenInstaller {
         // This generates POM.xml with proper parameters
@@ -107,4 +104,6 @@ bintray {
         licenses = ["Apache-2.0"]
         publish = true
     }
+}
+dependencies {
 }
