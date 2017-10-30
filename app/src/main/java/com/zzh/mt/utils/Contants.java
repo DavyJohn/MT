@@ -7,7 +7,7 @@ package com.zzh.mt.utils;
 public class Contants {
 
 //    public static final String BASEURL = "http://106.14.210.105";
-    public static final String BASEURL = "http://192.168.6.29:8806";
+    public static final String BASEURL = "http://192.168.6.29:8807";
     //查询轮播图列表
     public static final String BANNERURL = "/mtms-gateway/appImage/getImage";
 
@@ -75,4 +75,6 @@ public class Contants {
     public static final String Birthday = "/mtms-wap/birthday/myBirthdayView";
     //通告
     public static final String Notice = "/mtms-wap/notice/noticeView";
+    //查询最近一期公告信息
+    public static final String Lately = "/mtms-gateway/appNotice/getNoticesByLately";
 }

@@ -39,6 +39,8 @@ import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
 import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.BannerEntity;
+import com.zzh.mt.mode.BaseData;
+import com.zzh.mt.mode.LatelyMode;
 import com.zzh.mt.mode.UserData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
@@ -83,7 +85,8 @@ public class HomeFragment extends BaseFragment {
     RecyclerView mGroupRecycler;
     @BindView(R.id.home_question)
     RecyclerView mQuestionRecycler;
-
+    @BindView(R.id.notice_view)
+    TextView mNotice;
     @OnClick(R.id.home_rili) void ri(){
         showToast("日历",mContext);
     }
@@ -114,6 +117,7 @@ public class HomeFragment extends BaseFragment {
         textView.setText(R.string.main_page);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         initRecycler();
+        getLately();
         initGroup();
         initQuestion();
         banner();
@@ -265,38 +269,62 @@ public class HomeFragment extends BaseFragment {
 
                     }
                 });
-
     }
     //获取个人信息昵称头像
-    private void getInfo(){
+//    private void getInfo(){
+//        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+//        map.put("appVersion", CommonUtil.getVersion(mContext));
+//        map.put("ostype","android");
+//        map.put("uuid",CommonUtil.android_id(mContext));
+//        map.put("searchUserId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+//        map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+//        map.put("digest", MdTools.sign_digest(map));
+//        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.GETUSER, map, TAG, new SpotsCallBack<UserData>(mContext) {
+//            @Override
+//            public void onSuccess(Response response, UserData data) {
+//                if (data.getCode().equals("200")){
+//                    userData = data;
+//                    if (userData.getUserInfo().getDepartment() != null){
+//                        Contants.Deparmentname = userData.getUserInfo().getDepartment().getDepartmentName();
+//                        Contants.Deparmentid = userData.getUserInfo().getDepartmentId();
+//                    }
+//
+//                    if (userData.getUserInfo().getSex().equals("1")){
+//                        Picasso.with(mContext).load(data.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_b).error(R.drawable.image_b).into(mNavImage);
+//                    }else {
+//                        Picasso.with(mContext).load(data.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_g).error(R.drawable.image_g).into(mNavImage);
+//                    }
+//                    mNickName.setText(data.getUserInfo().getNickName());
+//                }else if (data.getCode().equals("110")){
+//                    goBack(data.getMessage(),mContext);
+//                }else {
+//                    showMessageDialog(data.getMessage(),mContext);
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Response response, int code, Exception e) {
+//
+//            }
+//        });
+//    }
+    //查询最近一期公告信息
+
+    private void getLately(){
         LinkedHashMap<String,String> map = new LinkedHashMap<>();
         map.put("appVersion", CommonUtil.getVersion(mContext));
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
-        map.put("searchUserId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
-        map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("digest", MdTools.sign_digest(map));
-        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.GETUSER, map, TAG, new SpotsCallBack<UserData>(mContext) {
+        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.Lately, map, TAG, new SpotsCallBack<LatelyMode>(mContext) {
             @Override
-            public void onSuccess(Response response, UserData data) {
+            public void onSuccess(Response response, LatelyMode data) {
                 if (data.getCode().equals("200")){
-                    userData = data;
-                    if (userData.getUserInfo().getDepartment() != null){
-                        Contants.Deparmentname = userData.getUserInfo().getDepartment().getDepartmentName();
-                        Contants.Deparmentid = userData.getUserInfo().getDepartmentId();
-                    }
-
-                    if (userData.getUserInfo().getSex().equals("1")){
-                        Picasso.with(mContext).load(data.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_b).error(R.drawable.image_b).into(mNavImage);
-                    }else {
-                        Picasso.with(mContext).load(data.getUserInfo().getHeadUrl()).placeholder(R.drawable.image_g).error(R.drawable.image_g).into(mNavImage);
-                    }
-                    mNickName.setText(data.getUserInfo().getNickName());
-                }else if (data.getCode().equals("110")){
-                    goBack(data.getMessage(),mContext);
+                    mNotice.setText(data.getNotice().getNoticeTitle());
                 }else {
-                    showMessageDialog(data.getMessage(),mContext);
+                    showToast(data.getMessage(),mContext);
                 }
+
             }
 
             @Override
@@ -305,5 +333,4 @@ public class HomeFragment extends BaseFragment {
             }
         });
     }
-
 }
