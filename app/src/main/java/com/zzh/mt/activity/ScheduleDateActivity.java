@@ -181,6 +181,7 @@ public class ScheduleDateActivity extends BaseActivity {
                 //设置小组颜色 和 备注图标
                 if (s.getType().equals("1")){
                     //普通
+                    holder.setVisible(R.id.chuangjian,false);
                     holder.setVisible(R.id.group_view,true);
                     if (s.getHasNote().equals("1")){
                         holder.setVisible(R.id.schedule_date_remarks_image,true);
@@ -203,6 +204,7 @@ public class ScheduleDateActivity extends BaseActivity {
                     }
                 }else if (s.getType().equals("2")){
                     //休息
+                    holder.setVisible(R.id.chuangjian,false);
                     holder.setVisible(R.id.group_view,true);
                      if (s.getHasNote().equals("1")){
                     holder.setVisible(R.id.schedule_date_remarks_image,true);
@@ -223,6 +225,7 @@ public class ScheduleDateActivity extends BaseActivity {
                     }
                 }else if (s.getType().equals("3")){
                     //小组活动
+                    holder.setVisible(R.id.chuangjian,true);
                     if (s.getHasRemark().equals("1")){
                         holder.setVisible(R.id.schedule_date_remarks_show_image,true);
                     }
@@ -240,8 +243,16 @@ public class ScheduleDateActivity extends BaseActivity {
                         }                    }
                 }
 
-                // TODO: 2017/6/3  设置备注过的样式
 
+                holder.setOnClickListener(R.id.chuangjian, new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent(mContext,BirthdayActivity.class);
+                        intent.putExtra("url",Contants.BASEURL+Contants.GroupName+"?userId="+SharedPreferencesUtil.getInstance(mContext).getString("userid")+"&"+"activityId"+s.getId());
+                        startActivity(intent);
+                    }
+                });
+                // TODO: 2017/6/3  设置备注过的样式
                 holder.setOnClickListener(R.id.schedule_date_remarks_image, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

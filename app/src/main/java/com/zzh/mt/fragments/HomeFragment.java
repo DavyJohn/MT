@@ -26,6 +26,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
+import com.zhy.http.okhttp.OkHttpUtils;
 import com.zzh.mt.R;
 import com.zzh.mt.activity.BirthdayActivity;
 import com.zzh.mt.activity.CourseActivity;
@@ -41,6 +42,7 @@ import com.zzh.mt.http.callback.SpotsCallBack;
 import com.zzh.mt.mode.BannerEntity;
 import com.zzh.mt.mode.BaseData;
 import com.zzh.mt.mode.LatelyMode;
+import com.zzh.mt.mode.MyGroupInfo;
 import com.zzh.mt.mode.UserData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
@@ -52,6 +54,7 @@ import com.zzh.mt.wrapper.HeaderAndFooterWrapper;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -70,13 +73,14 @@ public class HomeFragment extends BaseFragment {
     private TextView mNickName,mInfo;
     private LinkedList<BannerEntity.ImageData> banners = new LinkedList<>();
     private CommonAdapter<Integer> adapter;
-    private CommonAdapter<Integer> groupAdapter;//组
+    private CommonAdapter<MyGroupInfo.GroupList> groupAdapter;//组
     private CommonAdapter<Integer> questionAdapter;//提问
     private Integer[] imageData = {R.drawable.index_remark,R.drawable.index_selection,R.drawable.index_curriculum,R.drawable.index_material};
     private Integer[] data = {R.string.my_remarks,R.string.my_courde,R.string.class_schedule,R.string.Course_materials};
     private LinkedList<Integer> list = new LinkedList<>();
-    private LinkedList<Integer> groupList = new LinkedList<>();
     private LinkedList<Integer> questionList = new LinkedList<>();
+    //获取小组信息
+    private List<MyGroupInfo.GroupList> groupInfo = new LinkedList<>();
     @BindView(R.id.banner)
     BannerView mBanner;
     @BindView(R.id.main_recyclerview)
@@ -88,7 +92,11 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.notice_view)
     TextView mNotice;
     @OnClick(R.id.home_rili) void ri(){
-        showToast("日历",mContext);
+        //生产改回Basurl
+        Intent intent = new Intent(mContext,BirthdayActivity.class);
+        String url = Contants.BASEURL+Contants.CalView+SharedPreferencesUtil.getInstance(mContext).getString("userid");
+        intent.putExtra("url",Contants.BASEURL+Contants.CalView+SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        startActivity(intent);
     }
     @OnClick(R.id.notice_view) void notice(){
         Intent intent = new Intent(mContext,BirthdayActivity.class);
@@ -98,6 +106,11 @@ public class HomeFragment extends BaseFragment {
     @OnClick(R.id.birthday) void birthday(){
         Intent intent = new Intent(mContext,BirthdayActivity.class);
         intent.putExtra("url",Contants.BASEURL+Contants.Birthday+"?userId="+SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        startActivity(intent);
+    }
+    @OnClick(R.id.more_group) void moreGroup(){
+        Intent intent = new Intent(mContext,BirthdayActivity.class);
+        intent.putExtra("url",Contants.BASEURL+Contants.MoreGroup+"?userId="+SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         startActivity(intent);
     }
     @Nullable
@@ -118,9 +131,9 @@ public class HomeFragment extends BaseFragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         initRecycler();
         getLately();
-        initGroup();
         initQuestion();
         banner();
+        MyGroup();
     }
 
     private void initRecycler(){
@@ -183,28 +196,17 @@ public class HomeFragment extends BaseFragment {
 
     }
     private void initGroup(){
-        groupList.clear();
-        for (int i=0;i<2;i++){
-            groupList.add(i);
-        }
         mGroupRecycler.setNestedScrollingEnabled(false);
         mGroupRecycler.setHasFixedSize(true);
         mGroupRecycler.setLayoutManager(new LinearLayoutManager(mContext));
-        groupAdapter = new CommonAdapter<Integer>(mContext,R.layout.home_group_item_layout,groupList) {
+        groupAdapter = new CommonAdapter<MyGroupInfo.GroupList>(mContext,R.layout.home_group_item_layout,groupInfo) {
+
             @Override
-            protected void convert(ViewHolder holder, Integer integer, int position) {
-                switch (position){
-                    case 0:
-                        holder.setText(R.id.group_title,"开放型——Excel技能培训小组");
-                        holder.setText(R.id.group_num,"55人");
-                        holder.setImageDrawable(R.id.group_image, ContextCompat.getDrawable(mContext,R.drawable.index_group_excel));
-                        break;
-                    case 1:
-                        holder.setText(R.id.group_title,"开放型——Word技能培训小组");
-                        holder.setText(R.id.group_num,"38人");
-                        holder.setImageDrawable(R.id.group_image, ContextCompat.getDrawable(mContext,R.drawable.index_group_word));
-                        break;
-                }
+            protected void convert(ViewHolder holder, MyGroupInfo.GroupList data, int position) {
+                holder.setText(R.id.group_title,data.getName());
+                holder.setText(R.id.group_num,data.getNum()+"人");
+                holder.setUrl(R.id.group_image, data.getPictureUrl());
+
             }
         };
         mGroupRecycler.setAdapter(groupAdapter);
@@ -320,7 +322,9 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onSuccess(Response response, LatelyMode data) {
                 if (data.getCode().equals("200")){
-                    mNotice.setText(data.getNotice().getNoticeTitle());
+                    if (data.getNotice() != null){
+                        mNotice.setText(data.getNotice().getNoticeTitle());
+                    }
                 }else {
                     showToast(data.getMessage(),mContext);
                 }
@@ -333,4 +337,30 @@ public class HomeFragment extends BaseFragment {
             }
         });
     }
+
+    //获取小组
+    private void MyGroup(){
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("digest", MdTools.sign_digest(map));
+        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.MyGroup , map, TAG, new SpotsCallBack<MyGroupInfo>(mContext) {
+            @Override
+            public void onSuccess(Response response, MyGroupInfo data) {
+                if (data.getCode().equals("200")){
+                    groupInfo.clear();
+                    groupInfo.addAll(data.getGroups());
+                    initGroup();
+                }
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
+
 }

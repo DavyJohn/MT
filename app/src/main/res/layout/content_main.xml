@@ -84,29 +84,62 @@
                     android:orientation="vertical"
                     android:layout_marginTop="10dp"
                     android:background="@color/white">
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:gravity="center"
-                        android:layout_marginTop="20dp">
-                            <View
-                                android:layout_width="30dp"
-                                android:layout_height="1dp"
-                                android:background="#434343"/>
-                            <TextView
-                                android:layout_marginLeft="10dp"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/my_group"
-                                android:layout_marginRight="10dp"
-                                android:textSize="16sp"
-                                android:textColor="#434343"/>
-                            <View
-                                android:layout_width="30dp"
-                                android:layout_height="1dp"
-                                android:background="#434343"/>
-                    </LinearLayout>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="20dp">
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:layout_centerHorizontal="true"
+                                    android:orientation="horizontal">
+
+                                        <View
+                                            android:layout_width="30dp"
+                                            android:layout_height="1dp"
+                                            android:background="#434343" />
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_marginRight="10dp"
+                                            android:text="@string/my_group"
+                                            android:textColor="#434343"
+                                            android:textSize="16sp" />
+
+                                        <View
+                                            android:layout_width="30dp"
+                                            android:layout_height="1dp"
+                                            android:background="#434343" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:id="@+id/more_group"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:layout_marginRight="10dp"
+                                    android:layout_alignParentRight="true"
+                                    android:orientation="horizontal">
+
+                                        <TextView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/more"
+                                            android:textSize="16sp" />
+
+                                        <ImageView
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:src="@drawable/ic_right" />
+                                </LinearLayout>
+
+
+                        </RelativeLayout>
                     <android.support.v7.widget.RecyclerView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -116,34 +149,60 @@
                 </LinearLayout>
                 //互动问答
                 <LinearLayout
+                    android:visibility="gone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:id="@+id/more_que"
                     android:layout_marginTop="10dp"
                     android:background="@color/white">
-                        <LinearLayout
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
                             android:layout_marginTop="20dp">
-                                <View
-                                    android:layout_width="30dp"
-                                    android:layout_height="1dp"
-                                    android:background="#434343"/>
-                                <TextView
-                                    android:layout_marginLeft="10dp"
+
+                                <LinearLayout
                                     android:layout_width="wrap_content"
+                                    android:layout_centerHorizontal="true"
                                     android:layout_height="wrap_content"
-                                    android:text="@string/question"
-                                    android:layout_marginRight="10dp"
-                                    android:textSize="16sp"
-                                    android:textColor="#434343"/>
-                                <View
-                                    android:layout_width="30dp"
-                                    android:layout_height="1dp"
-                                    android:background="#434343"/>
-                        </LinearLayout>
+                                    android:gravity="center"
+                                    android:orientation="horizontal">
+                                        <View
+                                            android:layout_width="30dp"
+                                            android:layout_height="1dp"
+                                            android:background="#434343"/>
+                                        <TextView
+                                            android:layout_marginLeft="10dp"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:text="@string/question"
+                                            android:layout_marginRight="10dp"
+                                            android:textSize="16sp"
+                                            android:textColor="#434343"/>
+                                        <View
+                                            android:layout_width="30dp"
+                                            android:layout_height="1dp"
+                                            android:background="#434343"/>
+                                </LinearLayout>
+                               <LinearLayout
+                                   android:layout_width="wrap_content"
+                                   android:layout_height="wrap_content"
+                                   android:orientation="horizontal"
+                                   android:layout_alignParentRight="true">
+                                       <TextView
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:text="@string/more"
+                                           android:textSize="16sp" />
+
+                                       <ImageView
+                                           android:layout_width="wrap_content"
+                                           android:layout_height="wrap_content"
+                                           android:src="@drawable/ic_right" />
+                               </LinearLayout>
+
+                        </RelativeLayout>
                         <android.support.v7.widget.RecyclerView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

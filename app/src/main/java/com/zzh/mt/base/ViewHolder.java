@@ -127,6 +127,14 @@ public class ViewHolder extends RecyclerView.ViewHolder
         view.setImageBitmap(bitmap);
         return this;
     }
+
+    public ViewHolder setUrl(int viewId,String url){
+        view = getView(viewId);
+        view.setScaleType(ImageView.ScaleType.FIT_XY);
+        Picasso.with(mContext).load(url).placeholder(R.drawable.imag_demo).error(R.drawable.imag_demo).config(Bitmap.Config.RGB_565).transform(transformation).into(view);
+        return  this;
+    }
+
     public ViewHolder setImageUrl(int viewId,String url,String sex)
     {
         view = getView(viewId);

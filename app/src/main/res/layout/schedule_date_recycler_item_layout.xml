@@ -39,8 +39,21 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:layout_height="match_parent">
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/chuangjian"
+                android:layout_width="wrap_content"
+                android:layout_height="29dp"
+                android:layout_alignEnd="@+id/schedule_date_remarks_image"
+                android:layout_alignRight="@+id/schedule_date_remarks_image"
+                android:layout_centerVertical="true"
+                android:background="@drawable/button_click_shape"
+                android:gravity="center"
+                android:text="创建小组"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
 
             <ImageView
                 android:id="@+id/schedule_date_remarks_image"

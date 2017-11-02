@@ -16,6 +16,7 @@
             android:layout_gravity="center"/>
     </android.support.v7.widget.Toolbar>
     <WebView
+        android:id="@+id/new_webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"></WebView>
 </LinearLayout>

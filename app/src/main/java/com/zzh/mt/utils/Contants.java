@@ -6,8 +6,9 @@ package com.zzh.mt.utils;
 
 public class Contants {
 
-//    public static final String BASEURL = "http://106.14.210.105";
-    public static final String BASEURL = "http://192.168.6.29:8807";
+    public static final String BASEURL = "http://tool_mt.pullx-consulting.com";
+//    public static final String BASEURL = "http://192.168.6.29:8807";
+//    public static final String WEBBASEURL = "http://192.168.6.29:8806";//测试
     //查询轮播图列表
     public static final String BANNERURL = "/mtms-gateway/appImage/getImage";
 
@@ -25,7 +26,7 @@ public class Contants {
     public static final String GETUSER = "/mtms-gateway/appUser/getUserById";
     //查询我的同期学员列表
     public static final String CLASSMATE = "/mtms-gateway/appUser/getClassmate";
-    //上传图片
+    //上传图片w
     public static final String UPLOAD = "/mtms-gateway/appUser/upload";
     //查询部门列表
     public static final String DEPARTMENTLIST = "/mtms-gateway/appUser/departmentList";
@@ -77,4 +78,15 @@ public class Contants {
     public static final String Notice = "/mtms-wap/notice/noticeView";
     //查询最近一期公告信息
     public static final String Lately = "/mtms-gateway/appNotice/getNoticesByLately";
+    //日历
+    public static final String CalView = "/mtms-wap/cal/calView?userId=";
+    //更多小组
+    public static final String MoreGroup = "/mtms-wap/group/getMyGroupsView?userId=";
+    //消息(。。。)
+    public static final String Information= "/mtms-wap/notice/informationView";
+    //首页小组纤细
+    public static final String MyGroup = "/mtms-gateway/appGroup/getMyGroup";
+    //创建小组
+    public static final String GroupName = "/mtms-wap/group/groupNameView";
+
 }
