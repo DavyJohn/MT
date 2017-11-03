@@ -83,10 +83,12 @@ public class Contants {
     //更多小组
     public static final String MoreGroup = "/mtms-wap/group/getMyGroupsView?userId=";
     //消息(。。。)
-    public static final String Information= "/mtms-wap/notice/informationView";
+    public static final String Information= "/mtms-wap/notice/informationView?userId=";
     //首页小组纤细
     public static final String MyGroup = "/mtms-gateway/appGroup/getMyGroup";
     //创建小组
     public static final String GroupName = "/mtms-wap/group/groupNameView";
+    //小组详情
+    public static final String GroupDetali = "/mtms-wap/group/groupDetail2View?groupId=";
 
 }

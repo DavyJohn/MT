@@ -8,27 +8,26 @@ import android.support.v4.util.ArrayMap;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.zhy.http.okhttp.OkHttpUtils;
 import com.zzh.mt.R;
 import com.zzh.mt.base.BaseActivity;
 import com.zzh.mt.base.CommonAdapter;
-import com.zzh.mt.base.MultiItemTypeAdapter;
 import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
 import com.zzh.mt.http.callback.SpotsCallBack;
+import com.zzh.mt.http.callback.ToCallBack;
+import com.zzh.mt.mode.BaseData;
 import com.zzh.mt.mode.CourseActivityArrangement;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
 import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.SharedPreferencesUtil;
-import com.zzh.mt.utils.StringUtils;
 import com.zzh.mt.widget.DividerItemDecoration;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
@@ -37,6 +36,7 @@ import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import okhttp3.Call;
 import okhttp3.Response;
 
 /**
@@ -48,7 +48,6 @@ public class ScheduleDateActivity extends BaseActivity {
     private static final String TAG = ScheduleDateActivity.class.getSimpleName();
     private CommonAdapter<CourseActivityArrangement.activityListData> adapter;
     private LinkedList<CourseActivityArrangement.activityListData> list = new LinkedList<>();
-    private LinkedList<CourseActivityArrangement.activityListData> da = new LinkedList<>();
     int num ;//用来记录选中的第几个
     private String name = null;
     private String courseNoId = null;
@@ -160,7 +159,6 @@ public class ScheduleDateActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        onCreate(null);
     }
 
     private void initview(){
@@ -242,8 +240,6 @@ public class ScheduleDateActivity extends BaseActivity {
                             holder.setBackgroundColor(R.id.group_view, Color.parseColor(hashMap.get(mDate.getText().toString()).get(position).getColourLabel()));
                         }                    }
                 }
-
-
                 holder.setOnClickListener(R.id.chuangjian, new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -306,7 +302,7 @@ public class ScheduleDateActivity extends BaseActivity {
         map.put("ostype","android");
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("digest", MdTools.sign_digest(map));
-        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CourseActivityArrangement, map, TAG, new SpotsCallBack<CourseActivityArrangement>(mContext) {
+        mOkHttpHelper.post(mContext, Contants.BASEURL + Contants.CourseActivityArrangement, map, TAG, new SpotsCallBack<CourseActivityArrangement>(mContext,true) {
             @Override
             public void onSuccess(Response response, CourseActivityArrangement data) {
                 if (data.getCode().equals("200")){
@@ -326,6 +322,19 @@ public class ScheduleDateActivity extends BaseActivity {
 
             }
         });
+
+//        OkHttpUtils.post().url(Contants.BASEURL + Contants.CourseActivityArrangement).params(map).build().execute(new ToCallBack<BaseData>() {
+//            @Override
+//            public void onError(Call call, Exception e, int id) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(BaseData data, int id) {
+//                System.out.print(data);
+//
+//            }
+//        });
 
     }
     private void initData(){

@@ -2,6 +2,7 @@ package com.zzh.mt.fragments;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
@@ -21,6 +22,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.zzh.mt.R;
+import com.zzh.mt.activity.BirthdayActivity;
 import com.zzh.mt.base.BaseActivity;
 import com.zzh.mt.base.BaseFragment;
 import com.zzh.mt.utils.Contants;
@@ -55,7 +57,7 @@ public class NewsFragment extends BaseFragment {
         if (!TextUtils.isEmpty(SharedPreferencesUtil.getInstance(mContext).getString("cookie"))){
             cookies = SharedPreferencesUtil.getInstance(mContext).getString("cookie");
         }
-        url = Contants.BASEURL+Contants.Information;
+        url = Contants.BASEURL+Contants.Information+SharedPreferencesUtil.getInstance(mContext).getString("userid");
         initView(url);
 
     }
@@ -102,7 +104,6 @@ public class NewsFragment extends BaseFragment {
             }
         });
 
-
         webView.setWebViewClient(new WebViewClient() {
             public boolean shouldOverrideUrlLoading(WebView view, String url)
             {
@@ -142,6 +143,14 @@ public class NewsFragment extends BaseFragment {
             //TODO 处理代码
             getActivity().finish();
 
+        }
+        @JavascriptInterface
+        public void targetApp(String url){
+            String ur = url;
+            Intent intent = new Intent(mContext, BirthdayActivity.class);
+            intent.putExtra("url",Contants.BASEURL+url);
+            SharedPreferencesUtil.getInstance(mContext).putString("url",Contants.BASEURL+url);
+            startActivity(intent);
         }
     }
     public void syncCookie(String url,String cookie) {

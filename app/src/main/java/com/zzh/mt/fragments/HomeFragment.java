@@ -36,6 +36,7 @@ import com.zzh.mt.activity.MyRemarketsActivity;
 import com.zzh.mt.activity.ScheduleActivity;
 import com.zzh.mt.base.BaseFragment;
 import com.zzh.mt.base.CommonAdapter;
+import com.zzh.mt.base.MultiItemTypeAdapter;
 import com.zzh.mt.base.MyApplication;
 import com.zzh.mt.base.ViewHolder;
 import com.zzh.mt.http.callback.SpotsCallBack;
@@ -193,7 +194,6 @@ public class HomeFragment extends BaseFragment {
                 return false;
             }
         });
-
     }
     private void initGroup(){
         mGroupRecycler.setNestedScrollingEnabled(false);
@@ -210,6 +210,19 @@ public class HomeFragment extends BaseFragment {
             }
         };
         mGroupRecycler.setAdapter(groupAdapter);
+        groupAdapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
+                Intent intent = new Intent(mContext,BirthdayActivity.class);
+                intent.putExtra("url",Contants.BASEURL+Contants.GroupDetali+groupInfo.get(position).getId());
+                startActivity(intent);
+            }
+
+            @Override
+            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
+                return false;
+            }
+        });
     }
 
     private void initQuestion() {

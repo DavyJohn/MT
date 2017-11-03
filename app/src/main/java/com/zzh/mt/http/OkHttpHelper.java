@@ -44,9 +44,9 @@ public class OkHttpHelper {
     public  OkHttpHelper() {
         okHttpClient = new OkHttpClient();
         OkHttpClient.Builder builder = new OkHttpClient().newBuilder();
-        builder.readTimeout(15, TimeUnit.SECONDS);
-        builder.writeTimeout(15, TimeUnit.SECONDS);
-        builder.connectTimeout(15, TimeUnit.SECONDS);
+        builder.readTimeout(30, TimeUnit.SECONDS);
+        builder.writeTimeout(30, TimeUnit.SECONDS);
+        builder.connectTimeout(30, TimeUnit.SECONDS);
         builder.build();
 
         gson = new Gson();

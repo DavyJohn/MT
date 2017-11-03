@@ -93,8 +93,8 @@ public class MyApplication extends Application {
 		mMainThreadLooper = getMainLooper();
 		HttpsUtils.SSLParams sslParams = HttpsUtils.getSslSocketFactory(null, null, null);
 		OkHttpClient okHttpClient = new OkHttpClient.Builder()
-				.connectTimeout(10000L, TimeUnit.MILLISECONDS)
-				.readTimeout(10000L, TimeUnit.MILLISECONDS)
+				.connectTimeout(30, TimeUnit.SECONDS)
+				.readTimeout(30, TimeUnit.SECONDS)
 						//其他配置
 				.hostnameVerifier(new HostnameVerifier() {
 					@Override
