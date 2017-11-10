@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <View
+            android:id="@+id/group_view"
+            android:layout_width="10dp"
+            android:visibility="invisible"
+            android:layout_height="match_parent"
+            android:background="#f4b335"
+            android:layout_marginBottom="1dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:maxLines="1"
+            android:singleLine="true"
+            android:id="@+id/schedule_date_item_time"
+            android:textColor="#333"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:id="@+id/schedule_date_item_title"
+            android:layout_marginLeft="15dp"
+            android:textColor="#6c6c6c"
+            android:textSize="18sp" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:visibility="gone"
+                android:id="@+id/chuangjian"
+                android:layout_width="wrap_content"
+                android:layout_height="29dp"
+                android:layout_alignEnd="@+id/schedule_date_remarks_image"
+                android:layout_alignRight="@+id/schedule_date_remarks_image"
+                android:layout_centerVertical="true"
+                android:background="@drawable/button_click_shape"
+                android:gravity="center"
+                android:text="创建小组"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+
+            <ImageView
+                android:id="@+id/schedule_date_remarks_image"
+                android:layout_width="32dp"
+                android:layout_height="29dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_gravity="center"
+                android:layout_marginEnd="26dp"
+                android:layout_marginRight="26dp"
+                android:gravity="right"
+                android:src="@drawable/remarkes" />
+
+            <ImageView
+                android:id="@+id/schedule_date_remarks_show_image"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:visibility="invisible"
+                android:src="@drawable/remarks_show_icon" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>
