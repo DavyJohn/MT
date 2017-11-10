@@ -90,5 +90,8 @@ public class Contants {
     public static final String GroupName = "/mtms-wap/group/groupNameView";
     //小组详情
     public static final String GroupDetali = "/mtms-wap/group/groupDetail2View?groupId=";
-
+    //互动数据
+    public static final String Problem = "/mtms-gateway/interlocution/wholeProblemData";
+    //web互动数据
+    public static final String WevProblem = "/mtms-wap/interlocution/wholeProblemView";
 }

@@ -114,6 +114,11 @@ public class HomeFragment extends BaseFragment {
         intent.putExtra("url",Contants.BASEURL+Contants.MoreGroup+"?userId="+SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         startActivity(intent);
     }
+    @OnClick(R.id.more_que) void m_q(){
+        Intent intent = new Intent(mContext,BirthdayActivity.class);
+        intent.putExtra("url","http://192.168.6.29:8806"+Contants.WevProblem+"?userId="+SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        startActivity(intent);
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -135,6 +140,7 @@ public class HomeFragment extends BaseFragment {
         initQuestion();
         banner();
         MyGroup();
+        getQuestion();
     }
 
     private void initRecycler(){
@@ -376,4 +382,23 @@ public class HomeFragment extends BaseFragment {
         });
     }
 
+    private void getQuestion(){
+        LinkedHashMap<String,String> map = new LinkedHashMap<>();
+        map.put("appVersion", CommonUtil.getVersion(mContext));
+        map.put("ostype","android");
+        map.put("uuid",CommonUtil.android_id(mContext));
+        map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        map.put("digest", MdTools.sign_digest(map));
+        mOkHttpHelper.post(mContext, "http://192.168.6.29:8807" + Contants.Problem, map, TAG, new SpotsCallBack(mContext) {
+            @Override
+            public void onSuccess(Response response, Object o) {
+
+            }
+
+            @Override
+            public void onError(Response response, int code, Exception e) {
+
+            }
+        });
+    }
 }
