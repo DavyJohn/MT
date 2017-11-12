@@ -11,10 +11,7 @@ import android.os.Looper;
 import android.os.StrictMode;
 import android.support.annotation.RequiresApi;
 import android.support.multidex.MultiDex;
-//
-//import com.pgyersdk.crash.PgyCrashManager;
-//import com.tencent.bugly.Bugly;
-//import com.tencent.bugly.beta.Beta;
+
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.https.HttpsUtils;
 import com.zzh.mt.BuildConfig;
@@ -128,20 +125,7 @@ public class MyApplication extends Application {
 				return true;
 			}
 		});
-		//腾讯
-//		Beta.autoInit = true;//自动初始化开关
-//		Beta.autoCheckUpgrade = true;//自动检查开关
-//		Beta.upgradeCheckPeriod = 60 * 1000;//升级检查周期
-//		Beta.initDelay = 1 * 1000;//延迟初始化
-//		Beta.largeIconId = R.drawable.logo;//
-//		Beta.smallIconId = R.drawable.logo;
-//		Beta.defaultBannerId = R.drawable.logo;
-//		Beta.storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-//		Beta.showInterruptedStrategy = true;
-//		Beta.canShowUpgradeActs.add(HomeActivity.class);
-//		Bugly.init(getApplicationContext(),"91cb31c05e",true);
-		//end
-//		PgyCrashManager.register(this);
+
 	}
 
 	public static Handler getHandler()
@@ -228,7 +212,6 @@ public class MyApplication extends Application {
 	protected void attachBaseContext(Context base) {
 		super.attachBaseContext(base);
 		MultiDex.install(base);
-//		Beta.installTinker();
 	}
 
 	public String getDiskCacheDir(Context context){

@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
+
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,10 +29,12 @@ import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
 import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.NetworkUtils;
+
 import com.zzh.mt.widget.DividerItemDecoration;
 import com.zzh.mt.widget.HorizontalProgressBarWithNumber;
 
 import org.xutils.ex.DbException;
+
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -40,7 +44,7 @@ import java.util.LinkedList;
 import butterknife.BindView;
 import butterknife.OnClick;
 import okhttp3.Response;
-//import static com.pgyersdk.views.b.p;
+
 
 /**
  * Created by 腾翔信息 on 2017/6/12.

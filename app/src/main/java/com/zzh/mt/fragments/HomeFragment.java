@@ -44,6 +44,8 @@ import com.zzh.mt.mode.BannerEntity;
 import com.zzh.mt.mode.BaseData;
 import com.zzh.mt.mode.LatelyMode;
 import com.zzh.mt.mode.MyGroupInfo;
+
+import com.zzh.mt.mode.QuestionData;
 import com.zzh.mt.mode.UserData;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
@@ -82,6 +84,9 @@ public class HomeFragment extends BaseFragment {
     private LinkedList<Integer> questionList = new LinkedList<>();
     //获取小组信息
     private List<MyGroupInfo.GroupList> groupInfo = new LinkedList<>();
+
+    private List<QuestionData.QInfo> qInfo = new LinkedList<>();
+
     @BindView(R.id.banner)
     BannerView mBanner;
     @BindView(R.id.main_recyclerview)
@@ -388,10 +393,14 @@ public class HomeFragment extends BaseFragment {
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("digest", MdTools.sign_digest(map));
-        mOkHttpHelper.post(mContext, "http://192.168.6.29:8807" + Contants.Problem, map, TAG, new SpotsCallBack(mContext) {
-            @Override
-            public void onSuccess(Response response, Object o) {
 
+        mOkHttpHelper.post(mContext, "http://192.168.6.29:8807" + Contants.Problem, map, TAG, new SpotsCallBack<QuestionData>(mContext) {
+            @Override
+            public void onSuccess(Response response, QuestionData data) {
+                    if (data.getCode().equals("200")){
+                        qInfo.clear();
+                        qInfo.addAll(data.getProblems());
+                    }
             }
 
             @Override

@@ -20,9 +20,6 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-//import com.pgyersdk.javabean.AppBean;
-//import com.pgyersdk.update.PgyUpdateManager;
-//import com.pgyersdk.update.UpdateManagerListener;
 import com.squareup.picasso.Picasso;
 import com.zzh.mt.R;
 import com.zzh.mt.base.BaseActivity;
