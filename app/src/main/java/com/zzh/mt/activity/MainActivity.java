@@ -20,9 +20,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.pgyersdk.javabean.AppBean;
-import com.pgyersdk.update.PgyUpdateManager;
-import com.pgyersdk.update.UpdateManagerListener;
+//import com.pgyersdk.javabean.AppBean;
+//import com.pgyersdk.update.PgyUpdateManager;
+//import com.pgyersdk.update.UpdateManagerListener;
 import com.squareup.picasso.Picasso;
 import com.zzh.mt.R;
 import com.zzh.mt.base.BaseActivity;
@@ -80,32 +80,32 @@ public class MainActivity extends BaseActivity
         ButterKnife.bind(this);
         getInfo();
         //更新
-        PgyUpdateManager.register(this, "com.zzh.mt.fileprovider", new UpdateManagerListener() {
-            @Override
-            public void onNoUpdateAvailable() {
-            }
-            @Override
-            public void onUpdateAvailable(String result) {
-                // 将新版本信息封装到AppBean中
-                final AppBean appBean = getAppBeanFromString(result);
-                new AlertDialog.Builder(MainActivity.this)
-                        .setTitle("更新")
-                        .setMessage("检测到新的版本")
-                        .setNegativeButton(
-                                "确定",
-                                new DialogInterface.OnClickListener() {
-
-                                    @Override
-                                    public void onClick(
-                                            DialogInterface dialog,
-                                            int which) {
-                                        startDownloadTask(
-                                                MainActivity.this,
-                                                appBean.getDownloadURL());
-                                    }
-                                }).show();
-            }
-        });
+//        PgyUpdateManager.register(this, "com.zzh.mt.fileprovider", new UpdateManagerListener() {
+//            @Override
+//            public void onNoUpdateAvailable() {
+//            }
+//            @Override
+//            public void onUpdateAvailable(String result) {
+//                // 将新版本信息封装到AppBean中
+//                final AppBean appBean = getAppBeanFromString(result);
+//                new AlertDialog.Builder(MainActivity.this)
+//                        .setTitle("更新")
+//                        .setMessage("检测到新的版本")
+//                        .setNegativeButton(
+//                                "确定",
+//                                new DialogInterface.OnClickListener() {
+//
+//                                    @Override
+//                                    public void onClick(
+//                                            DialogInterface dialog,
+//                                            int which) {
+//                                        startDownloadTask(
+//                                                MainActivity.this,
+//                                                appBean.getDownloadURL());
+//                                    }
+//                                }).show();
+//            }
+//        });
         //end
 
         hasToolBar(false);

@@ -5,21 +5,15 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.FileCallBack;
 import com.zzh.mt.R;
 import com.zzh.mt.adapter.MaterialPlAdapter;
 import com.zzh.mt.adapter.MaterialsAdapter;
@@ -33,28 +27,20 @@ import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.Contants;
 import com.zzh.mt.utils.MdTools;
 import com.zzh.mt.utils.NetworkUtils;
-import com.zzh.mt.utils.SqliteTool;
 import com.zzh.mt.widget.DividerItemDecoration;
 import com.zzh.mt.widget.HorizontalProgressBarWithNumber;
 
 import org.xutils.ex.DbException;
 
-import java.io.File;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.LinkedList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import okhttp3.Call;
 import okhttp3.Response;
-
-import static android.R.attr.data;
-import static android.R.attr.id;
-import static android.R.attr.inAnimation;
-import static com.pgyersdk.views.b.p;
+//import static com.pgyersdk.views.b.p;
 
 /**
  * Created by 腾翔信息 on 2017/6/12.
