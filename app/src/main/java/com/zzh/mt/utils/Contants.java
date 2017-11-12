@@ -94,4 +94,8 @@ public class Contants {
     public static final String Problem = "/mtms-gateway/interlocution/wholeProblemData";
     //web互动数据
     public static final String WevProblem = "/mtms-wap/interlocution/wholeProblemView";
+    //web问答详情(首页)
+    public static final String ProblemDetali = "/mtms-wap/interlocution/wholeProblemView2?id=";
+    //问答详情（web）?userId=4&id=7
+    public static final String WebProblemDetali = "/mtms-wap/interlocution/wholeProblemDetails2";
 }

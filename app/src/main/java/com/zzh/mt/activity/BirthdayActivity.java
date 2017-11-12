@@ -133,6 +133,8 @@ public class BirthdayActivity extends BaseActivity {
             finish();
 
         }
+        //todo 获取js中传递的id
+
     }
     protected boolean openWithWebView(String url) {//处理判断url的合法性
 // TODO Auto-generated method stub
