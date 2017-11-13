@@ -9,6 +9,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,8 +66,11 @@ public class HomeFragment extends BaseFragment {
     private LinkedList<Integer> list = new LinkedList<>();
     //获取小组信息
     private List<MyGroupInfo.GroupList> groupInfo = new LinkedList<>();
+    //处理 只存入两条数据
+    private List<MyGroupInfo.GroupList> groupTwoInfo = new LinkedList<>();
 
     private List<QuestionData.QInfo> qInfo = new LinkedList<>();
+    private List<QuestionData.QInfo> qTwoInfo = new LinkedList<>();
 
     @BindView(R.id.banner)
     BannerView mBanner;
@@ -103,7 +107,7 @@ public class HomeFragment extends BaseFragment {
     //问答更多
     @OnClick(R.id.more_que) void m_q(){
         Intent intent = new Intent(mContext,BirthdayActivity.class);
-        intent.putExtra("url","http://192.168.6.29:8806"+Contants.WevProblem+"?userId="+SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+        intent.putExtra("url",Contants.BASEURL+Contants.WevProblem+"?userId="+SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         startActivity(intent);
     }
     @Nullable
@@ -124,7 +128,6 @@ public class HomeFragment extends BaseFragment {
         ((AppCompatActivity)getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         initRecycler();
         getLately();
-        initQuestion();
         banner();
         MyGroup();
         getQuestion();
@@ -189,10 +192,11 @@ public class HomeFragment extends BaseFragment {
         });
     }
     private void initGroup(){
+
         mGroupRecycler.setNestedScrollingEnabled(false);
         mGroupRecycler.setHasFixedSize(true);
         mGroupRecycler.setLayoutManager(new LinearLayoutManager(mContext));
-        groupAdapter = new CommonAdapter<MyGroupInfo.GroupList>(mContext,R.layout.home_group_item_layout,groupInfo) {
+        groupAdapter = new CommonAdapter<MyGroupInfo.GroupList>(mContext,R.layout.home_group_item_layout,groupTwoInfo) {
             @Override
             protected void convert(ViewHolder holder, MyGroupInfo.GroupList data, int position) {
                 holder.setText(R.id.group_title,data.getName());
@@ -218,26 +222,23 @@ public class HomeFragment extends BaseFragment {
     }
 
     private void initQuestion() {
+
         mQuestionRecycler.setHasFixedSize(true);
         mQuestionRecycler.setNestedScrollingEnabled(false);
         mQuestionRecycler.setLayoutManager(new LinearLayoutManager(mContext));
         //布局跟小组差不都可复用
-        questionAdapter = new CommonAdapter<QuestionData.QInfo>(mContext, R.layout.home_group_item_layout, qInfo) {
+        questionAdapter = new CommonAdapter<QuestionData.QInfo>(mContext, R.layout.home_group_item_layout, qTwoInfo) {
             @Override
             protected void convert(ViewHolder holder, QuestionData.QInfo info, int position) {
-                switch (position) {
-                    case 0:
-                        holder.setText(R.id.group_title, info.getProblemTitle());
-                        holder.setText(R.id.group_num, "答："+info.getProblemContent());
-                        holder.setUrl(R.id.group_image,info.getHeadUrl());
-                        holder.setImageDrawable(R.id.group_image, ContextCompat.getDrawable(mContext, R.drawable.index_interactive));
-                        break;
-                    case 1:
-                        holder.setText(R.id.group_title, "excel函数公式使用教程大全？");
-                        holder.setText(R.id.group_num, "答：创建一个Excel工作表，填入数值——...");
-                        holder.setImageDrawable(R.id.group_image, ContextCompat.getDrawable(mContext, R.drawable.index_interactive));
-                        break;
+                holder.setText(R.id.group_title, info.getProblemTitle());
+                if (info.getAnswers().size()>0){
+                    if (!TextUtils.isEmpty(info.getAnswers().get(position).getAnswer())){
+                        holder.setText(R.id.group_num, "答："+info.getAnswers().get(position).getAnswer());
+                    }
+                }else {
+                    holder.setText(R.id.group_num, "答："+"暂无回答");
                 }
+                holder.setImageDrawable(R.id.group_image, ContextCompat.getDrawable(mContext, R.drawable.index_interactive));
             }
         };
         mQuestionRecycler.setAdapter(questionAdapter);
@@ -245,7 +246,7 @@ public class HomeFragment extends BaseFragment {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
                 Intent intent = new Intent(mContext,BirthdayActivity.class);
-                intent.putExtra("url",Contants.BASEURL+Contants.ProblemDetali+qInfo.get(position).getId());
+                intent.putExtra("url",Contants.BASEURL+Contants.WebProblemDetali+"?userId="+SharedPreferencesUtil.getInstance(mContext).getString("userid")+"&id="+qInfo.get(position).getId());
                 startActivity(intent);
             }
 
@@ -328,7 +329,19 @@ public class HomeFragment extends BaseFragment {
                 if (data.getCode().equals("200")){
                     groupInfo.clear();
                     groupInfo.addAll(data.getGroups());
+                    groupTwoInfo.clear();
+                    if (data.getGroups().size()>0&& data.getGroups().size()<2){
+
+                        for (int i=0;i<data.getGroups().size();i++){
+                            groupTwoInfo.add(data.getGroups().get(i));
+                        }
+                    }else if (data.getGroups().size()>2){
+                        for (int i=0;i<2;i++){
+                            groupTwoInfo.add(data.getGroups().get(i));
+                        }
+                    }
                     initGroup();
+
                 }
             }
 
@@ -346,14 +359,24 @@ public class HomeFragment extends BaseFragment {
         map.put("uuid",CommonUtil.android_id(mContext));
         map.put("userId",SharedPreferencesUtil.getInstance(mContext).getString("userid"));
         map.put("digest", MdTools.sign_digest(map));
-
-        mOkHttpHelper.post(mContext, "http://192.168.6.29:8807" + Contants.Problem, map, TAG, new SpotsCallBack<QuestionData>(mContext) {
+        mOkHttpHelper.post(mContext,Contants.BASEURL + Contants.Problem, map, TAG, new SpotsCallBack<QuestionData>(mContext) {
             @Override
             public void onSuccess(Response response, QuestionData data) {
                     if (data.getCode().equals("200")){
                         qInfo.clear();
+                        qTwoInfo.clear();
                         qInfo.addAll(data.getProblems());
+                        if (data.getProblems().size()>0 && data.getProblems().size()<2){
+                            for (int i=0;i<data.getProblems().size();i++){
+                                qTwoInfo.add(data.getProblems().get(i));
+                            }
+                        }else if (data.getProblems().size()>2){
+                            for (int i=0;i<2;i++){
+                                qTwoInfo.add(data.getProblems().get(i));
+                            }
+                        }
                         initQuestion();
+
                     }
             }
 

@@ -131,9 +131,7 @@ public class BirthdayActivity extends BaseActivity {
         public void backApp() {
             //TODO 处理代码
             finish();
-
         }
-        //todo 获取js中传递的id
 
     }
     protected boolean openWithWebView(String url) {//处理判断url的合法性
