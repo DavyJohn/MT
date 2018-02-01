@@ -71,7 +71,8 @@ public class HomeFragment extends BaseFragment {
 
     private List<QuestionData.QInfo> qInfo = new LinkedList<>();
     private List<QuestionData.QInfo> qTwoInfo = new LinkedList<>();
-
+    @BindView(R.id.banner_copy)
+    ImageView mImage;
     @BindView(R.id.banner)
     BannerView mBanner;
     @BindView(R.id.main_recyclerview)
@@ -82,12 +83,14 @@ public class HomeFragment extends BaseFragment {
     RecyclerView mQuestionRecycler;
     @BindView(R.id.notice_view)
     TextView mNotice;
-    @OnClick(R.id.home_rili) void ri(){
+    //日历修改为消息
+    @OnClick(R.id.home_message) void ri(){
+        startActivity(new Intent(mContext,NewsActivity.class));
         //生产改回Basurl
-        Intent intent = new Intent(mContext,BirthdayActivity.class);
-        String url = Contants.BASEURL+Contants.CalView+SharedPreferencesUtil.getInstance(mContext).getString("userid");
-        intent.putExtra("url",Contants.BASEURL+Contants.CalView+SharedPreferencesUtil.getInstance(mContext).getString("userid"));
-        startActivity(intent);
+//        Intent intent = new Intent(mContext,BirthdayActivity.class);
+//        String url = Contants.BASEURL+Contants.CalView+SharedPreferencesUtil.getInstance(mContext).getString("userid");
+//        intent.putExtra("url",Contants.BASEURL+Contants.CalView+SharedPreferencesUtil.getInstance(mContext).getString("userid"));
+//        startActivity(intent);
     }
     @OnClick(R.id.notice_view) void notice(){
         Intent intent = new Intent(mContext,BirthdayActivity.class);
@@ -139,6 +142,7 @@ public class HomeFragment extends BaseFragment {
             list.add(data[i]);
         }
         mRecycler.setHasFixedSize(true);
+        mRecycler.setNestedScrollingEnabled(false);
         mRecycler.setLayoutManager(new GridLayoutManager(mContext,4));
         adapter = new CommonAdapter<Integer>(getActivity(),R.layout.main_recycler_item_layout,list) {
 
@@ -270,9 +274,16 @@ public class HomeFragment extends BaseFragment {
                         if (data.getCode().equals("200")){
                             banners.clear();
                             banners.addAll(data.getImageList());
-                            if (banners.size() == 1){
+                            if (banners.size() == 0 ){
+                                mImage.setVisibility(View.VISIBLE);
+                                mBanner.setVisibility(View.GONE);
+                            }else if (banners.size() == 1){
+                                mImage.setVisibility(View.GONE);
+                                mBanner.setVisibility(View.VISIBLE);
                                 mBanner.build(banners);
-                            }else {
+                            }else if (banners.size()>1){
+                                mImage.setVisibility(View.GONE);
+                                mBanner.setVisibility(View.VISIBLE);
                                 mBanner.delayTime(5).build(banners);
                             }
 

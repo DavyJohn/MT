@@ -9,6 +9,7 @@
     <string name="myinfo">编辑个人资料</string>
     <string name="center_info">个人中心</string>
     <string name="exit">退出</string>
+    <string name="news_center">消息中心</string>
     <string name="main_page">首页</string>
     <string name="check_out_classmate">查看同期学员</string>
     <string name="my_courde">我要选课</string>
@@ -113,7 +114,7 @@
     <string name="Incomplete">未完成</string>
     <string name="Complete">完成</string>
     <string name="mail_list">通讯录</string>
-    <string name="news">消息</string>
+    <string name="news">日历</string>
     <string name="mine">我的</string>
     <string name="my_group">我的小组</string>
     <string name="question">互问互答</string>

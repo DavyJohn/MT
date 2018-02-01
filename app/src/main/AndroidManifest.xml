@@ -121,7 +121,7 @@
             android:configChanges="locale"/>
         <activity android:name=".activity.DeparNameActivity"
             android:configChanges="locale"/>
-
+        <activity android:name=".fragments.NewsActivity"/>
 
 
 

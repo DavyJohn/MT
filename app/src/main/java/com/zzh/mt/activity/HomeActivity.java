@@ -12,10 +12,11 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.zzh.mt.R;
 import com.zzh.mt.base.BaseActivity;
 import com.zzh.mt.base.MyApplication;
+import com.zzh.mt.fragments.CalendarFragment;
 import com.zzh.mt.fragments.ClassMateFragment;
 import com.zzh.mt.fragments.HomeFragment;
 import com.zzh.mt.fragments.MineFragment;
-import com.zzh.mt.fragments.NewsFragment;
+import com.zzh.mt.fragments.NewsActivity;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 import com.zzh.mt.widget.MyViewPage;
@@ -53,7 +54,7 @@ public class HomeActivity extends BaseActivity {
     private void addView(){
         Fragment home = new HomeFragment();
         Fragment mate = new ClassMateFragment();
-        Fragment news = new NewsFragment();
+        Fragment news = new CalendarFragment();//修 + 日历界面
         Fragment mine = new MineFragment();
         view.add(home);
         view.add(mate);
@@ -101,7 +102,9 @@ public class HomeActivity extends BaseActivity {
         List<BottomNavigationItem> items = new ArrayList<>();
         items.add(getItem(R.drawable.index_home,R.string.main_page ));
         items.add(getItem(R.drawable.index_address, R.string.mail_list));
-        items.add(getItem(R.drawable.index_news, R.string.news));
+        //修改为日历
+        items.add(getItem(R.mipmap.index_calendar, R.string.news));
+        //
         items.add(getItem(R.drawable.index_my, R.string.mine));
 
         for (BottomNavigationItem item : items) {
