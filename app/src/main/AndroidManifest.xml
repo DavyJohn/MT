@@ -121,9 +121,7 @@
             android:configChanges="locale"/>
         <activity android:name=".activity.DeparNameActivity"
             android:configChanges="locale"/>
-        <activity android:name=".fragments.NewsActivity"/>
-
-
+        <activity android:name=".activity.NewsActivity"/>
 
         <!--蒲公英-->
         <meta-data

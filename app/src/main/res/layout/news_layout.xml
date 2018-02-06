@@ -2,19 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <android.support.v7.widget.Toolbar
-        android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
-        android:id="@+id/news_tool"
-        android:background="@color/main_color">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/news"
-            android:textSize="22sp"
-            android:textColor="@color/black"
-            android:layout_gravity="center"/>
-    </android.support.v7.widget.Toolbar>
+
     <WebView
         android:id="@+id/new_webview"
         android:layout_width="match_parent"

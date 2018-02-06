@@ -16,7 +16,6 @@ import com.zzh.mt.fragments.CalendarFragment;
 import com.zzh.mt.fragments.ClassMateFragment;
 import com.zzh.mt.fragments.HomeFragment;
 import com.zzh.mt.fragments.MineFragment;
-import com.zzh.mt.fragments.NewsActivity;
 import com.zzh.mt.utils.CommonUtil;
 import com.zzh.mt.utils.SharedPreferencesUtil;
 import com.zzh.mt.widget.MyViewPage;

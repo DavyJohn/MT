@@ -17,11 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zzh.mt.R;
-import com.zzh.mt.activity.BirthdayActivity;
-import com.zzh.mt.activity.CourseActivity;
-import com.zzh.mt.activity.DataActivity;
-import com.zzh.mt.activity.MyRemarketsActivity;
-import com.zzh.mt.activity.ScheduleActivity;
+import com.zzh.mt.activity.*;
 import com.zzh.mt.base.BaseFragment;
 import com.zzh.mt.base.CommonAdapter;
 import com.zzh.mt.base.MultiItemTypeAdapter;
@@ -85,7 +81,7 @@ public class HomeFragment extends BaseFragment {
     TextView mNotice;
     //日历修改为消息
     @OnClick(R.id.home_message) void ri(){
-        startActivity(new Intent(mContext,NewsActivity.class));
+        startActivity(new Intent(mContext, com.zzh.mt.activity.NewsActivity.class));
         //生产改回Basurl
 //        Intent intent = new Intent(mContext,BirthdayActivity.class);
 //        String url = Contants.BASEURL+Contants.CalView+SharedPreferencesUtil.getInstance(mContext).getString("userid");
